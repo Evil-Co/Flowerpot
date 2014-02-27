@@ -25,6 +25,23 @@ public class FlowerpotServer {
 	protected static final Logger logger = LogManager.getLogger (FlowerpotServer.class);
 
 	/**
+	 * Defines the server version.
+	 */
+	public static final String VERSION;
+
+	/**
+	 * Static Initialization
+	 */
+	static {
+		String version = "(unknown)";
+		Package p = FlowerpotServer.class.getPackage ();
+
+		if (p != null && p.getImplementationVersion () != null) version = p.getImplementationVersion ();
+
+		VERSION = version;
+	}
+
+	/**
 	 * Stores the current proxy configuration.
 	 */
 	protected IProxyConfiguration configuration;
@@ -54,6 +71,12 @@ public class FlowerpotServer {
 	 * @param configuration
 	 */
 	protected FlowerpotServer (IProxyConfiguration configuration) {
+		// log startup
+		logger.info ("Flowerpot " + VERSION);
+		logger.info ("Copyright (C) 2014 Evil-Co <http://www.evil-co.org>");
+		logger.info ("---------------------------------------------------");
+
+
 		// store arguments
 		this.configuration = configuration;
 
