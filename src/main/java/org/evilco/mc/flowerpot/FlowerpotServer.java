@@ -1,14 +1,18 @@
 package org.evilco.mc.flowerpot;
 
+import com.google.common.io.BaseEncoding;
 import io.netty.channel.EventLoop;
 import io.netty.channel.EventLoopGroup;
 import io.netty.channel.nio.NioEventLoopGroup;
+import org.apache.commons.io.IOUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.evilco.mc.flowerpot.configuration.IProxyConfiguration;
 import org.evilco.mc.flowerpot.protocol.ServerListener;
 import org.evilco.mc.flowerpot.server.MinecraftServer;
 
+import javax.imageio.ImageIO;
+import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -149,6 +153,14 @@ public class FlowerpotServer {
 	}
 
 	/**
+	 * Returns an encoded server icon.
+	 * @return
+	 */
+	public String getEncodedServerIcon () {
+		return "data:image/png;base64," + BaseEncoding.base64 ().encode (this.configuration.getServerIcon ());
+	}
+
+	/**
 	 * Main Entry Point
 	 * @param arguments
 	 */
@@ -166,6 +178,15 @@ public class FlowerpotServer {
 				return new ArrayList<> (Arrays.asList (new ServerListener[] {
 					new ServerListener ("0.0.0.0", 25565)
 				}));
+			}
+
+			@Override
+			public byte[] getServerIcon () {
+				try {
+					return IOUtils.toByteArray (FlowerpotServer.class.getResourceAsStream ("/defaults/server-icon.png"));
+				} catch (Exception ex) {
+					return null;
+				}
 			}
 
 			@Override
