@@ -21,6 +21,16 @@ import java.util.concurrent.TimeUnit;
 public class ServerListener {
 
 	/**
+	 * Stores the frame codec instance.
+	 */
+	public static final VarIntFrameCodec HANDLER_FRAME_CODEC = new VarIntFrameCodec ();
+
+	/**
+	 * Stores the minecraft codec instance.
+	 */
+	public static final MinecraftCodec HANDLER_MINECRAFT_CODEC = new MinecraftCodec ();
+
+	/**
 	 * Defines the client handler name.
 	 */
 	public static final String HANDLER_NAME_CLIENT = "client";
@@ -154,8 +164,8 @@ public class ServerListener {
 
 			// add handlers to pipeline
 			ch.pipeline ().addLast (HANDLER_NAME_TIMEOUT, new ReadTimeoutHandler (FlowerpotServer.getInstance ().getConfiguration ().getTimeout (), TimeUnit.MILLISECONDS));
-			ch.pipeline ().addLast (HANDLER_NAME_FRAME_CODEC, new VarIntFrameCodec ());
-			ch.pipeline ().addLast (HANDLER_NAME_MINECRAFT, new MinecraftCodec ());
+			ch.pipeline ().addLast (HANDLER_NAME_FRAME_CODEC, HANDLER_FRAME_CODEC);
+			ch.pipeline ().addLast (HANDLER_NAME_MINECRAFT, HANDLER_MINECRAFT_CODEC);
 			ch.pipeline ().addLast (HANDLER_NAME_CLIENT, new ClientChannelHandler ());
 		}
 	}
