@@ -24,6 +24,12 @@ public interface IProxyConfiguration {
 	public List<ServerListener> getListenerList ();
 
 	/**
+	 * Returns a server icon.
+	 * @return
+	 */
+	public byte[] getServerIcon ();
+
+	/**
 	 * Returns the connection timeout.
 	 * @return
 	 */
