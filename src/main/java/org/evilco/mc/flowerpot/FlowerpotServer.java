@@ -136,7 +136,7 @@ public class FlowerpotServer {
 	 * Returns the server instance.
 	 * @return
 	 */
-	public static final FlowerpotServer getInstance () {
+	public static FlowerpotServer getInstance () {
 		return instance;
 	}
 
@@ -144,7 +144,7 @@ public class FlowerpotServer {
 	 * Returns the application logger.
 	 * @return
 	 */
-	public static final Logger getLogger () {
+	public static Logger getLogger () {
 		return logger;
 	}
 
