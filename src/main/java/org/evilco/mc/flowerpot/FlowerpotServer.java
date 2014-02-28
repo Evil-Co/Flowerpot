@@ -9,9 +9,12 @@ import org.evilco.mc.flowerpot.configuration.IProxyConfiguration;
 import org.evilco.mc.flowerpot.protocol.ServerListener;
 import org.evilco.mc.flowerpot.server.MinecraftServer;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.jar.Attributes;
+import java.util.jar.JarFile;
 
 /**
  * @auhtor Johannes Donath <johannesd@evil-co.com>
@@ -20,9 +23,14 @@ import java.util.List;
 public class FlowerpotServer {
 
 	/**
+	 * Stores the build ID.
+	 */
+	public static final String BUILD;
+
+	/**
 	 * Stores the application logger.
 	 */
-	protected static final Logger logger = LogManager.getLogger (FlowerpotServer.class);
+	protected static final Logger logger = LogManager.getFormatterLogger (FlowerpotServer.class);
 
 	/**
 	 * Defines the server version.
@@ -33,11 +41,22 @@ public class FlowerpotServer {
 	 * Static Initialization
 	 */
 	static {
-		String version = "(unknown)";
+		String version = "SNAPSHOT";
+		String build = "dirty";
 		Package p = FlowerpotServer.class.getPackage ();
 
-		if (p != null && p.getImplementationVersion () != null) version = p.getImplementationVersion ();
+		if (p != null) {
+			if (p.getImplementationVersion () != null) version = p.getImplementationVersion ();
+		}
 
+		try {
+			JarFile jar = new JarFile (FlowerpotServer.class.getProtectionDomain ().getCodeSource ().getLocation ().getFile ());
+
+			Attributes attributes = jar.getManifest ().getMainAttributes ();
+			build = attributes.getValue ("Implementation-Build");
+		} catch (IOException ex) { }
+
+		BUILD = build;
 		VERSION = version;
 	}
 
@@ -72,7 +91,7 @@ public class FlowerpotServer {
 	 */
 	protected FlowerpotServer (IProxyConfiguration configuration) {
 		// log startup
-		logger.info ("Flowerpot " + VERSION);
+		logger.info ("Flowerpot " + VERSION + " (git-" + BUILD + ")");
 		logger.info ("Copyright (C) 2014 Evil-Co <http://www.evil-co.org>");
 		logger.info ("---------------------------------------------------");
 
@@ -90,6 +109,9 @@ public class FlowerpotServer {
 	 */
 	public void bind () throws Exception {
 		this.isAlive = true;
+
+		// log
+		logger.info ("Binding " + this.configuration.getListenerList ().size () + " listeners ...");
 
 		// bind listeners
 		for (ServerListener listener : this.configuration.getListenerList ()) {
@@ -136,13 +158,13 @@ public class FlowerpotServer {
 
 			@Override
 			public MinecraftServer getDefaultServer () {
-				return new MinecraftServer ("localhost", 25565);
+				return new MinecraftServer ("localhost", 25570);
 			}
 
 			@Override
 			public List<ServerListener> getListenerList () {
 				return new ArrayList<> (Arrays.asList (new ServerListener[] {
-
+					new ServerListener ("0.0.0.0", 25565)
 				}));
 			}
 
