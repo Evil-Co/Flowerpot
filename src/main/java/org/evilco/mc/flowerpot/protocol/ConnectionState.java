@@ -21,8 +21,21 @@ public enum ConnectionState {
 		 */
 		{
 			INBOUND.registerPacket (0x00, StatusRequestPacket.class);
+			INBOUND.registerPacket (0x01, PingPacket.class);
 
 			OUTBOUND.registerPacket (0x00, StatusResponsePacket.class);
+			OUTBOUND.registerPacket (0x01, PingPacket.class);
+		}
+	},
+	LOGIN {
+		/**
+		 * Static Initialization
+		 */
+		{
+			INBOUND.registerPacket (0x00, LoginStartPacket.class);
+			INBOUND.registerPacket (0x01, EncryptionResponsePacket.class);
+
+			OUTBOUND.registerPacket (0x01, EncryptionRequestPacket.class);
 		}
 	};
 
