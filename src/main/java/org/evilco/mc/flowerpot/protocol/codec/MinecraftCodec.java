@@ -39,8 +39,14 @@ public class MinecraftCodec extends ByteToMessageCodec<AbstractPacket> {
 	 */
 	@Override
 	protected void encode (ChannelHandlerContext ctx, AbstractPacket msg, ByteBuf out) throws Exception {
+		// get packet ID
+		int packetID = getProtocol (ctx).getOutboundRegistry ().getPacketID (msg.getClass ());
+
+		// log
+		logger.trace ("Sending packet with ID 0x%02X (packet type is %s)", packetID, msg.getClass ().getName ()); // DEBUG: This debug code will only work out as long as all packetIDs stay below ID 255
+
 		// write packetID
-		PacketUtility.writeVarInt (getProtocol (ctx).getOutboundRegistry ().getPacketID (msg.getClass ()), out);
+		PacketUtility.writeVarInt (packetID, out);
 
 		// write data
 		msg.writePacket (out);
@@ -63,6 +69,9 @@ public class MinecraftCodec extends ByteToMessageCodec<AbstractPacket> {
 		if (getProtocol (ctx).getInboundRegistry ().hasPacket (packetID)) {
 			// read packet
 			AbstractPacket packet = getProtocol (ctx).getInboundRegistry ().readPacket (packetID, in);
+
+			// debug
+			logger.trace ("Packet is assigned to type %s in current protocol state (%s).", packet.getClass ().getName (), getProtocol (ctx).toString ());
 
 			// verify
 			if (in.readableBytes () > 0) throw new BadPacketException ("Received extra data after the end of the packet");
@@ -106,6 +115,8 @@ public class MinecraftCodec extends ByteToMessageCodec<AbstractPacket> {
 	 * @param state
 	 */
 	public static void setProtocol (Channel channel, ConnectionState state) {
+		logger.debug ("Switching user %s to connection state %s.", channel.remoteAddress (), state);
+
 		Attribute<ConnectionState> stateAttribute = channel.attr (ATTRIBUTE_PROTOCOL);
 		stateAttribute.set (state);
 	}
