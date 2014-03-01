@@ -34,7 +34,7 @@ public class StatusResponse {
 		/**
 		 * Defines the server description text.
 		 */
-		public String text = "Flowerpot %s";
+		public String text = "Flowerpot %s (%s)";
 	}
 
 	/**
@@ -66,6 +66,6 @@ public class StatusResponse {
 		/**
 		 * Defines the protocol version.
 		 */
-		public int protocol = 0;
+		public int protocol = 4; // XXX: Update depending on latest release
 	}
 }
