@@ -51,6 +51,7 @@ public class PacketRegistry {
 	 */
 	public int getPacketID (Class<? extends AbstractPacket> packetClass) {
 		for (int i = 0; i < this.registeredPackets.length; i++) {
+			if (this.registeredPackets[i] == null) continue;
 			if (this.registeredPackets[i].equals (packetClass)) return i;
 		}
 
