@@ -14,6 +14,8 @@ import org.evilco.mc.flowerpot.server.MinecraftServer;
 import javax.imageio.ImageIO;
 import java.io.File;
 import java.io.IOException;
+import java.security.KeyPair;
+import java.security.KeyPairGenerator;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -85,6 +87,11 @@ public class FlowerpotServer {
 	protected boolean isAlive = false;
 
 	/**
+	 * Stores the encryption key.
+	 */
+	protected KeyPair serverKeyPair = null;
+
+	/**
 	 * Stores the worker thread group.
 	 */
 	protected EventLoopGroup threadGroupWorker;
@@ -93,12 +100,14 @@ public class FlowerpotServer {
 	 * Constructs a new FlowerpotServer.
 	 * @param configuration
 	 */
-	protected FlowerpotServer (IProxyConfiguration configuration) {
+	public FlowerpotServer (IProxyConfiguration configuration) {
 		// log startup
 		logger.info ("Flowerpot " + VERSION + " (git-" + BUILD + ")");
 		logger.info ("Copyright (C) 2014 Evil-Co <http://www.evil-co.org>");
 		logger.info ("---------------------------------------------------");
 
+		// generate encryption key
+		this.generateEncryptionKeyPair ();
 
 		// store arguments
 		this.configuration = configuration;
@@ -129,6 +138,21 @@ public class FlowerpotServer {
 	}
 
 	/**
+	 * Generates a new encryption key pair.
+	 */
+	protected void generateEncryptionKeyPair () {
+		logger.info ("Generating a new " + IProxyConfiguration.SERVER_ENCRYPTION_KEY_SIZE + " bit encryption key. This might take a while ...");
+
+		try {
+			KeyPairGenerator generator = KeyPairGenerator.getInstance (IProxyConfiguration.SERVER_ENCRYPTION_ALGORITHM);
+			generator.initialize (IProxyConfiguration.SERVER_ENCRYPTION_KEY_SIZE);
+			this.serverKeyPair = generator.generateKeyPair ();
+		} catch (Exception ex) { }
+
+		logger.info ("Finished generating the encryption key.");
+	}
+
+	/**
 	 * Returns the current configuration.
 	 * @return
 	 */
@@ -142,6 +166,14 @@ public class FlowerpotServer {
 	 */
 	public static FlowerpotServer getInstance () {
 		return instance;
+	}
+
+	/**
+	 * Returns the current encryption key pair.
+	 * @return
+	 */
+	public KeyPair getKeyPair () {
+		return this.serverKeyPair;
 	}
 
 	/**
