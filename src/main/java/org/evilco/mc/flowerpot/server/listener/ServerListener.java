@@ -150,7 +150,7 @@ public abstract class ServerListener {
 
 			// add handlers to pipeline
 			ch.pipeline ().addLast (HANDLER_NAME_TIMEOUT, new ReadTimeoutHandler (FlowerpotServer.getInstance ().getConfiguration ().getTimeout (), TimeUnit.MILLISECONDS));
-			ch.pipeline ().addLast (HANDLER_NAME_FRAME_CODEC, HANDLER_FRAME_CODEC);
+			ch.pipeline ().addLast (HANDLER_NAME_FRAME_CODEC, new VarIntFrameCodec ());
 			ch.pipeline ().addLast (HANDLER_NAME_MINECRAFT, HANDLER_MINECRAFT_CODEC);
 			ch.pipeline ().addLast (HANDLER_NAME_CLIENT, new ClientChannelHandler ());
 		}
