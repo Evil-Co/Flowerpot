@@ -36,6 +36,11 @@ public class ServerListener {
 	public static final String HANDLER_NAME_CLIENT = "client";
 
 	/**
+	 * Defines the encryption handler name.
+	 */
+	public static final String HANDLER_NAME_ENCRYPTION_CODEC = "encryptionCodec";
+
+	/**
 	 * Defines the frame decoder name.
 	 */
 	public static final String HANDLER_NAME_FRAME_CODEC = "frameCodec";
