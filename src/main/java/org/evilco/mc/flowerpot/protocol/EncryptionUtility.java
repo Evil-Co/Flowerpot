@@ -30,6 +30,11 @@ public class EncryptionUtility {
 	public static final String ALGORITHM_KEY_EXCHANGE_SETTINGS = "";
 
 	/**
+	 * Defines the session hash algorithm.
+	 */
+	public static final String ALGORITHM_SESSION_HASH = "SHA-1";
+
+	/**
 	 * Decrypts data with a shared key.
 	 * @param key
 	 * @param data
