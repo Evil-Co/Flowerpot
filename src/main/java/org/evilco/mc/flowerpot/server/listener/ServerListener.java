@@ -1,4 +1,4 @@
-package org.evilco.mc.flowerpot.protocol;
+package org.evilco.mc.flowerpot.server.listener;
 
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.buffer.PooledByteBufAllocator;
@@ -9,6 +9,8 @@ import io.netty.util.AttributeKey;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.evilco.mc.flowerpot.FlowerpotServer;
+import org.evilco.mc.flowerpot.protocol.ClientChannelHandler;
+import org.evilco.mc.flowerpot.protocol.ConnectionState;
 import org.evilco.mc.flowerpot.protocol.codec.MinecraftCodec;
 import org.evilco.mc.flowerpot.protocol.codec.VarIntFrameCodec;
 
@@ -18,7 +20,7 @@ import java.util.concurrent.TimeUnit;
  * @auhtor Johannes Donath <johannesd@evil-co.com>
  * @copyright Copyright (C) 2014 Evil-Co <http://www.evil-co.org>
  */
-public class ServerListener {
+public abstract class ServerListener {
 
 	/**
 	 * Stores the frame codec instance.
@@ -71,61 +73,28 @@ public class ServerListener {
 	protected Channel channel = null;
 
 	/**
-	 * Stores the hostname to listen on.
-	 */
-	protected String hostname;
-
-	/**
-	 * Stores the port to listen on.
-	 */
-	protected int port;
-
-	/**
 	 * Indicates whether query is enabled on this listener.
 	 */
-	protected boolean isQueryEnabled;
+	protected boolean isQueryEnabled = false;
 
 	/**
 	 * Indicates whether the proxy is enabled on this listener.
 	 */
-	protected boolean isProxyEnabled;
-
-	/**
-	 * Constructs a new ServerListener.
-	 * @param hostname
-	 * @param port
-	 */
-	public ServerListener (String hostname, int port) {
-		this (hostname, port, true, false);
-	}
-
-	/**
-	 * Constructs a new ServerListener.
-	 * @param hostname
-	 * @param port
-	 * @param isProxyEnabled
-	 * @param isQueryEnabled
-	 */
-	public ServerListener (String hostname, int port, boolean isProxyEnabled, boolean isQueryEnabled) {
-		this.hostname = hostname;
-		this.port = port;
-		this.isProxyEnabled = isProxyEnabled;
-		this.isQueryEnabled = isQueryEnabled;
-	}
+	protected boolean isProxyEnabled = true;
 
 	/**
 	 * Tries to activate the listener.
 	 * @param threadGroup
 	 */
 	public void bind (EventLoopGroup threadGroup) {
-		logger.info ("Requesting server socket for " + this.hostname + ":" + this.port + " ...");
+		logger.info ("Requesting server socket for " + this.getListenerHostname () + ":" + this.getListenerPort () + " ...");
 
 		new ServerBootstrap ()
 			.channel (NioServerSocketChannel.class)
 			.childAttr (LISTENER_ATTRIBUTE, this)
 			.childHandler (new ChannelInitializer ())
 			.group (threadGroup)
-			.localAddress (this.hostname, this.port)
+			.localAddress (this.getListenerHostname (), this.getListenerPort ())
 			.bind ()
 				.addListener (new ChannelFutureListener () {
 
@@ -137,12 +106,24 @@ public class ServerListener {
 						if (future.isSuccess ()) {
 							channel = future.channel ();
 
-							logger.info ("Listening on " + hostname + ":" + port + " (" + (isProxyEnabled && isQueryEnabled ? "query enabled" : "query disabled") + ")");
+							logger.info ("Listening on " + getListenerHostname () + ":" + getListenerPort () + " (" + (isProxyEnabled && isQueryEnabled ? "query enabled" : "query disabled") + ")");
 						} else
-							logger.warn ("Could not bind listener on " + hostname + ":" + port, future.cause ());
+							logger.warn ("Could not bind listener on " + getListenerHostname () + ":" + getListenerPort (), future.cause ());
 					}
 				});
 	}
+
+	/**
+	 * Returns the listener hostname.
+	 * @return
+	 */
+	public abstract String getListenerHostname ();
+
+	/**
+	 * Returns the listener port.
+	 * @return
+	 */
+	public abstract short getListenerPort ();
 
 	/**
 	 * Initializes new connections.
