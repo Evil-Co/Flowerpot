@@ -255,6 +255,11 @@ public class FlowerpotServer {
 			}
 
 			@Override
+			public int getProtocolVersion () {
+				return 4;
+			}
+
+			@Override
 			public byte[] getServerIcon () {
 				try {
 					return IOUtils.toByteArray (FlowerpotServer.class.getResourceAsStream ("/defaults/server-icon.png"));
