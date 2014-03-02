@@ -1,9 +1,7 @@
 package org.evilco.mc.flowerpot.configuration;
 
-import org.evilco.mc.flowerpot.protocol.ServerListener;
-import org.evilco.mc.flowerpot.server.MinecraftServer;
-
-import java.util.List;
+import org.evilco.mc.flowerpot.server.ServerList;
+import org.evilco.mc.flowerpot.server.listener.ListenerList;
 
 /**
  * @auhtor Johannes Donath <johannesd@evil-co.com>
@@ -12,16 +10,10 @@ import java.util.List;
 public interface IProxyConfiguration {
 
 	/**
-	 * Returns the default Minecraft server.
-	 * @return
-	 */
-	public MinecraftServer getDefaultServer ();
-
-	/**
 	 * Returns a list of configured listeners.
 	 * @return
 	 */
-	public List<ServerListener> getListenerList ();
+	public ListenerList getListenerList ();
 
 	/**
 	 * Returns the selected protocol version.
@@ -34,6 +26,12 @@ public interface IProxyConfiguration {
 	 * @return
 	 */
 	public byte[] getServerIcon ();
+
+	/**
+	 * Returns the server list.
+	 * @return
+	 */
+	public ServerList getServerList ();
 
 	/**
 	 * Returns the connection timeout.
