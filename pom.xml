@@ -139,6 +139,9 @@
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
+		<!-- Build Settings -->
+		<minecraft.version>1.7.5</minecraft.version>
+
 		<!-- Signer Settings -->
 		<sign.keyStore>/opt/evilco/keystore</sign.keyStore>
 		<sign.password>changeit</sign.password>
@@ -245,6 +248,7 @@
 
 						<manifestEntries>
 							<Implementation-Build>${buildNumber}</Implementation-Build>
+							<Implementation-MinecraftVersion>${minecraft.version}</Implementation-MinecraftVersion>
 						</manifestEntries>
 					</archive>
 				</configuration>
