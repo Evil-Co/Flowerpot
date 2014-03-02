@@ -8,6 +8,7 @@ import org.apache.commons.io.IOUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.evilco.mc.flowerpot.configuration.IProxyConfiguration;
+import org.evilco.mc.flowerpot.protocol.EncryptionUtility;
 import org.evilco.mc.flowerpot.protocol.ServerListener;
 import org.evilco.mc.flowerpot.server.MinecraftServer;
 
@@ -30,6 +31,11 @@ public class FlowerpotServer {
 	 * Stores the build ID.
 	 */
 	public static final String BUILD;
+
+	/**
+	 * Defines the default server encryption key size.
+	 */
+	public static final int SERVER_ENCRYPTION_KEY_SIZE = 1024;
 
 	/**
 	 * Stores the application logger.
@@ -158,11 +164,11 @@ public class FlowerpotServer {
 	 * Generates a new encryption key pair.
 	 */
 	protected void generateEncryptionKeyPair () {
-		logger.info ("Generating a new " + IProxyConfiguration.SERVER_ENCRYPTION_KEY_SIZE + " bit encryption key. This might take a while ...");
+		logger.info ("Generating a new " + SERVER_ENCRYPTION_KEY_SIZE + " bit encryption key. This might take a while ...");
 
 		try {
-			KeyPairGenerator generator = KeyPairGenerator.getInstance (IProxyConfiguration.SERVER_ENCRYPTION_ALGORITHM);
-			generator.initialize (IProxyConfiguration.SERVER_ENCRYPTION_KEY_SIZE);
+			KeyPairGenerator generator = KeyPairGenerator.getInstance (EncryptionUtility.ALGORITHM_ENCRYPTION);
+			generator.initialize (SERVER_ENCRYPTION_KEY_SIZE);
 			this.serverKeyPair = generator.generateKeyPair ();
 		} catch (Exception ex) { }
 
