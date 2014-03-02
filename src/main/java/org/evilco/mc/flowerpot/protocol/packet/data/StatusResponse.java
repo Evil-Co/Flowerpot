@@ -1,5 +1,7 @@
 package org.evilco.mc.flowerpot.protocol.packet.data;
 
+import org.evilco.mc.flowerpot.FlowerpotServer;
+
 /**
  * @auhtor Johannes Donath <johannesd@evil-co.com>
  * @copyright Copyright (C) 2014 Evil-Co <http://www.evil-co.org>
@@ -61,11 +63,18 @@ public class StatusResponse {
 		/**
 		 * Defines the game version.
 		 */
-		public String name = "1.7.5";
+		public String name;
 
 		/**
 		 * Defines the protocol version.
 		 */
 		public int protocol = 4; // XXX: Update depending on latest release
+
+		/**
+		 * Constructs a new Version.
+		 */
+		public Version () {
+			this.name = FlowerpotServer.getMinecraftVersionString ();
+		}
 	}
 }
