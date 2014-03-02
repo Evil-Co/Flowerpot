@@ -192,6 +192,17 @@
 					<include>server-icon.png</include>
 				</includes>
 			</resource>
+
+			<!-- Translations -->
+			<resource>
+				<directory>${project.basedir}/src/main/resources/translation</directory>
+				<targetPath>.</targetPath>
+				<filtering>true</filtering>
+
+				<includes>
+					<include>*.properties</include>
+				</includes>
+			</resource>
 		</resources>
 
 		<!-- Build Plugins -->
