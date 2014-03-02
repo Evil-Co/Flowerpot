@@ -1,7 +1,6 @@
 package org.evilco.mc.flowerpot;
 
 import com.google.common.io.BaseEncoding;
-import io.netty.channel.EventLoop;
 import io.netty.channel.EventLoopGroup;
 import io.netty.channel.nio.NioEventLoopGroup;
 import org.apache.commons.io.IOUtils;
@@ -9,14 +8,15 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.evilco.mc.flowerpot.configuration.IProxyConfiguration;
 import org.evilco.mc.flowerpot.protocol.EncryptionUtility;
-import org.evilco.mc.flowerpot.protocol.ServerListener;
+import org.evilco.mc.flowerpot.server.ServerList;
+import org.evilco.mc.flowerpot.server.listener.ListenerList;
+import org.evilco.mc.flowerpot.server.listener.ServerListener;
 import org.evilco.mc.flowerpot.server.MinecraftServer;
 
-import javax.imageio.ImageIO;
-import java.io.File;
 import java.io.IOException;
 import java.security.KeyPair;
 import java.security.KeyPairGenerator;
+import java.text.MessageFormat;
 import java.util.*;
 import java.util.jar.Attributes;
 import java.util.jar.JarFile;
@@ -224,6 +224,20 @@ public class FlowerpotServer {
 	}
 
 	/**
+	 * Returns the translation.
+	 * @param name
+	 * @param arguments
+	 * @return
+	 */
+	public String getTranslation (String name, Object... arguments) {
+		try {
+			return MessageFormat.format (this.translation.getString (name), arguments);
+		} catch (MissingResourceException ex) { }
+
+		return name;
+	}
+
+	/**
 	 * Loads the server translation.
 	 */
 	protected void loadTranslation () {
@@ -243,20 +257,36 @@ public class FlowerpotServer {
 		instance = new FlowerpotServer (new IProxyConfiguration () {
 
 			@Override
-			public MinecraftServer getDefaultServer () {
-				return new MinecraftServer ("localhost", 25570);
-			}
+			public ListenerList getListenerList () {
+				return new ListenerList (Arrays.asList (new ServerListener[] {
+					new ServerListener () {
+						@Override
+						public String getListenerHostname () {
+							return "0.0.0.0";
+						}
 
-			@Override
-			public List<ServerListener> getListenerList () {
-				return new ArrayList<> (Arrays.asList (new ServerListener[] {
-					new ServerListener ("0.0.0.0", 25565)
+						@Override
+						public short getListenerPort () {
+							return 25565;
+						}
+					},
+					new ServerListener () {
+						@Override
+						public String getListenerHostname () {
+							return "0.0.0.0";
+						}
+
+						@Override
+						public short getListenerPort () {
+							return 25566;
+						}
+					}
 				}));
 			}
 
 			@Override
 			public int getProtocolVersion () {
-				return 4;
+				return 15;
 			}
 
 			@Override
@@ -266,6 +296,13 @@ public class FlowerpotServer {
 				} catch (Exception ex) {
 					return null;
 				}
+			}
+
+			@Override
+			public ServerList getServerList () {
+				return new ServerList (Arrays.asList (new MinecraftServer[]{
+					new MinecraftServer ("localhost", 25570, "localhost", 25565)
+				}));
 			}
 
 			@Override
