@@ -16,9 +16,7 @@ import java.io.File;
 import java.io.IOException;
 import java.security.KeyPair;
 import java.security.KeyPairGenerator;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 import java.util.jar.Attributes;
 import java.util.jar.JarFile;
 
@@ -39,9 +37,24 @@ public class FlowerpotServer {
 	protected static final Logger logger = LogManager.getFormatterLogger (FlowerpotServer.class);
 
 	/**
+	 * Defines the Minecraft version.
+	 */
+	public static final String MINECRAFT_VERSION;
+
+	/**
+	 * Defines the Minecraft version template.
+	 */
+	public static final String MINECRAFT_VERSION_TEMPLATE = "Flowerpot %s (%s)";
+
+	/**
 	 * Defines the server version.
 	 */
 	public static final String VERSION;
+
+	/**
+	 * Stores the translation bundle.
+	 */
+	public ResourceBundle translation;
 
 	/**
 	 * Static Initialization
@@ -49,6 +62,7 @@ public class FlowerpotServer {
 	static {
 		String version = "SNAPSHOT";
 		String build = "dirty";
+		String mcVersion = "SNAPSHOT";
 		Package p = FlowerpotServer.class.getPackage ();
 
 		if (p != null) {
@@ -60,9 +74,11 @@ public class FlowerpotServer {
 
 			Attributes attributes = jar.getManifest ().getMainAttributes ();
 			build = attributes.getValue ("Implementation-Build");
+			mcVersion = attributes.getValue ("Implementation-MinecraftVersion");
 		} catch (IOException ex) { }
 
 		BUILD = build;
+		MINECRAFT_VERSION = mcVersion;
 		VERSION = version;
 	}
 
@@ -108,6 +124,7 @@ public class FlowerpotServer {
 
 		// generate encryption key
 		this.generateEncryptionKeyPair ();
+		this.loadTranslation ();
 
 		// store arguments
 		this.configuration = configuration;
@@ -161,6 +178,14 @@ public class FlowerpotServer {
 	}
 
 	/**
+	 * Returns an encoded server icon.
+	 * @return
+	 */
+	public String getEncodedServerIcon () {
+		return "data:image/png;base64," + BaseEncoding.base64 ().encode (this.configuration.getServerIcon ());
+	}
+
+	/**
 	 * Returns the server instance.
 	 * @return
 	 */
@@ -185,11 +210,22 @@ public class FlowerpotServer {
 	}
 
 	/**
-	 * Returns an encoded server icon.
+	 * Returns the Minecraft version string.
 	 * @return
 	 */
-	public String getEncodedServerIcon () {
-		return "data:image/png;base64," + BaseEncoding.base64 ().encode (this.configuration.getServerIcon ());
+	public static String getMinecraftVersionString () {
+		return String.format (MINECRAFT_VERSION_TEMPLATE, MINECRAFT_VERSION, BUILD);
+	}
+
+	/**
+	 * Loads the server translation.
+	 */
+	protected void loadTranslation () {
+		try {
+			this.translation = ResourceBundle.getBundle ("messages");
+		} catch (Exception ex) {
+			this.translation = ResourceBundle.getBundle ("messages", Locale.ENGLISH);
+		}
 	}
 
 	/**
