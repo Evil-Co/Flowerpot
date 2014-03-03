@@ -1,6 +1,7 @@
 package org.evilco.mc.flowerpot.protocol.packet.data;
 
 import org.evilco.mc.flowerpot.FlowerpotServer;
+import org.evilco.mc.flowerpot.chat.TextMessage;
 
 /**
  * @auhtor Johannes Donath <johannesd@evil-co.com>
@@ -11,7 +12,7 @@ public class StatusResponse {
 	/**
 	 * Stores the server description.
 	 */
-	public Description description = new Description ();
+	public TextMessage description = new TextMessage ("Flowerpot %s (%s)");
 
 	/**
 	 * Stores the favicon.
@@ -27,17 +28,6 @@ public class StatusResponse {
 	 * Stores the server version.
 	 */
 	public Version version = new Version ();
-
-	/**
-	 * Stores the server description.
-	 */
-	public static class Description {
-
-		/**
-		 * Defines the server description text.
-		 */
-		public String text = "Flowerpot %s (%s)";
-	}
 
 	/**
 	 * Stores the player statistic.
