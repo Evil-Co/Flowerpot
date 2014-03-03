@@ -48,12 +48,6 @@ public class YggdrasilAuthenticationService implements IAuthenticationService {
 
 			@Override
 			public void finish (String content) {
-				// check for empty response
-				if (content == null) {
-					callback.error ();
-					return;
-				}
-
 				// decode JSON
 				YggdrasilAuthenticationResult result = gson.fromJson (content, YggdrasilAuthenticationResult.class);
 
