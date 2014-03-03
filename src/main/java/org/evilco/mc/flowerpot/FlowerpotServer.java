@@ -6,6 +6,8 @@ import io.netty.channel.nio.NioEventLoopGroup;
 import org.apache.commons.io.IOUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.evilco.mc.flowerpot.authentication.IAuthenticationService;
+import org.evilco.mc.flowerpot.authentication.YggdrasilAuthenticationService;
 import org.evilco.mc.flowerpot.configuration.IProxyConfiguration;
 import org.evilco.mc.flowerpot.protocol.EncryptionUtility;
 import org.evilco.mc.flowerpot.server.ServerList;
@@ -56,6 +58,11 @@ public class FlowerpotServer {
 	 * Defines the server version.
 	 */
 	public static final String VERSION;
+
+	/**
+	 * Stores the selected authentication service.
+	 */
+	protected IAuthenticationService authenticationService;
 
 	/**
 	 * Stores the translation bundle.
@@ -133,6 +140,7 @@ public class FlowerpotServer {
 		this.loadTranslation ();
 
 		// store arguments
+		this.authenticationService = new YggdrasilAuthenticationService ();
 		this.configuration = configuration;
 
 		// create thread groups
@@ -167,12 +175,22 @@ public class FlowerpotServer {
 		logger.info ("Generating a new " + SERVER_ENCRYPTION_KEY_SIZE + " bit encryption key. This might take a while ...");
 
 		try {
-			KeyPairGenerator generator = KeyPairGenerator.getInstance (EncryptionUtility.ALGORITHM_ENCRYPTION);
+			KeyPairGenerator generator = KeyPairGenerator.getInstance (EncryptionUtility.ALGORITHM_KEY_EXCHANGE);
 			generator.initialize (SERVER_ENCRYPTION_KEY_SIZE);
 			this.serverKeyPair = generator.generateKeyPair ();
-		} catch (Exception ex) { }
+		} catch (Exception ex) {
+			logger.fatal ("Could not generate the encryption key pair. This could cause connectivity issues!", ex);
+		}
 
 		logger.info ("Finished generating the encryption key.");
+	}
+
+	/**
+	 * Returns the current authentication service.
+	 * @return
+	 */
+	public IAuthenticationService getAuthenticationService () {
+		return this.authenticationService;
 	}
 
 	/**
