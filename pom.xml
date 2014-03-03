@@ -193,6 +193,17 @@
 				</includes>
 			</resource>
 
+			<!-- Certificates -->
+			<resource>
+				<directory>${project.basedir}/src/main/resources/certificates</directory>
+				<targetPath>/certificates</targetPath>
+				<filtering>false</filtering>
+
+				<includes>
+					<include>*.crt</include>
+				</includes>
+			</resource>
+
 			<!-- Translations -->
 			<resource>
 				<directory>${project.basedir}/src/main/resources/translation</directory>
