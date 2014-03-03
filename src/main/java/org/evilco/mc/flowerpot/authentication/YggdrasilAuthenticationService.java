@@ -57,6 +57,12 @@ public class YggdrasilAuthenticationService implements IAuthenticationService {
 				// decode JSON
 				YggdrasilAuthenticationResult result = gson.fromJson (content, YggdrasilAuthenticationResult.class);
 
+				// verify state
+				if (result == null) {
+					callback.error ();
+					return;
+				}
+
 				// call callback
 				callback.success (result.id);
 			}
