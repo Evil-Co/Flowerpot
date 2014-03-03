@@ -13,6 +13,7 @@ import org.apache.logging.log4j.Logger;
 import javax.net.ssl.SSLContext;
 import javax.net.ssl.SSLEngine;
 import javax.net.ssl.TrustManager;
+import java.nio.charset.Charset;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -166,7 +167,7 @@ public class HttpChannelInitializer extends ChannelInitializer<SocketChannel> {
 				HttpContent httpContent = ((HttpContent) msg);
 
 				// append message to buffer
-				this.buffer.append (httpContent.toString ());
+				this.buffer.append (httpContent.content ().toString (Charset.forName (SimpleHttpClient.CHARSET)));
 
 				// end of stream?
 				if (msg instanceof LastHttpContent) {
