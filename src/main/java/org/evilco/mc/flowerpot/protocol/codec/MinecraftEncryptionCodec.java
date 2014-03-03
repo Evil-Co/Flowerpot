@@ -7,6 +7,7 @@ import org.evilco.mc.flowerpot.protocol.EncryptionUtility;
 
 import javax.crypto.Cipher;
 import javax.crypto.SecretKey;
+import javax.crypto.spec.IvParameterSpec;
 import java.util.List;
 
 /**
@@ -18,7 +19,12 @@ public class MinecraftEncryptionCodec extends ByteToMessageCodec<ByteBuf> {
 	/**
 	 * Stores the codec cipher.
 	 */
-	protected Cipher cipher;
+	protected Cipher decryptionCipher;
+
+	/**
+	 * Stores the codec cipher.
+	 */
+	protected Cipher encryptionCipher;
 
 	/**
 	 * Stores the shared key.
@@ -33,10 +39,12 @@ public class MinecraftEncryptionCodec extends ByteToMessageCodec<ByteBuf> {
 		this.sharedKey = sharedKey;
 
 		// get cipher
-		this.cipher = EncryptionUtility.getEncryptionCipher ();
+		this.decryptionCipher = EncryptionUtility.getEncryptionCipher ();
+		this.encryptionCipher = EncryptionUtility.getEncryptionCipher ();
 
 		// initialize ciper
-		this.cipher.init (Cipher.DECRYPT_MODE, this.sharedKey);
+		this.decryptionCipher.init (Cipher.DECRYPT_MODE, sharedKey, new IvParameterSpec (sharedKey.getEncoded ()));
+		this.encryptionCipher.init (Cipher.ENCRYPT_MODE, sharedKey, new IvParameterSpec (sharedKey.getEncoded ()));
 	}
 
 	/**
@@ -51,10 +59,10 @@ public class MinecraftEncryptionCodec extends ByteToMessageCodec<ByteBuf> {
 		msg.readBytes (buffer);
 
 		// create output buffer
-		byte[] heapOut = new byte[this.cipher.getOutputSize (readableBytes)];
+		byte[] heapOut = new byte[this.encryptionCipher.getOutputSize (readableBytes)];
 
 		// write finished result
-		out.writeBytes (heapOut, 0, this.cipher.update (buffer, 0, readableBytes, heapOut));
+		out.writeBytes (heapOut, 0, this.encryptionCipher.update (buffer, 0, readableBytes, heapOut));
 	}
 
 	/**
@@ -70,10 +78,10 @@ public class MinecraftEncryptionCodec extends ByteToMessageCodec<ByteBuf> {
 		in.readBytes (buffer);
 
 		// create heap buffer
-		ByteBuf heap = ctx.alloc ().heapBuffer (this.cipher.getOutputSize (readableBytes));
+		ByteBuf heap = ctx.alloc ().heapBuffer (this.decryptionCipher.getOutputSize (readableBytes));
 
 		// write data
-		heap.writerIndex (this.cipher.update (buffer, 0, readableBytes, heap.array (), heap.arrayOffset ()));
+		heap.writerIndex (this.decryptionCipher.update (buffer, 0, readableBytes, heap.array (), heap.arrayOffset ()));
 
 		// return finished version
 		out.add (heap);
