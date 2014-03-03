@@ -8,6 +8,8 @@ import io.netty.channel.ChannelOption;
 import io.netty.channel.EventLoop;
 import io.netty.channel.socket.nio.NioSocketChannel;
 import io.netty.handler.codec.http.*;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.evilco.mc.flowerpot.FlowerpotServer;
 
 import javax.net.ssl.TrustManager;
@@ -23,6 +25,11 @@ public class SimpleHttpClient {
 	 * Defines the requested charset.
 	 */
 	public static final String CHARSET = "UTF-8";
+
+	/**
+	 * Stores the internal logging instance.
+	 */
+	public static final Logger logger = LogManager.getLogger (SimpleHttpClient.class);
 
 	/**
 	 * Defines the connection timeout for queries.
@@ -54,6 +61,9 @@ public class SimpleHttpClient {
 		// get correct port
 		int port = uri.getPort ();
 		if (port == -1) port = (sslEnabled ? 443 : 80);
+
+		// debug log
+		logger.debug ("Sending an HTTP request (GET) to URI " + url + " ...");
 
 		// create client instance
 		Bootstrap httpClient = new Bootstrap ();
