@@ -143,8 +143,8 @@ public class HttpChannelInitializer extends ChannelInitializer<SocketChannel> {
 
 				// no content sent?
 				if (this.responseCode == HttpResponseStatus.NO_CONTENT.code ()) { // XXX: This is sadly not an enum value
+					logger.debug ("The server did not send any data.");
 					callback.finish (null);
-					logger.debug ("Received an empty HTTP response.");
 					return;
 				}
 
@@ -173,6 +173,7 @@ public class HttpChannelInitializer extends ChannelInitializer<SocketChannel> {
 				if (msg instanceof LastHttpContent) {
 					logger.debug ("Received end of answer.");
 					callback.finish (this.buffer.toString ());
+					ctx.channel ().close ();
 				}
 			}
 		}
