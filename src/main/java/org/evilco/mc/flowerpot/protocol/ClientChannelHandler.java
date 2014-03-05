@@ -12,6 +12,7 @@ import org.evilco.mc.flowerpot.protocol.codec.MinecraftCodec;
 import org.evilco.mc.flowerpot.protocol.codec.MinecraftEncryptionCodec;
 import org.evilco.mc.flowerpot.protocol.packet.*;
 import org.evilco.mc.flowerpot.protocol.packet.data.StatusResponse;
+import org.evilco.mc.flowerpot.server.MinecraftClient;
 import org.evilco.mc.flowerpot.server.MinecraftServer;
 import org.evilco.mc.flowerpot.server.capability.Capability;
 import org.evilco.mc.flowerpot.server.capability.CapabilityKey;
@@ -32,6 +33,11 @@ public class ClientChannelHandler extends ChannelHandlerAdapter {
 	 * Stores the internal logging instance.
 	 */
 	protected static final Logger logger = LogManager.getFormatterLogger (ClientChannelHandler.class);
+
+	/**
+	 * Stores the current client instance.
+	 */
+	protected MinecraftClient client = null;
 
 	/**
 	 * Stores the verify token.
@@ -72,6 +78,14 @@ public class ClientChannelHandler extends ChannelHandlerAdapter {
 	public void channelInactive (ChannelHandlerContext ctx) throws Exception {
 		// log disconnect
 		logger.info ("%s disconnected.", ctx.channel ().remoteAddress ().toString ());
+
+		// disconnect from server
+		if (this.client != null) {
+			logger.debug ("Disconnecting %s from current server.", ctx.channel ().remoteAddress ().toString ());
+
+			this.client.getClientChannel ().writeAndFlush (new KickPacket ("disconnect.quit"));
+			this.client.getClientChannel ().close ();
+		}
 
 		// call parent
 		super.channelInactive (ctx);
@@ -141,7 +155,8 @@ public class ClientChannelHandler extends ChannelHandlerAdapter {
 					break;
 			}
 
-			return;
+			// packet has been handled
+			message.setHandled (true);
 		}
 
 		if (message instanceof StatusRequestPacket) {
@@ -160,7 +175,9 @@ public class ClientChannelHandler extends ChannelHandlerAdapter {
 
 			// send packet
 			ctx.writeAndFlush (new StatusResponsePacket (response));
-			return;
+
+			// packet has been handled
+			message.setHandled (true);
 		}
 
 		if (message instanceof PingPacket) {
@@ -171,7 +188,9 @@ public class ClientChannelHandler extends ChannelHandlerAdapter {
 
 			// respond
 			ctx.writeAndFlush (ping);
-			return;
+
+			// packet has been handled
+			message.setHandled (true);
 		}
 
 		if (message instanceof LoginStartPacket) {
@@ -194,7 +213,9 @@ public class ClientChannelHandler extends ChannelHandlerAdapter {
 
 			// send encryption request
 			ctx.writeAndFlush (encryptionRequestPacket);
-			return;
+
+			// packet has been handled
+			message.setHandled (true);
 		}
 
 		if (message instanceof EncryptionResponsePacket) {
@@ -237,10 +258,19 @@ public class ClientChannelHandler extends ChannelHandlerAdapter {
 						// update protocol
 						logger.info ("%s successfully authenticated with user ID %s.", username, uuid);
 						MinecraftCodec.setProtocol (ctx.channel (), ConnectionState.GAME);
+
+						// create client
+						client = server.createConnection (ctx.channel (), username, ((Capability<Integer>) server.getCapability (MinecraftServer.CAPABILITY_PROTOCOL)).get ());
 					}
 				}
 			});
+
+			// packet has been handled
+			message.setHandled (true);
 		}
+
+		// relay packet
+		if (!message.hasHandled () && this.client != null) this.client.sendPacketServer (message);
 	}
 
 	/**
