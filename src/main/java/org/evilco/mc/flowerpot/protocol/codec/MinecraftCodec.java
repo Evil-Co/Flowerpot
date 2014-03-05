@@ -63,6 +63,13 @@ public class MinecraftCodec extends ByteToMessageCodec<AbstractPacket> {
 	 */
 	@Override
 	protected void encode (ChannelHandlerContext ctx, AbstractPacket msg, ByteBuf out) throws Exception {
+		// write unhandled packet
+		if (msg instanceof UnhandledPacket) {
+			logger.trace ("Relaying unhandled packet.");
+			msg.writePacket (out);
+			return;
+		}
+
 		// get packet ID
 		int packetID = getProtocol (ctx).getOutboundRegistry (this.isClient).getPacketID (msg.getClass ());
 
@@ -111,7 +118,7 @@ public class MinecraftCodec extends ByteToMessageCodec<AbstractPacket> {
 		in.skipBytes (in.readableBytes ());
 
 		// create packet wrapper for later handling
-		out.add (new UnhandledPacket (packetData));
+		out.add (new UnhandledPacket (packetID, packetData));
 	}
 
 	/**
