@@ -8,6 +8,7 @@ import org.evilco.mc.flowerpot.protocol.http.HttpClientCallback;
 import org.evilco.mc.flowerpot.protocol.http.SimpleHttpClient;
 
 import java.math.BigInteger;
+import java.net.URLEncoder;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
@@ -20,7 +21,7 @@ public class YggdrasilAuthenticationService implements IAuthenticationService {
 	/**
 	 * Defines the authentication URL.
 	 */
-	public static final String AUTHENTICATION_URL = "https://sessionserver.mojang.com/session/minecraft/hasJoined?username=%s&serverID=%s";
+	public static final String AUTHENTICATION_URL = "https://sessionserver.mojang.com/session/minecraft/hasJoined?username=%s&serverId=%s";
 
 	/**
 	 * Stores an internal Gson instance.
@@ -87,6 +88,10 @@ public class YggdrasilAuthenticationService implements IAuthenticationService {
 			messageDigest.update (part);
 		}
 
-		return (new BigInteger (messageDigest.digest ())).toString (16);
+		try {
+			return URLEncoder.encode (new BigInteger (messageDigest.digest ()).toString (16), "UTF-8");
+		} catch (Exception ex) {
+			return null;
+		}
 	}
 }
