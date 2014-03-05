@@ -2,7 +2,6 @@ package org.evilco.mc.flowerpot.authentication;
 
 import com.google.gson.Gson;
 import io.netty.channel.EventLoop;
-import org.evilco.mc.flowerpot.FlowerpotServer;
 import org.evilco.mc.flowerpot.protocol.EncryptionUtility;
 import org.evilco.mc.flowerpot.protocol.http.HttpClientCallback;
 import org.evilco.mc.flowerpot.protocol.http.SimpleHttpClient;

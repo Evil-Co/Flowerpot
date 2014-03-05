@@ -1,7 +1,9 @@
 package org.evilco.mc.flowerpot.protocol;
 
 import javax.crypto.*;
-import java.security.*;
+import java.security.InvalidKeyException;
+import java.security.Key;
+import java.security.NoSuchAlgorithmException;
 
 /**
  * @auhtor Johannes Donath <johannesd@evil-co.com>

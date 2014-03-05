@@ -3,7 +3,6 @@ package org.evilco.mc.flowerpot;
 import com.google.common.io.BaseEncoding;
 import io.netty.channel.EventLoopGroup;
 import io.netty.channel.nio.NioEventLoopGroup;
-import org.apache.commons.io.IOUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.evilco.mc.flowerpot.authentication.IAuthenticationService;
@@ -11,16 +10,16 @@ import org.evilco.mc.flowerpot.authentication.YggdrasilAuthenticationService;
 import org.evilco.mc.flowerpot.configuration.IProxyConfiguration;
 import org.evilco.mc.flowerpot.configuration.xml.XMLProxyConfiguration;
 import org.evilco.mc.flowerpot.protocol.EncryptionUtility;
-import org.evilco.mc.flowerpot.server.ServerList;
-import org.evilco.mc.flowerpot.server.listener.ListenerList;
-import org.evilco.mc.flowerpot.server.listener.ServerListener;
 import org.evilco.mc.flowerpot.server.MinecraftServer;
+import org.evilco.mc.flowerpot.server.listener.ServerListener;
 
 import java.io.IOException;
 import java.security.KeyPair;
 import java.security.KeyPairGenerator;
 import java.text.MessageFormat;
-import java.util.*;
+import java.util.Locale;
+import java.util.MissingResourceException;
+import java.util.ResourceBundle;
 import java.util.jar.Attributes;
 import java.util.jar.JarFile;
 

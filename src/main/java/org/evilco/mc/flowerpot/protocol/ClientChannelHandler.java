@@ -8,7 +8,6 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.evilco.mc.flowerpot.FlowerpotServer;
 import org.evilco.mc.flowerpot.authentication.AuthenticationCallback;
-import org.evilco.mc.flowerpot.authentication.IAuthenticationService;
 import org.evilco.mc.flowerpot.protocol.codec.MinecraftCodec;
 import org.evilco.mc.flowerpot.protocol.codec.MinecraftEncryptionCodec;
 import org.evilco.mc.flowerpot.protocol.packet.*;
@@ -19,8 +18,6 @@ import org.evilco.mc.flowerpot.server.capability.CapabilityKey;
 import org.evilco.mc.flowerpot.server.listener.ServerListener;
 
 import javax.crypto.SecretKey;
-import java.net.URLEncoder;
-import java.security.MessageDigest;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;

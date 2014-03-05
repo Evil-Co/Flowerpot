@@ -10,9 +10,9 @@ import io.netty.util.AttributeKey;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.evilco.mc.flowerpot.protocol.ConnectionState;
-import org.evilco.mc.flowerpot.protocol.packet.PacketUtility;
 import org.evilco.mc.flowerpot.protocol.packet.AbstractPacket;
 import org.evilco.mc.flowerpot.protocol.packet.BadPacketException;
+import org.evilco.mc.flowerpot.protocol.packet.PacketUtility;
 import org.evilco.mc.flowerpot.protocol.packet.UnhandledPacket;
 
 import java.util.List;

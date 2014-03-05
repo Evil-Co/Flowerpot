@@ -1,6 +1,5 @@
 package org.evilco.mc.flowerpot.configuration.xml;
 
-import com.sun.javaws.exceptions.InvalidArgumentException;
 import org.evilco.mc.flowerpot.server.MinecraftServer;
 import org.evilco.mc.flowerpot.server.capability.Capability;
 import org.evilco.mc.flowerpot.server.capability.CapabilityKey;

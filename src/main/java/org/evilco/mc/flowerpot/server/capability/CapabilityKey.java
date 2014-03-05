@@ -1,8 +1,5 @@
 package org.evilco.mc.flowerpot.server.capability;
 
-import io.netty.util.AbstractConstant;
-import io.netty.util.ConstantPool;
-
 import java.util.HashMap;
 import java.util.Map;
 

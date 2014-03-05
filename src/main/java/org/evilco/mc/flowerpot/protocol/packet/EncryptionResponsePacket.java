@@ -5,7 +5,6 @@ import org.evilco.mc.flowerpot.protocol.EncryptionUtility;
 
 import javax.crypto.SecretKey;
 import javax.crypto.spec.SecretKeySpec;
-import java.security.InvalidKeyException;
 import java.security.PrivateKey;
 import java.security.PublicKey;
 import java.util.Arrays;
