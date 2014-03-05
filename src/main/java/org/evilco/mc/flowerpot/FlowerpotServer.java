@@ -161,11 +161,6 @@ public class FlowerpotServer {
 		for (ServerListener listener : this.configuration.getListenerList ()) {
 			listener.bind (this.threadGroupWorker);
 		}
-
-		// enter server loop
-		while (this.isAlive) {
-			Thread.sleep (500);
-		}
 	}
 
 	/**
