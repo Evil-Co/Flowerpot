@@ -9,6 +9,7 @@ import org.apache.logging.log4j.Logger;
 import org.evilco.mc.flowerpot.authentication.IAuthenticationService;
 import org.evilco.mc.flowerpot.authentication.YggdrasilAuthenticationService;
 import org.evilco.mc.flowerpot.configuration.IProxyConfiguration;
+import org.evilco.mc.flowerpot.configuration.xml.XMLProxyConfiguration;
 import org.evilco.mc.flowerpot.protocol.EncryptionUtility;
 import org.evilco.mc.flowerpot.server.ServerList;
 import org.evilco.mc.flowerpot.server.listener.ListenerList;
@@ -272,64 +273,13 @@ public class FlowerpotServer {
 	 */
 	public static void main (String[] arguments) throws Exception {
 		// TODO: Add proper implementation here
-		instance = new FlowerpotServer (new IProxyConfiguration () {
-
-			@Override
-			public ListenerList getListenerList () {
-				return new ListenerList (Arrays.asList (new ServerListener[] {
-					new ServerListener () {
-						@Override
-						public String getListenerHostname () {
-							return "0.0.0.0";
-						}
-
-						@Override
-						public short getListenerPort () {
-							return 25565;
-						}
-					},
-					new ServerListener () {
-						@Override
-						public String getListenerHostname () {
-							return "0.0.0.0";
-						}
-
-						@Override
-						public short getListenerPort () {
-							return 25566;
-						}
-					}
-				}));
-			}
-
-			@Override
-			public int getProtocolVersion () {
-				return 15;
-			}
-
-			@Override
-			public byte[] getServerIcon () {
-				try {
-					return IOUtils.toByteArray (FlowerpotServer.class.getResourceAsStream ("/defaults/server-icon.png"));
-				} catch (Exception ex) {
-					return null;
-				}
-			}
-
-			@Override
-			public ServerList getServerList () {
-				return new ServerList (Arrays.asList (new MinecraftServer[]{
-					new MinecraftServer ("localhost", 25570, "localhost", 25565)
-				}));
-			}
-
-			@Override
-			public int getTimeout () {
-				return 30000;
-			}
-		});
-
-		// start instance
+		instance = new FlowerpotServer (new XMLProxyConfiguration ());
 		instance.bind ();
+
+		while (true) {
+			try {
+				Thread.sleep (500);
+			} catch (Exception ex) { }
+		}
 	}
 }
