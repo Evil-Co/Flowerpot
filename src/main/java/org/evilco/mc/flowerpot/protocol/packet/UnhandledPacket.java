@@ -14,6 +14,11 @@ public class UnhandledPacket extends AbstractPacket {
 	protected ByteBuf data = null;
 
 	/**
+	 * Stores the packet ID.
+	 */
+	protected int packetID = -1;
+
+	/**
 	 * Constructs a new empty UnhandledPacket.
 	 */
 	public UnhandledPacket () {
@@ -24,9 +29,10 @@ public class UnhandledPacket extends AbstractPacket {
 	 * Constructs a new UnhandledPacket.
 	 * @param in
 	 */
-	public UnhandledPacket (ByteBuf in) {
+	public UnhandledPacket (int packetID, ByteBuf in) {
 		super (in);
 
+		this.packetID = packetID;
 		this.data = in;
 	}
 
@@ -35,6 +41,7 @@ public class UnhandledPacket extends AbstractPacket {
 	 */
 	@Override
 	public void writePacket (ByteBuf out) {
+		PacketUtility.writeVarInt (this.packetID, out);
 		out.writeBytes (this.data);
 	}
 }
