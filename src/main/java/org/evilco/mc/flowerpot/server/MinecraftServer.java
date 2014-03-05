@@ -19,6 +19,11 @@ public abstract class MinecraftServer {
 	public static final CapabilityKey<Void> CAPABILITY_FALLBACK = CapabilityKey.valueOf ("Fallback");
 
 	/**
+	 * Defines the offline mode capability.
+	 */
+	public static final CapabilityKey<Void> CAPABILITY_OFFLINE_MODE = CapabilityKey.valueOf ("OfflineMode");
+
+	/**
 	 * Defines the protocol capability.
 	 */
 	public static final CapabilityKey<Integer> CAPABILITY_PROTOCOL = CapabilityKey.valueOf ("Protocol");
