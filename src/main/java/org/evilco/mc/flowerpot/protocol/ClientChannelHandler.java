@@ -82,8 +82,6 @@ public class ClientChannelHandler extends ChannelHandlerAdapter {
 		// disconnect from server
 		if (this.client != null) {
 			logger.debug ("Disconnecting %s from current server.", ctx.channel ().remoteAddress ().toString ());
-
-			this.client.getClientChannel ().writeAndFlush (new KickPacket ("disconnect.quit"));
 			this.client.getClientChannel ().close ();
 		}
 
