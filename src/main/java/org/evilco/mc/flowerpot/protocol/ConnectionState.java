@@ -37,6 +37,15 @@ public enum ConnectionState {
 
 			OUTBOUND.registerPacket (0x00, KickPacket.class);
 			OUTBOUND.registerPacket (0x01, EncryptionRequestPacket.class);
+			OUTBOUND.registerPacket (0x02, LoginSuccessPacket.class);
+		}
+	},
+	GAME {
+		/**
+		 * Static Initialization
+		 */
+		{
+			// TODO
 		}
 	};
 
