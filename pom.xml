@@ -184,7 +184,7 @@
 			<!-- Defaults -->
 			<resource>
 				<directory>${project.basedir}/src/main/resources/defaults</directory>
-				<targetPath>/defaults</targetPath>
+				<targetPath>defaults/</targetPath>
 				<filtering>false</filtering>
 
 				<includes>
@@ -196,7 +196,7 @@
 			<!-- Certificates -->
 			<resource>
 				<directory>${project.basedir}/src/main/resources/certificates</directory>
-				<targetPath>/certificates</targetPath>
+				<targetPath>certificates/</targetPath>
 				<filtering>false</filtering>
 
 				<includes>
