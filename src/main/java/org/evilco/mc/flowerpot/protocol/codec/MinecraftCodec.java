@@ -35,12 +35,36 @@ public class MinecraftCodec extends ByteToMessageCodec<AbstractPacket> {
 	protected static final Logger logger = LogManager.getFormatterLogger (MinecraftCodec.class);
 
 	/**
+	 * Defines whether the codec is running in client mode.
+	 */
+	protected boolean isClient = false;
+
+	/**
+	 * Constructs a new MinecraftCodec.
+	 */
+	public MinecraftCodec () {
+		super ();
+
+		this.isClient = false;
+	}
+
+	/**
+	 * Constructs a new MinecraftCodec.
+	 * @param isClient
+	 */
+	public MinecraftCodec (boolean isClient) {
+		super ();
+
+		this.isClient = isClient;
+	}
+
+	/**
 	 * {@inheritDoc}
 	 */
 	@Override
 	protected void encode (ChannelHandlerContext ctx, AbstractPacket msg, ByteBuf out) throws Exception {
 		// get packet ID
-		int packetID = getProtocol (ctx).getOutboundRegistry ().getPacketID (msg.getClass ());
+		int packetID = getProtocol (ctx).getOutboundRegistry (this.isClient).getPacketID (msg.getClass ());
 
 		// log
 		logger.trace ("Sending packet with ID 0x%02X (packet type is %s)", packetID, msg.getClass ().getName ()); // DEBUG: This debug code will only work out as long as all packetIDs stay below ID 255
@@ -66,9 +90,9 @@ public class MinecraftCodec extends ByteToMessageCodec<AbstractPacket> {
 		logger.trace ("Received a packet with ID 0x%02X.", packetID); // DEBUG: This debug code will only work out as long as all packetIDs stay below ID 255
 
 		// check protocol
-		if (getProtocol (ctx).getInboundRegistry ().hasPacket (packetID)) {
+		if (getProtocol (ctx).getInboundRegistry (this.isClient).hasPacket (packetID)) {
 			// read packet
-			AbstractPacket packet = getProtocol (ctx).getInboundRegistry ().readPacket (packetID, in);
+			AbstractPacket packet = getProtocol (ctx).getInboundRegistry (this.isClient).readPacket (packetID, in);
 
 			// debug
 			logger.trace ("Packet is assigned to type %s in current protocol state (%s).", packet.getClass ().getName (), getProtocol (ctx).toString ());
