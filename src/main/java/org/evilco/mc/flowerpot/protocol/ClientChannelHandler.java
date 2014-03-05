@@ -22,6 +22,7 @@ import javax.crypto.SecretKey;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.UUID;
 
 /**
  * @auhtor Johannes Donath <johannesd@evil-co.com>
@@ -200,17 +201,20 @@ public class ClientChannelHandler extends ChannelHandlerAdapter {
 			// log
 			logger.trace ("User %s requested to be authenticated (account %s has been requested).", ctx.channel ().remoteAddress ().toString (), loginStartPacket.getUsername ());
 
-			// TODO: Allow servers to run in offline mode
+			// check for offline mode
+			if (this.server.hasCapability (MinecraftServer.CAPABILITY_OFFLINE_MODE)) {
+				ctx.writeAndFlush (new LoginSuccessPacket (this.username, UUID.randomUUID ().toString ()));
+			} else {
+				// encryption
+				EncryptionRequestPacket encryptionRequestPacket = new EncryptionRequestPacket ();
 
-			// encryption
-			EncryptionRequestPacket encryptionRequestPacket = new EncryptionRequestPacket ();
+				// store token
+				this.verifyToken = encryptionRequestPacket.getVerifyToken ();
+				this.serverID = encryptionRequestPacket.getServerID ();
 
-			// store token
-			this.verifyToken = encryptionRequestPacket.getVerifyToken ();
-			this.serverID = encryptionRequestPacket.getServerID ();
-
-			// send encryption request
-			ctx.writeAndFlush (encryptionRequestPacket);
+				// send encryption request
+				ctx.writeAndFlush (encryptionRequestPacket);
+			}
 
 			// packet has been handled
 			message.setHandled (true);
