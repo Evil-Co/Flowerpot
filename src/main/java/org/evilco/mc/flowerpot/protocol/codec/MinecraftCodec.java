@@ -65,7 +65,7 @@ public class MinecraftCodec extends ByteToMessageCodec<AbstractPacket> {
 	protected void encode (ChannelHandlerContext ctx, AbstractPacket msg, ByteBuf out) throws Exception {
 		// write unhandled packet
 		if (msg instanceof UnhandledPacket) {
-			logger.trace ("Relaying unhandled packet.");
+			logger.trace ("Relaying unhandled packet with packetID %s.", ((UnhandledPacket) msg).getPacketID ());
 			msg.writePacket (out);
 			return;
 		}
@@ -88,9 +88,6 @@ public class MinecraftCodec extends ByteToMessageCodec<AbstractPacket> {
 	 */
 	@Override
 	protected void decode (ChannelHandlerContext ctx, ByteBuf in, List<Object> out) throws Exception {
-		// copy packet (for passing through)
-		ByteBuf packetData = in.copy ();
-
 		// read packetID
 		int packetID = PacketUtility.readVarInt (in);
 
@@ -114,8 +111,9 @@ public class MinecraftCodec extends ByteToMessageCodec<AbstractPacket> {
 			return;
 		}
 
-		// skip data
-		in.skipBytes (in.readableBytes ());
+		// read data
+		ByteBuf packetData = ctx.alloc ().buffer (in.readableBytes ());
+		in.readBytes (packetData, in.readableBytes ());
 
 		// create packet wrapper for later handling
 		out.add (new UnhandledPacket (packetID, packetData));
