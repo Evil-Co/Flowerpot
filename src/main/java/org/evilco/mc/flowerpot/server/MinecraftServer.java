@@ -1,5 +1,6 @@
 package org.evilco.mc.flowerpot.server;
 
+import io.netty.channel.Channel;
 import org.evilco.mc.flowerpot.server.capability.Capability;
 import org.evilco.mc.flowerpot.server.capability.CapabilityKey;
 
@@ -33,8 +34,8 @@ public abstract class MinecraftServer {
 	 * Creates a new server connection.
 	 * @return
 	 */
-	public MinecraftServerClient createConnection () {
-		return null;
+	public MinecraftClient createConnection (Channel channel, String username, int protocolVersion) {
+		return new MinecraftClient (channel, username, this.getHostname (), this.getPort (), protocolVersion);
 	}
 
 	/**
