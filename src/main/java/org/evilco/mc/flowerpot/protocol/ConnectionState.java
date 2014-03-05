@@ -45,7 +45,7 @@ public enum ConnectionState {
 		 * Static Initialization
 		 */
 		{
-			// TODO
+			OUTBOUND.registerPacket (0x40, KickPacket.class);
 		}
 	};
 
