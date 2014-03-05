@@ -9,6 +9,11 @@ import io.netty.buffer.ByteBuf;
 public abstract class AbstractPacket {
 
 	/**
+	 * Indicates whether the packet has been handled.
+	 */
+	protected boolean handled = false;
+
+	/**
 	 * Defines the default constructor.
 	 */
 	public AbstractPacket () { }
@@ -18,6 +23,22 @@ public abstract class AbstractPacket {
 	 * @param in
 	 */
 	public AbstractPacket (ByteBuf in) { }
+
+	/**
+	 * Checks whether the the packet has been handled.
+	 * @return
+	 */
+	public boolean hasHandled () {
+		return this.handled;
+	}
+
+	/**
+	 * Changes the handling state.
+	 * @param value
+	 */
+	public void setHandled (boolean value) {
+		this.handled = value;
+	}
 
 	/**
 	 * Writes a packet.
