@@ -37,6 +37,14 @@ public class UnhandledPacket extends AbstractPacket {
 	}
 
 	/**
+	 * Returns the packet ID.
+	 * @return
+	 */
+	public int getPacketID () {
+		return packetID;
+	}
+
+	/**
 	 * {@inheritDoc}
 	 */
 	@Override
