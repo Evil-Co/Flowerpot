@@ -73,16 +73,6 @@ public abstract class ServerListener {
 	protected Channel channel = null;
 
 	/**
-	 * Indicates whether query is enabled on this listener.
-	 */
-	protected boolean isQueryEnabled = false;
-
-	/**
-	 * Indicates whether the proxy is enabled on this listener.
-	 */
-	protected boolean isProxyEnabled = true;
-
-	/**
 	 * Tries to activate the listener.
 	 * @param threadGroup
 	 */
@@ -106,7 +96,7 @@ public abstract class ServerListener {
 						if (future.isSuccess ()) {
 							channel = future.channel ();
 
-							logger.info ("Listening on " + getListenerHostname () + ":" + getListenerPort () + " (" + (isProxyEnabled && isQueryEnabled ? "query enabled" : "query disabled") + ")");
+							logger.info ("Listening on " + getListenerHostname () + ":" + getListenerPort () + " (" + (isQueryEnabled () ? "query enabled" : "query disabled") + ")");
 						} else
 							logger.warn ("Could not bind listener on " + getListenerHostname () + ":" + getListenerPort (), future.cause ());
 					}
@@ -124,6 +114,18 @@ public abstract class ServerListener {
 	 * @return
 	 */
 	public abstract short getListenerPort ();
+
+	/**
+	 * Checks whether the proxy is enabled on this listener.
+	 * @return
+	 */
+	public abstract boolean isProxyEnabled ();
+
+	/**
+	 * Checks whether server query is enabled on this listener.
+	 * @return
+	 */
+	public abstract boolean isQueryEnabled ();
 
 	/**
 	 * Initializes new connections.
