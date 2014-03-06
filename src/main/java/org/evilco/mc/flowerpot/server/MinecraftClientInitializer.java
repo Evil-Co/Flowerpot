@@ -1,14 +1,11 @@
 package org.evilco.mc.flowerpot.server;
 
-import com.sun.jndi.ldap.Connection;
 import io.netty.channel.ChannelInitializer;
 import io.netty.channel.socket.SocketChannel;
-import io.netty.util.Attribute;
 import org.evilco.mc.flowerpot.protocol.ConnectionState;
 import org.evilco.mc.flowerpot.protocol.ServerChannelHandler;
 import org.evilco.mc.flowerpot.protocol.codec.MinecraftCodec;
 import org.evilco.mc.flowerpot.protocol.codec.VarIntFrameCodec;
-import org.evilco.mc.flowerpot.server.listener.ServerListener;
 
 /**
  * @auhtor Johannes Donath <johannesd@evil-co.com>

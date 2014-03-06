@@ -1,6 +1,5 @@
 package org.evilco.mc.flowerpot.protocol;
 
-import com.google.common.base.Charsets;
 import io.netty.channel.ChannelHandlerAdapter;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelPromise;
@@ -8,23 +7,10 @@ import io.netty.handler.timeout.ReadTimeoutException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.evilco.mc.flowerpot.FlowerpotServer;
-import org.evilco.mc.flowerpot.authentication.AuthenticationCallback;
-import org.evilco.mc.flowerpot.protocol.codec.MinecraftCodec;
-import org.evilco.mc.flowerpot.protocol.codec.MinecraftEncryptionCodec;
-import org.evilco.mc.flowerpot.protocol.packet.*;
-import org.evilco.mc.flowerpot.protocol.packet.data.StatusResponse;
+import org.evilco.mc.flowerpot.protocol.packet.AbstractPacket;
 import org.evilco.mc.flowerpot.protocol.packet.event.PacketHandlerSide;
 import org.evilco.mc.flowerpot.server.MinecraftClient;
 import org.evilco.mc.flowerpot.server.MinecraftServer;
-import org.evilco.mc.flowerpot.server.capability.Capability;
-import org.evilco.mc.flowerpot.server.capability.CapabilityKey;
-import org.evilco.mc.flowerpot.server.listener.ServerListener;
-
-import javax.crypto.SecretKey;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.UUID;
 
 /**
  * @auhtor Johannes Donath <johannesd@evil-co.com>

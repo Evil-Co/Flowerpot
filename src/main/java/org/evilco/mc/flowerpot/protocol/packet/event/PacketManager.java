@@ -1,6 +1,5 @@
 package org.evilco.mc.flowerpot.protocol.packet.event;
 
-import com.sun.javaws.exceptions.InvalidArgumentException;
 import io.netty.channel.Channel;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;

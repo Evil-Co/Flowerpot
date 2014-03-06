@@ -2,7 +2,6 @@ package org.evilco.mc.flowerpot.protocol.packet.event;
 
 import com.google.common.base.Charsets;
 import io.netty.channel.Channel;
-import io.netty.channel.ChannelHandlerContext;
 import io.netty.util.Attribute;
 import io.netty.util.AttributeKey;
 import org.apache.logging.log4j.LogManager;

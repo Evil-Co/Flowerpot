@@ -1,6 +1,5 @@
 package org.evilco.mc.flowerpot.protocol.packet.event.annotation;
 
-import org.evilco.mc.flowerpot.protocol.packet.AbstractPacket;
 import org.evilco.mc.flowerpot.protocol.packet.event.PacketHandlerPriority;
 import org.evilco.mc.flowerpot.protocol.packet.event.PacketHandlerSide;
 
