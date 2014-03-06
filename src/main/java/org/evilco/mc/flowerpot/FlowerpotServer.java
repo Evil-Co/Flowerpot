@@ -10,6 +10,8 @@ import org.evilco.mc.flowerpot.authentication.YggdrasilAuthenticationService;
 import org.evilco.mc.flowerpot.configuration.IProxyConfiguration;
 import org.evilco.mc.flowerpot.configuration.xml.XMLProxyConfiguration;
 import org.evilco.mc.flowerpot.protocol.EncryptionUtility;
+import org.evilco.mc.flowerpot.protocol.packet.event.ClientPacketHandler;
+import org.evilco.mc.flowerpot.protocol.packet.event.PacketManager;
 import org.evilco.mc.flowerpot.server.MinecraftServer;
 import org.evilco.mc.flowerpot.server.listener.ServerListener;
 
@@ -63,6 +65,11 @@ public class FlowerpotServer {
 	 * Stores the selected authentication service.
 	 */
 	protected IAuthenticationService authenticationService;
+
+	/**
+	 * Stores the PacketManager instance.
+	 */
+	protected PacketManager packetManager;
 
 	/**
 	 * Stores the translation bundle.
@@ -142,9 +149,13 @@ public class FlowerpotServer {
 		// store arguments
 		this.authenticationService = new YggdrasilAuthenticationService ();
 		this.configuration = configuration;
+		this.packetManager = new PacketManager ();
 
 		// create thread groups
 		this.threadGroupWorker = new NioEventLoopGroup ();
+
+		// register default handlers
+		this.packetManager.registerHandler (new ClientPacketHandler ());
 	}
 
 	/**
@@ -234,6 +245,14 @@ public class FlowerpotServer {
 	 */
 	public static String getMinecraftVersionString () {
 		return String.format (MINECRAFT_VERSION_TEMPLATE, MINECRAFT_VERSION, BUILD);
+	}
+
+	/**
+	 * Returns the current packet manager.
+	 * @return
+	 */
+	public PacketManager getPacketManager () {
+		return this.packetManager;
 	}
 
 	/**
