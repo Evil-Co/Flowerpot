@@ -60,6 +60,7 @@ public class MinecraftClientInitializer extends ChannelInitializer<SocketChannel
 	 */
 	@Override
 	protected void initChannel (SocketChannel ch) throws Exception {
+		this.client.setClientChannel (ch);
 		MinecraftCodec.setProtocol (ch, ConnectionState.HANDSHAKE);
 
 		ch.pipeline ().addLast (new VarIntFrameCodec ());

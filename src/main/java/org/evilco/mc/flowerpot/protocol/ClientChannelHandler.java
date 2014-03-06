@@ -8,6 +8,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.evilco.mc.flowerpot.FlowerpotServer;
 import org.evilco.mc.flowerpot.protocol.packet.AbstractPacket;
+import org.evilco.mc.flowerpot.protocol.packet.event.ClientPacketHandler;
 import org.evilco.mc.flowerpot.protocol.packet.event.PacketHandlerSide;
 import org.evilco.mc.flowerpot.server.MinecraftClient;
 import org.evilco.mc.flowerpot.server.MinecraftServer;
@@ -22,31 +23,6 @@ public class ClientChannelHandler extends ChannelHandlerAdapter {
 	 * Stores the internal logging instance.
 	 */
 	protected static final Logger logger = LogManager.getFormatterLogger (ClientChannelHandler.class);
-
-	/**
-	 * Stores the current client instance.
-	 */
-	protected MinecraftClient client = null;
-
-	/**
-	 * Stores the verify token.
-	 */
-	protected byte[] verifyToken = null;
-
-	/**
-	 * Stores the selected Minecraft server.
-	 */
-	protected MinecraftServer server = null;
-
-	/**
-	 * Stores the serverID.
-	 */
-	protected String serverID = null;
-
-	/**
-	 * Stores the requested player name.
-	 */
-	protected String username = null;
 
 	/**
 	 * {@inheritDoc}
@@ -69,9 +45,11 @@ public class ClientChannelHandler extends ChannelHandlerAdapter {
 		logger.info ("%s disconnected.", ctx.channel ().remoteAddress ().toString ());
 
 		// disconnect from server
-		if (this.client != null) {
+		MinecraftClient client = ClientPacketHandler.getClient (ctx.channel ());
+
+		if (client != null) {
 			logger.debug ("Disconnecting %s from current server.", ctx.channel ().remoteAddress ().toString ());
-			this.client.getClientChannel ().close ();
+			client.getClientChannel ().close ();
 		}
 
 		// call parent
@@ -92,7 +70,10 @@ public class ClientChannelHandler extends ChannelHandlerAdapter {
 		FlowerpotServer.getInstance ().getPacketManager ().handlePacket (ctx.channel (), message, PacketHandlerSide.CLIENT_TO_PROXY);
 
 		// relay packet
-		if (!message.hasHandled () && this.client != null) this.client.sendPacketServer (message);
+		if (!message.hasHandled ()) {
+			MinecraftClient client = ClientPacketHandler.getClient (ctx.channel ());
+			if (client != null) client.sendPacketServer (message);
+		}
 	}
 
 	/**
