@@ -28,6 +28,14 @@ public class CapabilityKey<T> {
 	}
 
 	/**
+	 * Returns the name of this capability.
+	 * @return
+	 */
+	public String getName () {
+		return this.name;
+	}
+
+	/**
 	 * Returns a singleton instance of the specified CapabilityKey.
 	 * @param name
 	 * @param <T>
@@ -36,5 +44,12 @@ public class CapabilityKey<T> {
 	public static <T> CapabilityKey<T> valueOf (String name) {
 		if (!instances.containsKey (name)) instances.put (name, new CapabilityKey<T> (name));
 		return ((CapabilityKey<T>) instances.get (name));
+	}
+
+	/**
+	 * Alias for getName ().
+	 */
+	public String toString () {
+		return this.getName ();
 	}
 }
