@@ -74,7 +74,7 @@ public class XmlProxyConfiguration implements IProxyConfiguration {
 		}));
 
 		// add fallback capability
-		this.serverList.get (0).addCapability (MinecraftServer.CAPABILITY_FALLBACK, new Capability<Void> (null));
+		this.serverList.get (0).addCapability (MinecraftServer.CAPABILITY_FALLBACK, new XmlCapability<Void> (null));
 	}
 
 	/**

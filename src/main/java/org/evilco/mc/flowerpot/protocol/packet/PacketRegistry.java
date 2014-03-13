@@ -91,12 +91,8 @@ public class PacketRegistry {
 		// FIXME: Add exceptions here to report the problem
 		try {
 			return packetSerializationConstructor.newInstance (data);
-		} catch (InstantiationException ex) {
-			return null;
-		} catch (IllegalAccessException ex) {
-			return null;
-		} catch (InvocationTargetException ex) {
-			return null;
+		} catch (Exception ex) {
+			throw new IllegalArgumentException (ex);
 		}
 	}
 

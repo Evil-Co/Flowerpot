@@ -18,6 +18,7 @@ import org.evilco.mc.flowerpot.server.MinecraftClient;
 import org.evilco.mc.flowerpot.server.MinecraftServer;
 import org.evilco.mc.flowerpot.server.capability.Capability;
 import org.evilco.mc.flowerpot.server.capability.CapabilityKey;
+import org.evilco.mc.flowerpot.server.capability.DefaultCapability;
 import org.evilco.mc.flowerpot.server.listener.ServerListener;
 
 import javax.crypto.SecretKey;
@@ -184,7 +185,7 @@ public class ClientPacketHandler {
 
 		// get server
 		Map<CapabilityKey<?>, Capability<?>> capabilityMap = new HashMap<> ();
-		capabilityMap.put (MinecraftServer.CAPABILITY_PROTOCOL, new Capability<Integer> (packet.getProtocolVersion ()));
+		capabilityMap.put (MinecraftServer.CAPABILITY_PROTOCOL, new DefaultCapability<> (packet.getProtocolVersion ()));
 
 		MinecraftServer server = FlowerpotServer.getInstance ().getConfiguration ().getServerList ().matchServer (packet.getServerAddress (), packet.getServerPort (), capabilityMap);
 
@@ -196,7 +197,7 @@ public class ClientPacketHandler {
 			logger.fatal ("Could not find any matching server for request %s:%s (protocol version %s).", packet.getServerAddress (), packet.getServerPort (), packet.getProtocolVersion ());
 
 			// close connection
-			channel.close ();
+			channel.close ().awaitUninterruptibly ();
 			return;
 		}
 
@@ -219,7 +220,7 @@ public class ClientPacketHandler {
 					// disconnect
 					String reason = (((Capability<Integer>) server.getCapability (MinecraftServer.CAPABILITY_PROTOCOL)).get () < packet.getProtocolVersion () ? "disconnect.outdatedServer" : "disconnect.outdatedClient");
 					channel.writeAndFlush (new KickPacket (FlowerpotServer.getInstance ().getTranslation (reason)));
-					channel.close ();
+					channel.close ().awaitUninterruptibly ();
 				}
 
 				break;

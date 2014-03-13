@@ -98,6 +98,8 @@ public class MinecraftCodec extends ByteToMessageCodec<AbstractPacket> {
 			// read packet
 			AbstractPacket packet = getProtocol (ctx).getInboundRegistry (this.isClient).readPacket (packetID, in);
 
+			System.out.println (packet);
+
 			// debug
 			logger.trace ("Packet is assigned to type %s in current protocol state (%s).", packet.getClass ().getName (), getProtocol (ctx).toString ());
 

@@ -40,7 +40,7 @@ public class XmlServer extends MinecraftServer {
 	@Comment ("Specifies the server capabilities.")
 	@PropertyWrapper ("capabilities")
 	@Property ("capability")
-	public Map<String, Capability<?>> capabilityMap = new HashMap<> ();
+	public Map<String, XmlCapability<?>> capabilityMap = new HashMap<> ();
 
 	/**
 	 * Stores the server hostname.
@@ -76,7 +76,7 @@ public class XmlServer extends MinecraftServer {
 		this.aliasPort = aliasPort;
 
 		// add default capabilities
-		this.capabilityMap.put (MinecraftServer.CAPABILITY_PROTOCOL.toString (), new Capability<> (4));
+		this.capabilityMap.put (MinecraftServer.CAPABILITY_PROTOCOL.toString (), new XmlCapability<> (4));
 	}
 
 	/**
@@ -84,8 +84,13 @@ public class XmlServer extends MinecraftServer {
 	 */
 	@Override
 	public void addCapability (CapabilityKey<?> capabilityKey, Capability<?> capability) {
-		if (this.hasCapability (capabilityKey)) throw new InvalidParameterException ("The supplied capability is already registered with this server.");
-		this.capabilityMap.put (capabilityKey.toString (), capability);
+		if (this.hasCapability (capabilityKey)) throw new IllegalArgumentException ("The supplied capability is already registered with this server.");
+
+		// add new capability
+		if (capability instanceof XmlCapability)
+			this.capabilityMap.put (capabilityKey.toString (), ((XmlCapability) capability));
+		else
+			this.capabilityMap.put (capabilityKey.toString (), new XmlCapability (capability.get ()));
 	}
 
 	/**
