@@ -1,9 +1,11 @@
 package org.evilco.mc.flowerpot.configuration.xml;
 
+import com.evilco.configuration.xml.annotation.Comment;
+import com.evilco.configuration.xml.annotation.Property;
+import com.evilco.configuration.xml.annotation.PropertyWrapper;
 import org.evilco.mc.flowerpot.server.listener.ServerListener;
 
-import javax.xml.bind.annotation.XmlAttribute;
-import javax.xml.bind.annotation.XmlValue;
+import javax.xml.bind.annotation.XmlType;
 
 /**
  * @auhtor Johannes Donath <johannesd@evil-co.com>
@@ -14,26 +16,37 @@ public class XMLServerListener extends ServerListener {
 	/**
 	 * Indicates whether the proxy is enabled.
 	 */
-	@XmlAttribute (name = "proxyEnabled", namespace = XMLProxyConfiguration.NAMESPACE)
-	protected boolean proxyEnabled = false;
+	@Comment ("Defines whether servers are available via this listener.")
+	@PropertyWrapper ("protocols")
+	@Property ("proxy")
+	public Boolean proxyEnabled = false;
 
 	/**
 	 * Indicates whether server query is enabled.
 	 */
-	@XmlAttribute (name = "queryEnabled", namespace = XMLProxyConfiguration.NAMESPACE)
-	protected boolean queryEnabled = false;
+	@Comment ("Defines whether server query is available via this listener.")
+	@PropertyWrapper ("protocols")
+	@Property ("query")
+	public Boolean queryEnabled = false;
 
 	/**
 	 * Stores the listener hostname.
 	 */
-	@XmlValue
-	protected String listenerHostname = "0.0.0.0";
+	@Comment ("Specifies the hostname to listen on.")
+	@Property ("hostname")
+	public String listenerHostname = "0.0.0.0";
 
 	/**
 	 * Stores the listener port.
 	 */
-	@XmlAttribute (name = "port", namespace = XMLProxyConfiguration.NAMESPACE)
-	protected short listenerPort = 25565;
+	@Comment ("Specifies the port to listen on.")
+	@Property ("port")
+	public Short listenerPort = 25565;
+
+	/**
+	 * Serialization Constructor
+	 */
+	public XMLServerListener () { }
 
 	/**
 	 * Constructs a new XMLServerListener.

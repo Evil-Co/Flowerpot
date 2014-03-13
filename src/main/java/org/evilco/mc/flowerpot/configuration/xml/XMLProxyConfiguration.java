@@ -1,6 +1,14 @@
 package org.evilco.mc.flowerpot.configuration.xml;
 
+import com.evilco.configuration.xml.ConfigurationProcessor;
+import com.evilco.configuration.xml.annotation.Comment;
+import com.evilco.configuration.xml.annotation.Configuration;
+import com.evilco.configuration.xml.annotation.Property;
+import com.evilco.configuration.xml.annotation.PropertyWrapper;
+import com.evilco.configuration.xml.exception.ConfigurationException;
 import org.apache.commons.io.IOUtils;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.evilco.mc.flowerpot.FlowerpotServer;
 import org.evilco.mc.flowerpot.configuration.IProxyConfiguration;
 import org.evilco.mc.flowerpot.server.MinecraftServer;
@@ -8,7 +16,6 @@ import org.evilco.mc.flowerpot.server.ServerList;
 import org.evilco.mc.flowerpot.server.capability.Capability;
 import org.evilco.mc.flowerpot.server.listener.ListenerList;
 
-import javax.xml.bind.annotation.XmlRootElement;
 import java.io.File;
 import java.io.FileInputStream;
 import java.util.Arrays;
@@ -17,8 +24,13 @@ import java.util.Arrays;
  * @auhtor Johannes Donath <johannesd@evil-co.com>
  * @copyright Copyright (C) 2014 Evil-Co <http://www.evil-co.org>
  */
-@XmlRootElement (name = "configuration", namespace = XMLProxyConfiguration.NAMESPACE)
+@Configuration (namespace = XMLProxyConfiguration.NAMESPACE)
 public class XMLProxyConfiguration implements IProxyConfiguration {
+
+	/**
+	 * Stores the internal logger instance.
+	 */
+	protected static final Logger logger = LogManager.getLogger (XMLProxyConfiguration.class);
 
 	/**
 	 * Defines the document namespace.
@@ -28,26 +40,40 @@ public class XMLProxyConfiguration implements IProxyConfiguration {
 	/**
 	 * Stores the listener list.
 	 */
-	protected ListenerList listenerList = new ListenerList (Arrays.asList (new XMLServerListener[] {
-		new XMLServerListener ("0.0.0.0", ((short) 25565), true, false)
-	}));
+	@Comment ("Specifies listeners for the proxy.")
+	@PropertyWrapper ("listeners")
+	@Property ("listener")
+	public XmlListenerList listenerList = null;
 
 	/**
 	 * Stores the server list.
 	 */
-	protected ServerList serverList = new ServerList (Arrays.asList (new XMLServer[] {
-		new XMLServer ("localhost", ((short) 25570), "*", ((short) -1))
-	}));
+	@Comment ("Specifies the servers registered with the proxy.")
+	@PropertyWrapper ("servers")
+	@Property ("server")
+	public XmlServerList serverList = null;
 
 	/**
 	 * Defines the connection timeout.
 	 */
-	protected int timeout = 300000;
+	@Comment ("Defines how long a client is allowed to idle before being timed out.")
+	@Property ("timeout")
+	public Integer timeout = 300000;
 
 	/**
 	 * Constructs a new empty XMLProxyConfiguration.
 	 */
 	public XMLProxyConfiguration () {
+		// create default entries
+		this.serverList = new XmlServerList (Arrays.asList (new XMLServer[] {
+			new XMLServer ("localhost", ((short) 25570), "*", ((short) -1))
+		}));
+
+		this.listenerList = new XmlListenerList (Arrays.asList (new XMLServerListener[] {
+			new XMLServerListener ("0.0.0.0", ((short) 25565), true, false)
+		}));
+
+		// add fallback capability
 		this.serverList.get (0).addCapability (MinecraftServer.CAPABILITY_FALLBACK, new Capability<Void> (null));
 	}
 
@@ -94,5 +120,44 @@ public class XMLProxyConfiguration implements IProxyConfiguration {
 	@Override
 	public int getTimeout () {
 		return this.timeout;
+	}
+
+	/**
+	 * Loads a configuration file.
+	 * @param file
+	 * @return
+	 */
+	public static XMLProxyConfiguration load (File file) throws ConfigurationException {
+		return ConfigurationProcessor.getInstance ().load (file, XMLProxyConfiguration.class);
+	}
+
+	/**
+	 * Constructs a new instance.
+	 * @param file
+	 * @return
+	 * @throws Exception
+	 */
+	public static XMLProxyConfiguration newInstance (File file) throws Exception {
+		try {
+			return load (file);
+		} catch (Exception ex) {
+			XMLProxyConfiguration configuration = new XMLProxyConfiguration ();
+			configuration.save (file);
+
+			logger.debug ("Could not load the configuration file.", ex);
+
+			return configuration;
+		}
+	}
+
+	/**
+	 * Saves the configuration file.
+	 * @param file
+	 * @throws Exception
+	 */
+	public void save (File file) throws ConfigurationException {
+		System.out.println (this.serverList);
+
+		ConfigurationProcessor.getInstance ().save (this, file);
 	}
 }

@@ -1,14 +1,12 @@
 package org.evilco.mc.flowerpot.configuration.xml;
 
+import com.evilco.configuration.xml.annotation.Comment;
+import com.evilco.configuration.xml.annotation.Property;
+import com.evilco.configuration.xml.annotation.PropertyWrapper;
 import org.evilco.mc.flowerpot.server.MinecraftServer;
 import org.evilco.mc.flowerpot.server.capability.Capability;
 import org.evilco.mc.flowerpot.server.capability.CapabilityKey;
 
-import javax.xml.bind.annotation.XmlAttribute;
-import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlElementWrapper;
-import javax.xml.bind.annotation.XmlValue;
-import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 import java.security.InvalidParameterException;
 import java.util.HashMap;
 import java.util.List;
@@ -23,34 +21,46 @@ public class XMLServer extends MinecraftServer {
 	/**
 	 * Stores the alias hostname.
 	 */
-	@XmlAttribute (name = "aliasHostname", namespace = XMLProxyConfiguration.NAMESPACE)
-	protected String aliasHostname = null;
+	@Comment ("Specifies the server forced host.")
+	@PropertyWrapper ("alias")
+	@Property ("hostname")
+	public String aliasHostname = null;
 
 	/**
 	 * Stores the alias port.
 	 */
-	@XmlAttribute (name = "aliasPort", namespace = XMLProxyConfiguration.NAMESPACE)
-	protected Short aliasPort = null;
+	@Comment ("Specifies the server forced port.")
+	@PropertyWrapper ("alias")
+	@Property ("port")
+	public Short aliasPort = null;
 
 	/**
 	 * Stores all associated capabilities.
 	 */
-	@XmlElementWrapper (name = "capabilities", namespace = XMLProxyConfiguration.NAMESPACE)
-	@XmlElement (name = "capability", namespace = XMLProxyConfiguration.NAMESPACE)
-	@XmlJavaTypeAdapter (ServerCapabilityMapAdapter.class)
-	protected Map<CapabilityKey<?>, Capability<?>> capabilityMap = new HashMap<> ();
+	@Comment ("Specifies the server capabilities.")
+	@PropertyWrapper ("capabilities")
+	@Property ("capability")
+	public Map<String, Capability<?>> capabilityMap = new HashMap<> ();
 
 	/**
 	 * Stores the server hostname.
 	 */
-	@XmlValue
-	protected String hostname = null;
+	@Comment ("Specifies the server hostname.")
+	@Property ("hostname")
+	public String hostname = null;
 
 	/**
 	 * Stores the server port.
 	 */
-	@XmlAttribute (name = "port", namespace = XMLProxyConfiguration.NAMESPACE)
-	protected Short port = null;
+	@Comment ("Specifies the server port.")
+	@Property ("port")
+	public Integer port = 25565;
+
+	/**
+	 * Serialization constructor.
+	 * @fixme Java cannot access any protected or private fields right now
+	 */
+	public XMLServer () { }
 
 	/**
 	 * Constructs a new server.
@@ -61,12 +71,12 @@ public class XMLServer extends MinecraftServer {
 	 */
 	public XMLServer (String hostname, short port, String aliasHostname, short aliasPort) {
 		this.hostname = hostname;
-		this.port = port;
+		// this.port = port;
 		this.aliasHostname = aliasHostname;
 		this.aliasPort = aliasPort;
 
 		// add default capabilities
-		this.capabilityMap.put (MinecraftServer.CAPABILITY_PROTOCOL, new Capability<> (4));
+		this.capabilityMap.put (MinecraftServer.CAPABILITY_PROTOCOL.toString (), new Capability<> (4));
 	}
 
 	/**
@@ -75,7 +85,7 @@ public class XMLServer extends MinecraftServer {
 	@Override
 	public void addCapability (CapabilityKey<?> capabilityKey, Capability<?> capability) {
 		if (this.hasCapability (capabilityKey)) throw new InvalidParameterException ("The supplied capability is already registered with this server.");
-		this.capabilityMap.put (capabilityKey, capability);
+		this.capabilityMap.put (capabilityKey.toString (), capability);
 	}
 
 	/**
@@ -107,7 +117,8 @@ public class XMLServer extends MinecraftServer {
 	 */
 	@Override
 	public short getPort () {
-		return this.port;
+		// return this.port;
+		return -1;
 	}
 
 	/**
@@ -115,7 +126,7 @@ public class XMLServer extends MinecraftServer {
 	 */
 	@Override
 	public Capability<?> getCapability (CapabilityKey<?> capability) {
-		return this.capabilityMap.get (capability);
+		return this.capabilityMap.get (capability.toString ());
 	}
 
 	/**
