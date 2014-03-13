@@ -24,13 +24,13 @@ import java.util.Arrays;
  * @auhtor Johannes Donath <johannesd@evil-co.com>
  * @copyright Copyright (C) 2014 Evil-Co <http://www.evil-co.org>
  */
-@Configuration (namespace = XMLProxyConfiguration.NAMESPACE)
-public class XMLProxyConfiguration implements IProxyConfiguration {
+@Configuration (namespace = XmlProxyConfiguration.NAMESPACE)
+public class XmlProxyConfiguration implements IProxyConfiguration {
 
 	/**
 	 * Stores the internal logger instance.
 	 */
-	protected static final Logger logger = LogManager.getLogger (XMLProxyConfiguration.class);
+	protected static final Logger logger = LogManager.getLogger (XmlProxyConfiguration.class);
 
 	/**
 	 * Defines the document namespace.
@@ -61,16 +61,16 @@ public class XMLProxyConfiguration implements IProxyConfiguration {
 	public Integer timeout = 300000;
 
 	/**
-	 * Constructs a new empty XMLProxyConfiguration.
+	 * Constructs a new empty XmlProxyConfiguration.
 	 */
-	public XMLProxyConfiguration () {
+	public XmlProxyConfiguration () {
 		// create default entries
-		this.serverList = new XmlServerList (Arrays.asList (new XMLServer[] {
-			new XMLServer ("localhost", ((short) 25570), "*", ((short) -1))
+		this.serverList = new XmlServerList (Arrays.asList (new XmlServer[] {
+			new XmlServer ("localhost", ((short) 25570), "*", ((short) -1))
 		}));
 
-		this.listenerList = new XmlListenerList (Arrays.asList (new XMLServerListener[] {
-			new XMLServerListener ("0.0.0.0", ((short) 25565), true, false)
+		this.listenerList = new XmlListenerList (Arrays.asList (new XmlServerListener[] {
+			new XmlServerListener ("0.0.0.0", ((short) 25565), true, false)
 		}));
 
 		// add fallback capability
@@ -127,8 +127,8 @@ public class XMLProxyConfiguration implements IProxyConfiguration {
 	 * @param file
 	 * @return
 	 */
-	public static XMLProxyConfiguration load (File file) throws ConfigurationException {
-		return ConfigurationProcessor.getInstance ().load (file, XMLProxyConfiguration.class);
+	public static XmlProxyConfiguration load (File file) throws ConfigurationException {
+		return ConfigurationProcessor.getInstance ().load (file, XmlProxyConfiguration.class);
 	}
 
 	/**
@@ -137,11 +137,11 @@ public class XMLProxyConfiguration implements IProxyConfiguration {
 	 * @return
 	 * @throws Exception
 	 */
-	public static XMLProxyConfiguration newInstance (File file) throws Exception {
+	public static XmlProxyConfiguration newInstance (File file) throws Exception {
 		try {
 			return load (file);
 		} catch (Exception ex) {
-			XMLProxyConfiguration configuration = new XMLProxyConfiguration ();
+			XmlProxyConfiguration configuration = new XmlProxyConfiguration ();
 			configuration.save (file);
 
 			logger.debug ("Could not load the configuration file.", ex);

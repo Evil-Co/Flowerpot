@@ -11,7 +11,7 @@ import javax.xml.bind.annotation.XmlType;
  * @auhtor Johannes Donath <johannesd@evil-co.com>
  * @copyright Copyright (C) 2014 Evil-Co <http://www.evil-co.org>
  */
-public class XMLServerListener extends ServerListener {
+public class XmlServerListener extends ServerListener {
 
 	/**
 	 * Indicates whether the proxy is enabled.
@@ -46,16 +46,16 @@ public class XMLServerListener extends ServerListener {
 	/**
 	 * Serialization Constructor
 	 */
-	public XMLServerListener () { }
+	public XmlServerListener () { }
 
 	/**
-	 * Constructs a new XMLServerListener.
+	 * Constructs a new XmlServerListener.
 	 * @param hostname
 	 * @param port
 	 * @param isProxyEnabled
 	 * @param isQueryEnabled
 	 */
-	public XMLServerListener (String hostname, short port, boolean isProxyEnabled, boolean isQueryEnabled) {
+	public XmlServerListener (String hostname, short port, boolean isProxyEnabled, boolean isQueryEnabled) {
 		this.listenerHostname = hostname;
 		this.listenerPort = port;
 		this.proxyEnabled = isProxyEnabled;

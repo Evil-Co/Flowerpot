@@ -16,7 +16,7 @@ import java.util.Map;
  * @auhtor Johannes Donath <johannesd@evil-co.com>
  * @copyright Copyright (C) 2014 Evil-Co <http://www.evil-co.org>
  */
-public class XMLServer extends MinecraftServer {
+public class XmlServer extends MinecraftServer {
 
 	/**
 	 * Stores the alias hostname.
@@ -60,7 +60,7 @@ public class XMLServer extends MinecraftServer {
 	 * Serialization constructor.
 	 * @fixme Java cannot access any protected or private fields right now
 	 */
-	public XMLServer () { }
+	public XmlServer () { }
 
 	/**
 	 * Constructs a new server.
@@ -69,7 +69,7 @@ public class XMLServer extends MinecraftServer {
 	 * @param aliasHostname
 	 * @param aliasPort
 	 */
-	public XMLServer (String hostname, short port, String aliasHostname, short aliasPort) {
+	public XmlServer (String hostname, short port, String aliasHostname, short aliasPort) {
 		this.hostname = hostname;
 		// this.port = port;
 		this.aliasHostname = aliasHostname;
