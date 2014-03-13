@@ -80,6 +80,18 @@
 		</snapshotRepository>
 	</distributionManagement>
 
+	<!-- Dependency Repositories -->
+	<repositories>
+		<repository>
+			<id>evil-co</id>
+			<url>http://nexus.evil-co.org/content/repositories/free-snapshots/</url>
+
+			<snapshots>
+				<enabled>true</enabled>
+			</snapshots>
+		</repository>
+	</repositories>
+
 	<!-- Dependencies -->
 	<dependencies>
 		<!-- Netty -->
@@ -117,6 +129,13 @@
 			<groupId>com.google.code.gson</groupId>
 			<artifactId>gson</artifactId>
 			<version>2.2.4</version>
+		</dependency>
+
+		<!-- XML Configuration -->
+		<dependency>
+			<groupId>com.evilco.configuration</groupId>
+			<artifactId>xml</artifactId>
+			<version>1.0-SNAPSHOT</version>
 		</dependency>
 
 		<!-- Log4j -->
