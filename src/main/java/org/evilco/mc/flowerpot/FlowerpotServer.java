@@ -15,6 +15,7 @@ import org.evilco.mc.flowerpot.protocol.packet.event.PacketManager;
 import org.evilco.mc.flowerpot.server.MinecraftServer;
 import org.evilco.mc.flowerpot.server.listener.ServerListener;
 
+import java.io.File;
 import java.io.IOException;
 import java.security.KeyPair;
 import java.security.KeyPairGenerator;
@@ -286,7 +287,7 @@ public class FlowerpotServer {
 	 */
 	public static void main (String[] arguments) throws Exception {
 		// TODO: Add proper implementation here
-		instance = new FlowerpotServer (new XMLProxyConfiguration ());
+		instance = new FlowerpotServer (XMLProxyConfiguration.newInstance (new File ("flowerpot.xml")));
 		instance.bind ();
 
 		while (true) {
