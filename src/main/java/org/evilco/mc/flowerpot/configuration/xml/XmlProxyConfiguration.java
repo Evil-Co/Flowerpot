@@ -1,4 +1,4 @@
-package org.evilco.mc.flowerpot.configuration.xmltmp;
+package org.evilco.mc.flowerpot.configuration.xml;
 
 import com.evilco.configuration.xml.ConfigurationProcessor;
 import com.evilco.configuration.xml.annotation.Comment;

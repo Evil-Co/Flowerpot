@@ -1,4 +1,4 @@
-package org.evilco.mc.flowerpot.configuration.xmltmp;
+package org.evilco.mc.flowerpot.configuration.xml;
 
 import com.evilco.configuration.xml.annotation.InnerType;
 import org.evilco.mc.flowerpot.server.listener.ListenerList;
