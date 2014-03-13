@@ -8,7 +8,7 @@ import org.apache.logging.log4j.Logger;
 import org.evilco.mc.flowerpot.authentication.IAuthenticationService;
 import org.evilco.mc.flowerpot.authentication.YggdrasilAuthenticationService;
 import org.evilco.mc.flowerpot.configuration.IProxyConfiguration;
-import org.evilco.mc.flowerpot.configuration.xml.XmlProxyConfiguration;
+import org.evilco.mc.flowerpot.configuration.xmltmp.XmlProxyConfiguration;
 import org.evilco.mc.flowerpot.protocol.EncryptionUtility;
 import org.evilco.mc.flowerpot.protocol.packet.event.ClientPacketHandler;
 import org.evilco.mc.flowerpot.protocol.packet.event.PacketManager;
@@ -287,7 +287,7 @@ public class FlowerpotServer {
 	 */
 	public static void main (String[] arguments) throws Exception {
 		// TODO: Add proper implementation here
-		instance = new FlowerpotServer (XmlProxyConfiguration.newInstance (new File ("flowerpot.xml")));
+		instance = new FlowerpotServer (XmlProxyConfiguration.newInstance (new File ("flowerpot.xmltmp")));
 		instance.bind ();
 
 		while (true) {

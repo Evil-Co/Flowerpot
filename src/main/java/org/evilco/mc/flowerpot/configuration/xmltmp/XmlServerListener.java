@@ -1,11 +1,9 @@
-package org.evilco.mc.flowerpot.configuration.xml;
+package org.evilco.mc.flowerpot.configuration.xmltmp;
 
 import com.evilco.configuration.xml.annotation.Comment;
 import com.evilco.configuration.xml.annotation.Property;
 import com.evilco.configuration.xml.annotation.PropertyWrapper;
 import org.evilco.mc.flowerpot.server.listener.ServerListener;
-
-import javax.xml.bind.annotation.XmlType;
 
 /**
  * @auhtor Johannes Donath <johannesd@evil-co.com>
