@@ -1,7 +1,7 @@
 package org.evilco.mc.flowerpot.server;
 
 import io.netty.channel.Channel;
-import org.evilco.mc.flowerpot.server.capability.Capability;
+import org.evilco.mc.flowerpot.server.capability.ICapability;
 import org.evilco.mc.flowerpot.server.capability.CapabilityKey;
 
 import java.util.List;
@@ -33,7 +33,7 @@ public abstract class MinecraftServer {
 	 * @param capabilityKey
 	 * @param capability
 	 */
-	public abstract void addCapability (CapabilityKey<?> capabilityKey, Capability<?> capability);
+	public abstract void addCapability (CapabilityKey<?> capabilityKey, ICapability<?> capability);
 
 	/**
 	 * Creates a new server connection.
@@ -72,7 +72,7 @@ public abstract class MinecraftServer {
 	 * @param capability
 	 * @return
 	 */
-	public abstract Capability<?> getCapability (CapabilityKey<?> capability);
+	public abstract ICapability<?> getCapability (CapabilityKey<?> capability);
 
 	/**
 	 * Checks whether a server has a specific capability.
@@ -87,7 +87,7 @@ public abstract class MinecraftServer {
 	 * @param capability
 	 * @return
 	 */
-	public abstract boolean hasCapability (CapabilityKey<?> capabilityKey, Capability<?> capability);
+	public abstract boolean hasCapability (CapabilityKey<?> capabilityKey, ICapability<?> capability);
 
 	/**
 	 * Checks all capabilities.
@@ -101,5 +101,5 @@ public abstract class MinecraftServer {
 	 * @param capabilityMap
 	 * @return
 	 */
-	public abstract boolean hasCapabilities (Map<CapabilityKey<?>, Capability<?>> capabilityMap);
+	public abstract boolean hasCapabilities (Map<CapabilityKey<?>, ICapability<?>> capabilityMap);
 }

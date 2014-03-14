@@ -1,6 +1,6 @@
 package org.evilco.mc.flowerpot.server;
 
-import org.evilco.mc.flowerpot.server.capability.Capability;
+import org.evilco.mc.flowerpot.server.capability.ICapability;
 import org.evilco.mc.flowerpot.server.capability.CapabilityKey;
 
 import java.util.ArrayList;
@@ -37,6 +37,7 @@ public class ServerList extends ArrayList<MinecraftServer> {
 	 */
 	public MinecraftServer matchServer (String hostname, short port) {
 		for (MinecraftServer server : this) {
+			if (server.getAliasHostname ().equalsIgnoreCase ("*") && server.getAliasPort () == -1) return server;
 			if (server.getAliasHostname ().equalsIgnoreCase (hostname) && server.getAliasPort () == port) return server;
 		}
 
@@ -69,10 +70,10 @@ public class ServerList extends ArrayList<MinecraftServer> {
 	 * @param capabilities
 	 * @return
 	 */
-	public MinecraftServer matchServer (String hostname, short port, Map<CapabilityKey<?>, Capability<?>> capabilities) {
+	public MinecraftServer matchServer (String hostname, short port, Map<CapabilityKey<?>, ICapability<?>> capabilities) {
 		for (MinecraftServer server : this) {
-			if (!server.getAliasHostname ().equalsIgnoreCase (hostname)) continue;
-			if (server.getAliasPort () != port) continue;
+			if (!server.getAliasHostname ().equalsIgnoreCase (hostname) && !server.getAliasHostname ().equalsIgnoreCase ("*")) continue;
+			if (server.getAliasPort () != port && server.getAliasPort () != -1) continue;
 
 			// verify capabilities
 			if (server.hasCapabilities (capabilities)) return server;

@@ -16,7 +16,7 @@ import org.evilco.mc.flowerpot.protocol.packet.data.StatusResponse;
 import org.evilco.mc.flowerpot.protocol.packet.event.annotation.PacketHandler;
 import org.evilco.mc.flowerpot.server.MinecraftClient;
 import org.evilco.mc.flowerpot.server.MinecraftServer;
-import org.evilco.mc.flowerpot.server.capability.Capability;
+import org.evilco.mc.flowerpot.server.capability.ICapability;
 import org.evilco.mc.flowerpot.server.capability.CapabilityKey;
 import org.evilco.mc.flowerpot.server.capability.DefaultCapability;
 import org.evilco.mc.flowerpot.server.listener.ServerListener;
@@ -166,7 +166,7 @@ public class ClientPacketHandler {
 					MinecraftCodec.setProtocol (channel, ConnectionState.GAME);
 
 					// create client
-					setClient (channel, server.createConnection (channel, username, ((Capability<Integer>) server.getCapability (MinecraftServer.CAPABILITY_PROTOCOL)).get ()));
+					setClient (channel, server.createConnection (channel, username, ((ICapability<Integer>) server.getCapability (MinecraftServer.CAPABILITY_PROTOCOL)).get ()));
 				}
 			}
 		});
@@ -184,7 +184,7 @@ public class ClientPacketHandler {
 		logger.debug ("Received handshake from %s: Requested server %s:%s (protocol version %s) with followup state %s.", channel.remoteAddress ().toString (), packet.getServerAddress (), packet.getServerPort (), packet.getProtocolVersion (), packet.getNextState ());
 
 		// get server
-		Map<CapabilityKey<?>, Capability<?>> capabilityMap = new HashMap<> ();
+		Map<CapabilityKey<?>, ICapability<?>> capabilityMap = new HashMap<> ();
 		capabilityMap.put (MinecraftServer.CAPABILITY_PROTOCOL, new DefaultCapability<> (packet.getProtocolVersion ()));
 
 		MinecraftServer server = FlowerpotServer.getInstance ().getConfiguration ().getServerList ().matchServer (packet.getServerAddress (), packet.getServerPort (), capabilityMap);
@@ -213,12 +213,12 @@ public class ClientPacketHandler {
 				MinecraftCodec.setProtocol (channel, ConnectionState.LOGIN);
 
 				// verify protocol version
-				if (packet.getProtocolVersion () != ((Capability<Integer>) server.getCapability (MinecraftServer.CAPABILITY_PROTOCOL)).get ()) {
+				if (packet.getProtocolVersion () != ((ICapability<Integer>) server.getCapability (MinecraftServer.CAPABILITY_PROTOCOL)).get ()) {
 					// log
-					logger.info ("Disconnecting %s: The client version does not match the server version (expected version %s but received %s).", channel.remoteAddress (), ((Capability<Integer>) server.getCapability (MinecraftServer.CAPABILITY_PROTOCOL)).get (), packet.getProtocolVersion ());
+					logger.info ("Disconnecting %s: The client version does not match the server version (expected version %s but received %s).", channel.remoteAddress (), ((ICapability<Integer>) server.getCapability (MinecraftServer.CAPABILITY_PROTOCOL)).get (), packet.getProtocolVersion ());
 
 					// disconnect
-					String reason = (((Capability<Integer>) server.getCapability (MinecraftServer.CAPABILITY_PROTOCOL)).get () < packet.getProtocolVersion () ? "disconnect.outdatedServer" : "disconnect.outdatedClient");
+					String reason = (((ICapability<Integer>) server.getCapability (MinecraftServer.CAPABILITY_PROTOCOL)).get () < packet.getProtocolVersion () ? "disconnect.outdatedServer" : "disconnect.outdatedClient");
 					channel.writeAndFlush (new KickPacket (FlowerpotServer.getInstance ().getTranslation (reason)));
 					channel.close ().awaitUninterruptibly ();
 				}
@@ -294,7 +294,7 @@ public class ClientPacketHandler {
 		MinecraftServer server = getServer (channel);
 
 		// log
-		logger.debug ("Received status request from %s. Replying with correct server status (protocol version %s).", channel.remoteAddress ().toString (), ((Capability<Integer>) server.getCapability (MinecraftServer.CAPABILITY_PROTOCOL)).get ());
+		logger.debug ("Received status request from %s. Replying with correct server status (protocol version %s).", channel.remoteAddress ().toString (), ((ICapability<Integer>) server.getCapability (MinecraftServer.CAPABILITY_PROTOCOL)).get ());
 
 		// create data object
 		StatusResponse response = new StatusResponse ();

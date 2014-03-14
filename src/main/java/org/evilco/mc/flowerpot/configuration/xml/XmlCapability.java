@@ -1,6 +1,8 @@
 package org.evilco.mc.flowerpot.configuration.xml;
 
+import com.evilco.configuration.xml.annotation.InnerType;
 import com.evilco.configuration.xml.annotation.Property;
+import com.evilco.configuration.xml.annotation.TypeMethod;
 import org.evilco.mc.flowerpot.server.capability.DefaultCapability;
 
 /**
@@ -44,5 +46,11 @@ public class XmlCapability<T> extends DefaultCapability<T> {
 	@Override
 	public T get () {
 		return this.value;
+	}
+
+	@TypeMethod
+	public Class<?> getType () {
+		if (this.value == null) return Void.class;
+		return this.value.getClass ();
 	}
 }

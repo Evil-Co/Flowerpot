@@ -1,13 +1,13 @@
 package org.evilco.mc.flowerpot.configuration.xml;
 
 import com.evilco.configuration.xml.annotation.Comment;
+import com.evilco.configuration.xml.annotation.InnerType;
 import com.evilco.configuration.xml.annotation.Property;
 import com.evilco.configuration.xml.annotation.PropertyWrapper;
 import org.evilco.mc.flowerpot.server.MinecraftServer;
-import org.evilco.mc.flowerpot.server.capability.Capability;
+import org.evilco.mc.flowerpot.server.capability.ICapability;
 import org.evilco.mc.flowerpot.server.capability.CapabilityKey;
 
-import java.security.InvalidParameterException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -40,6 +40,7 @@ public class XmlServer extends MinecraftServer {
 	@Comment ("Specifies the server capabilities.")
 	@PropertyWrapper ("capabilities")
 	@Property ("capability")
+	@InnerType (XmlCapability.class)
 	public Map<String, XmlCapability<?>> capabilityMap = new HashMap<> ();
 
 	/**
@@ -83,9 +84,7 @@ public class XmlServer extends MinecraftServer {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public void addCapability (CapabilityKey<?> capabilityKey, Capability<?> capability) {
-		if (this.hasCapability (capabilityKey)) throw new IllegalArgumentException ("The supplied capability is already registered with this server.");
-
+	public void addCapability (CapabilityKey<?> capabilityKey, ICapability<?> capability) {
 		// add new capability
 		if (capability instanceof XmlCapability)
 			this.capabilityMap.put (capabilityKey.toString (), ((XmlCapability) capability));
@@ -130,8 +129,8 @@ public class XmlServer extends MinecraftServer {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public Capability<?> getCapability (CapabilityKey<?> capability) {
-		return this.capabilityMap.get (capability.toString ());
+	public ICapability<?> getCapability (CapabilityKey<?> capability) {
+		return this.capabilityMap.get (capability.getName ());
 	}
 
 	/**
@@ -139,14 +138,14 @@ public class XmlServer extends MinecraftServer {
 	 */
 	@Override
 	public boolean hasCapability (CapabilityKey<?> capability) {
-		return this.capabilityMap.containsKey (capability);
+		return this.capabilityMap.containsKey (capability.getName ());
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	@Override
-	public boolean hasCapability (CapabilityKey<?> capabilityKey, Capability<?> capability) {
+	public boolean hasCapability (CapabilityKey<?> capabilityKey, ICapability<?> capability) {
 		if (!this.hasCapability (capabilityKey)) return false;
 		return this.getCapability (capabilityKey).equals (capability);
 	}
@@ -167,8 +166,8 @@ public class XmlServer extends MinecraftServer {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public boolean hasCapabilities (Map<CapabilityKey<?>, Capability<?>> capabilityMap) {
-		for (Map.Entry<CapabilityKey<?>, Capability<?>> capabilityEntry : capabilityMap.entrySet ()) {
+	public boolean hasCapabilities (Map<CapabilityKey<?>, ICapability<?>> capabilityMap) {
+		for (Map.Entry<CapabilityKey<?>, ICapability<?>> capabilityEntry : capabilityMap.entrySet ()) {
 			if (!this.hasCapability (capabilityEntry.getKey (), capabilityEntry.getValue ())) return false;
 		}
 

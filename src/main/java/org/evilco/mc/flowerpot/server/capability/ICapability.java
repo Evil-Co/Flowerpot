@@ -4,7 +4,7 @@ package org.evilco.mc.flowerpot.server.capability;
  * @auhtor Johannes Donath <johannesd@evil-co.com>
  * @copyright Copyright (C) 2014 Evil-Co <http://www.evil-co.org>
  */
-public interface Capability<T> {
+public interface ICapability<T> {
 
 	/**
 	 * Returns the capability value.
@@ -23,5 +23,5 @@ public interface Capability<T> {
 	 * @param obj
 	 * @return
 	 */
-	public boolean equals (Capability obj);
+	public boolean equals (ICapability obj);
 }

@@ -13,7 +13,6 @@ import org.evilco.mc.flowerpot.FlowerpotServer;
 import org.evilco.mc.flowerpot.configuration.IProxyConfiguration;
 import org.evilco.mc.flowerpot.server.MinecraftServer;
 import org.evilco.mc.flowerpot.server.ServerList;
-import org.evilco.mc.flowerpot.server.capability.Capability;
 import org.evilco.mc.flowerpot.server.listener.ListenerList;
 
 import java.io.File;

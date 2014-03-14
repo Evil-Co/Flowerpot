@@ -1,6 +1,7 @@
 package org.evilco.mc.flowerpot.protocol;
 
 import org.evilco.mc.flowerpot.protocol.packet.*;
+import sun.plugin2.main.server.Plugin;
 
 /**
  * @auhtor Johannes Donath <johannesd@evil-co.com>
@@ -22,9 +23,11 @@ public enum ConnectionState {
 		{
 			INBOUND.registerPacket (0x00, StatusRequestPacket.class);
 			INBOUND.registerPacket (0x01, PingPacket.class);
+			INBOUND.registerPacket (0x17, PluginMessagePacket.class);
 
 			OUTBOUND.registerPacket (0x00, StatusResponsePacket.class);
 			OUTBOUND.registerPacket (0x01, PingPacket.class);
+			OUTBOUND.registerPacket (0x17, PluginMessagePacket.class);
 		}
 	},
 	LOGIN {
@@ -34,10 +37,12 @@ public enum ConnectionState {
 		{
 			INBOUND.registerPacket (0x00, LoginStartPacket.class);
 			INBOUND.registerPacket (0x01, EncryptionResponsePacket.class);
+			INBOUND.registerPacket (0x17, PluginMessagePacket.class);
 
 			OUTBOUND.registerPacket (0x00, KickPacket.class);
 			OUTBOUND.registerPacket (0x01, EncryptionRequestPacket.class);
 			OUTBOUND.registerPacket (0x02, LoginSuccessPacket.class);
+			OUTBOUND.registerPacket (0x17, PluginMessagePacket.class);
 		}
 	},
 	GAME {
@@ -45,7 +50,10 @@ public enum ConnectionState {
 		 * Static Initialization
 		 */
 		{
+			OUTBOUND.registerPacket (0x17, PluginMessagePacket.class);
 			OUTBOUND.registerPacket (0x40, KickPacket.class);
+
+			INBOUND.registerPacket (0x17, PluginMessagePacket.class);
 		}
 	};
 
