@@ -58,6 +58,9 @@ public class PluginMessagePacket extends AbstractPacket {
 		this.data = Unpooled.copiedBuffer (data);
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public void writePacket (ByteBuf out) {
 		PacketUtility.writeString (this.channel, out);
