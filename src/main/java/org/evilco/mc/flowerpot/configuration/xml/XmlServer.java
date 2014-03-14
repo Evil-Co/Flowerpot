@@ -5,8 +5,8 @@ import com.evilco.configuration.xml.annotation.InnerType;
 import com.evilco.configuration.xml.annotation.Property;
 import com.evilco.configuration.xml.annotation.PropertyWrapper;
 import org.evilco.mc.flowerpot.server.MinecraftServer;
-import org.evilco.mc.flowerpot.server.capability.ICapability;
 import org.evilco.mc.flowerpot.server.capability.CapabilityKey;
+import org.evilco.mc.flowerpot.server.capability.ICapability;
 
 import java.util.HashMap;
 import java.util.List;

@@ -1,6 +1,5 @@
 package org.evilco.mc.flowerpot.configuration.xml;
 
-import com.evilco.configuration.xml.annotation.InnerType;
 import com.evilco.configuration.xml.annotation.Property;
 import com.evilco.configuration.xml.annotation.TypeMethod;
 import org.evilco.mc.flowerpot.server.capability.DefaultCapability;

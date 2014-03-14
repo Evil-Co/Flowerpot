@@ -11,7 +11,6 @@ import org.evilco.mc.flowerpot.protocol.packet.AbstractPacket;
 import org.evilco.mc.flowerpot.protocol.packet.event.ClientPacketHandler;
 import org.evilco.mc.flowerpot.protocol.packet.event.PacketHandlerSide;
 import org.evilco.mc.flowerpot.server.MinecraftClient;
-import org.evilco.mc.flowerpot.server.MinecraftServer;
 
 /**
  * @auhtor Johannes Donath <johannesd@evil-co.com>

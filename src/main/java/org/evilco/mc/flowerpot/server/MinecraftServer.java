@@ -1,8 +1,8 @@
 package org.evilco.mc.flowerpot.server;
 
 import io.netty.channel.Channel;
-import org.evilco.mc.flowerpot.server.capability.ICapability;
 import org.evilco.mc.flowerpot.server.capability.CapabilityKey;
+import org.evilco.mc.flowerpot.server.capability.ICapability;
 
 import java.util.List;
 import java.util.Map;

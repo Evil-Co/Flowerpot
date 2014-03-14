@@ -1,7 +1,6 @@
 package org.evilco.mc.flowerpot.protocol;
 
 import org.evilco.mc.flowerpot.protocol.packet.*;
-import sun.plugin2.main.server.Plugin;
 
 /**
  * @auhtor Johannes Donath <johannesd@evil-co.com>

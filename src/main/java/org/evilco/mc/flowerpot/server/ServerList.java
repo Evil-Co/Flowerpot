@@ -1,7 +1,7 @@
 package org.evilco.mc.flowerpot.server;
 
-import org.evilco.mc.flowerpot.server.capability.ICapability;
 import org.evilco.mc.flowerpot.server.capability.CapabilityKey;
+import org.evilco.mc.flowerpot.server.capability.ICapability;
 
 import java.util.ArrayList;
 import java.util.Collection;

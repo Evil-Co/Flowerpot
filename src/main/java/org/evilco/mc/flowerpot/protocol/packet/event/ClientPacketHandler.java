@@ -16,9 +16,9 @@ import org.evilco.mc.flowerpot.protocol.packet.data.StatusResponse;
 import org.evilco.mc.flowerpot.protocol.packet.event.annotation.PacketHandler;
 import org.evilco.mc.flowerpot.server.MinecraftClient;
 import org.evilco.mc.flowerpot.server.MinecraftServer;
-import org.evilco.mc.flowerpot.server.capability.ICapability;
 import org.evilco.mc.flowerpot.server.capability.CapabilityKey;
 import org.evilco.mc.flowerpot.server.capability.DefaultCapability;
+import org.evilco.mc.flowerpot.server.capability.ICapability;
 import org.evilco.mc.flowerpot.server.listener.ServerListener;
 
 import javax.crypto.SecretKey;

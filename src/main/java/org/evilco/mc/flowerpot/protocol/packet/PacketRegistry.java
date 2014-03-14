@@ -5,7 +5,6 @@ import io.netty.buffer.ByteBuf;
 import org.evilco.mc.flowerpot.protocol.ConnectionDirection;
 
 import java.lang.reflect.Constructor;
-import java.lang.reflect.InvocationTargetException;
 
 /**
  * @auhtor Johannes Donath <johannesd@evil-co.com>
