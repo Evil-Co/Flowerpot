@@ -18,6 +18,7 @@ import org.evilco.mc.flowerpot.server.listener.ListenerList;
 import java.io.File;
 import java.io.FileInputStream;
 import java.util.Arrays;
+import java.util.UUID;
 
 /**
  * @auhtor Johannes Donath <johannesd@evil-co.com>
@@ -60,6 +61,13 @@ public class XmlProxyConfiguration implements IProxyConfiguration {
 	public Integer timeout = 300000;
 
 	/**
+	 * Defines the metrics server identifier.
+	 */
+	@Comment ("Defines a unique identifier for this server. Please do not change this variable.")
+	@Property ("metricsIdentifier")
+	public UUID metricsIdentifier;
+
+	/**
 	 * Constructs a new empty XmlProxyConfiguration.
 	 */
 	public XmlProxyConfiguration () {
@@ -74,6 +82,9 @@ public class XmlProxyConfiguration implements IProxyConfiguration {
 
 		// add fallback capability
 		this.serverList.get (0).addCapability (MinecraftServer.CAPABILITY_FALLBACK, new XmlCapability<Void> (null));
+
+		// generate metrics identifier
+		this.metricsIdentifier = UUID.randomUUID ();
 	}
 
 	/**
@@ -82,6 +93,14 @@ public class XmlProxyConfiguration implements IProxyConfiguration {
 	@Override
 	public ListenerList getListenerList () {
 		return this.listenerList;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public UUID getMetricsIdentifier () {
+		return this.metricsIdentifier;
 	}
 
 	/**
