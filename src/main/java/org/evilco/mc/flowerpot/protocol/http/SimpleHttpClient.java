@@ -41,6 +41,13 @@ public class SimpleHttpClient {
 	 */
 	public static final String USER_AGENT_TEMPLATE = "Flowerpot/%s (%s)";
 
+	/**
+	 * Performs a get request.
+	 * @param url
+	 * @param eventLoop
+	 * @param callback
+	 * @param trustManager
+	 */
 	public static void get (String url, EventLoop eventLoop, final HttpClientCallback callback, TrustManager trustManager) {
 		Preconditions.checkNotNull (url, "URL cannot be null");
 		Preconditions.checkNotNull (eventLoop, "EventLoop cannot be null");
