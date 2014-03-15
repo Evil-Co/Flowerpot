@@ -84,11 +84,6 @@ public class XmlProxyConfiguration implements IProxyConfiguration {
 		return this.listenerList;
 	}
 
-	@Override
-	public int getProtocolVersion () {
-		return 0;
-	}
-
 	/**
 	 * {@inheritDoc}
 	 */
