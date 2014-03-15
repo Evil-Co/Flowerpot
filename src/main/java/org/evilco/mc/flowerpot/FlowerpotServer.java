@@ -81,20 +81,16 @@ public class FlowerpotServer {
 	 * Static Initialization
 	 */
 	static {
-		String version = "SNAPSHOT";
+		String version = "git-Flowerpot-SNAPSHOT";
 		String build = "dirty";
 		String mcVersion = "SNAPSHOT";
-		Package p = FlowerpotServer.class.getPackage ();
-
-		if (p != null) {
-			if (p.getImplementationVersion () != null) version = p.getImplementationVersion ();
-		}
 
 		try {
 			JarFile jar = new JarFile (FlowerpotServer.class.getProtectionDomain ().getCodeSource ().getLocation ().getFile ());
 
 			Attributes attributes = jar.getManifest ().getMainAttributes ();
 			build = attributes.getValue ("Implementation-Build");
+			version = "git-Flowerpot-" + build;
 			mcVersion = attributes.getValue ("Implementation-MinecraftVersion");
 		} catch (IOException ex) { }
 
