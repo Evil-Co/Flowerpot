@@ -105,11 +105,6 @@ public class FlowerpotServer {
 	protected IProxyConfiguration configuration;
 
 	/**
-	 * Stores the default server to connect to.
-	 */
-	protected MinecraftServer defaultServer;
-
-	/**
 	 * Stores the current proxy instance.
 	 */
 	protected static FlowerpotServer instance = null;
