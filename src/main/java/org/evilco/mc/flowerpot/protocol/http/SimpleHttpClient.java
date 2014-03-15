@@ -13,7 +13,10 @@ import org.apache.logging.log4j.Logger;
 import org.evilco.mc.flowerpot.FlowerpotServer;
 
 import javax.net.ssl.TrustManager;
+import java.io.UnsupportedEncodingException;
 import java.net.URI;
+import java.net.URLEncoder;
+import java.util.Map;
 
 /**
  * @auhtor Johannes Donath <johannesd@evil-co.com>
@@ -40,6 +43,35 @@ public class SimpleHttpClient {
 	 * Defines the application user agent template.
 	 */
 	public static final String USER_AGENT_TEMPLATE = "Flowerpot/%s (%s)";
+
+	/**
+	 * Builds a query string based on a map of parameters.
+	 * @param parameters
+	 * @return
+	 * @throws UnsupportedEncodingException
+	 */
+	public static String buildQueryString (Map<String, String> parameters) throws UnsupportedEncodingException {
+		// create buffer
+		StringBuffer query = new StringBuffer ();
+
+		// iterate over all parameters
+		for (Map.Entry<String, String> parameter : parameters.entrySet ()) {
+			// add & after each parameter
+			if (query.length () != 0) query.append ("&");
+
+			// append key
+			query.append (URLEncoder.encode (parameter.getKey (), CHARSET));
+
+			// append key <-> value separator
+			query.append ("=");
+
+			// append data
+			query.append (URLEncoder.encode (parameter.getValue (), CHARSET));
+		}
+
+		// return finished query
+		return query.toString ();
+	}
 
 	/**
 	 * Performs a get request.
