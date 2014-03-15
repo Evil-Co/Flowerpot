@@ -24,6 +24,12 @@ public interface IProxyConfiguration {
 	public UUID getMetricsIdentifier ();
 
 	/**
+	 * Indicates whether the user opted out of metrics.
+	 * @return
+	 */
+	public boolean getMetricsOptedOut ();
+
+	/**
 	 * Returns a server icon.
 	 * @return
 	 */

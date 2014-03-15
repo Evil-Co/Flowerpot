@@ -64,8 +64,14 @@ public class XmlProxyConfiguration implements IProxyConfiguration {
 	 * Defines the metrics server identifier.
 	 */
 	@Comment ("Defines a unique identifier for this server. Please do not change this variable.")
-	@Property ("metricsIdentifier")
+	@PropertyWrapper ("metrics")
+	@Property ("identifier")
 	public UUID metricsIdentifier;
+
+	@Comment ("Indicates whether this server will post anonymous metrics.")
+	@PropertyWrapper ("metrics")
+	@Property ("optOut")
+	public Boolean metricsOptOut = false;
 
 	/**
 	 * Constructs a new empty XmlProxyConfiguration.
@@ -101,6 +107,14 @@ public class XmlProxyConfiguration implements IProxyConfiguration {
 	@Override
 	public UUID getMetricsIdentifier () {
 		return this.metricsIdentifier;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public boolean getMetricsOptedOut () {
+		return this.metricsOptOut;
 	}
 
 	/**
