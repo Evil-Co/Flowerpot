@@ -16,12 +16,6 @@ public interface IProxyConfiguration {
 	public ListenerList getListenerList ();
 
 	/**
-	 * Returns the selected protocol version.
-	 * @return
-	 */
-	public int getProtocolVersion ();
-
-	/**
 	 * Returns a server icon.
 	 * @return
 	 */
