@@ -9,6 +9,9 @@ import org.evilco.mc.flowerpot.authentication.IAuthenticationService;
 import org.evilco.mc.flowerpot.authentication.YggdrasilAuthenticationService;
 import org.evilco.mc.flowerpot.configuration.IProxyConfiguration;
 import org.evilco.mc.flowerpot.configuration.xml.XmlProxyConfiguration;
+import org.evilco.mc.flowerpot.metrics.IMetricsService;
+import org.evilco.mc.flowerpot.metrics.MetricsManager;
+import org.evilco.mc.flowerpot.metrics.mcstats.MCStatsMetricsService;
 import org.evilco.mc.flowerpot.protocol.EncryptionUtility;
 import org.evilco.mc.flowerpot.protocol.packet.event.ClientPacketHandler;
 import org.evilco.mc.flowerpot.protocol.packet.event.PacketManager;
@@ -66,6 +69,11 @@ public class FlowerpotServer {
 	 * Stores the selected authentication service.
 	 */
 	protected IAuthenticationService authenticationService;
+
+	/**
+	 * Stores the currently active metrics manager.
+	 */
+	protected MetricsManager metricsManager;
 
 	/**
 	 * Stores the PacketManager instance.
@@ -148,6 +156,11 @@ public class FlowerpotServer {
 
 		// register default handlers
 		this.packetManager.registerHandler (new ClientPacketHandler ());
+
+		// enable metrics
+		MCStatsMetricsService metricsService = new MCStatsMetricsService ();
+		metricsService.setServerDetail ("Flowerpot", VERSION);
+		this.metricsManager = new MetricsManager (metricsService);
 	}
 
 	/**
