@@ -1,13 +1,32 @@
 package org.evilco.mc.flowerpot.protocol.packet;
 
+import com.google.common.base.Joiner;
+import com.google.common.collect.Iterables;
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.Unpooled;
+
+import java.util.List;
 
 /**
  * @auhtor Johannes Donath <johannesd@evil-co.com>
  * @copyright Copyright (C) 2014 Evil-Co <http://www.evil-co.org>
  */
 public class PluginMessagePacket extends AbstractPacket {
+
+	/**
+	 * Defines the name of the channel used for channel registrations (confusing, huh?).
+	 */
+	public static final String MINECRAFT_CHANNEL_REGISTER = "REGISTER";
+
+	/**
+	 * Stores the channel registrations required for Forge.
+	 */
+	public static final String[] FORGE_CHANNEL_REGISTER = new String[] { "FML|HS", "FML" };
+
+	/**
+	 * Stores the forge handshake packet.
+	 */
+	public static final PluginMessagePacket FORGE_HANDSHAKE = new PluginMessagePacket ("FML", new byte[] { 0, 0, 0, 0, 0, 2 });
 
 	/**
 	 * Stores the channel name.
@@ -56,6 +75,20 @@ public class PluginMessagePacket extends AbstractPacket {
 
 		// convert
 		this.data = Unpooled.copiedBuffer (data);
+	}
+
+	/**
+	 * Constructs a channel registration packet.
+	 * @param channels
+	 * @return
+	 */
+	public static PluginMessagePacket createChannelRegistrationPacket (List<String> channels) {
+		// create contents
+		ByteBuf buffer = Unpooled.buffer ();
+		PacketUtility.writeString (Joiner.on ('\0').join (Iterables.concat (channels)), buffer);
+
+		// create packet
+		return new PluginMessagePacket (MINECRAFT_CHANNEL_REGISTER, buffer);
 	}
 
 	/**
