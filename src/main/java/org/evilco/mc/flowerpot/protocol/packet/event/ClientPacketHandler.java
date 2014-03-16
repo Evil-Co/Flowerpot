@@ -8,6 +8,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.evilco.mc.flowerpot.FlowerpotServer;
 import org.evilco.mc.flowerpot.authentication.AuthenticationCallback;
+import org.evilco.mc.flowerpot.event.login.HandshakeEvent;
 import org.evilco.mc.flowerpot.event.login.LoginSuccessEvent;
 import org.evilco.mc.flowerpot.event.login.PreLoginEvent;
 import org.evilco.mc.flowerpot.event.login.StatusResponseEvent;
@@ -197,8 +198,17 @@ public class ClientPacketHandler {
 		Map<CapabilityKey<?>, ICapability<?>> capabilityMap = new HashMap<> ();
 		capabilityMap.put (MinecraftServer.CAPABILITY_PROTOCOL, new DefaultCapability<> (packet.getProtocolVersion ()));
 
+		// fire server search event
+		HandshakeEvent handshakeEvent = new HandshakeEvent (capabilityMap);
+		FlowerpotServer.getInstance ().getEventManager ().fireEvent (handshakeEvent);
+
+		// get new capability map
+		capabilityMap = handshakeEvent.getCapabilityMap ();
+
+		// find server
 		MinecraftServer server = FlowerpotServer.getInstance ().getConfiguration ().getServerList ().matchServer (packet.getServerAddress (), packet.getServerPort (), capabilityMap);
 
+		// find fallback server
 		if (server == null) server = FlowerpotServer.getInstance ().getConfiguration ().getServerList ().matchServer (packet.getServerAddress (), packet.getServerPort (), Arrays.asList (new CapabilityKey<?>[]{MinecraftServer.CAPABILITY_FALLBACK}));
 
 		// fire pre login event
