@@ -26,7 +26,7 @@ public enum ConnectionState {
 
 			OUTBOUND.registerPacket (0x00, StatusResponsePacket.class);
 			OUTBOUND.registerPacket (0x01, PingPacket.class);
-			OUTBOUND.registerPacket (0x17, PluginMessagePacket.class);
+			OUTBOUND.registerPacket (0x3F, PluginMessagePacket.class);
 		}
 	},
 	LOGIN {
@@ -41,7 +41,7 @@ public enum ConnectionState {
 			OUTBOUND.registerPacket (0x00, KickPacket.class);
 			OUTBOUND.registerPacket (0x01, EncryptionRequestPacket.class);
 			OUTBOUND.registerPacket (0x02, LoginSuccessPacket.class);
-			OUTBOUND.registerPacket (0x17, PluginMessagePacket.class);
+			OUTBOUND.registerPacket (0x3F, PluginMessagePacket.class);
 		}
 	},
 	GAME {
@@ -49,10 +49,10 @@ public enum ConnectionState {
 		 * Static Initialization
 		 */
 		{
+			INBOUND.registerPacket (0x3F, PluginMessagePacket.class);
+
 			OUTBOUND.registerPacket (0x17, PluginMessagePacket.class);
 			OUTBOUND.registerPacket (0x40, KickPacket.class);
-
-			INBOUND.registerPacket (0x17, PluginMessagePacket.class);
 		}
 	};
 
