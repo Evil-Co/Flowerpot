@@ -8,6 +8,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.evilco.mc.flowerpot.FlowerpotServer;
 import org.evilco.mc.flowerpot.authentication.AuthenticationCallback;
+import org.evilco.mc.flowerpot.event.login.LoginSuccessEvent;
 import org.evilco.mc.flowerpot.event.login.PreLoginEvent;
 import org.evilco.mc.flowerpot.event.login.StatusResponseEvent;
 import org.evilco.mc.flowerpot.protocol.ConnectionState;
@@ -159,6 +160,13 @@ public class ClientPacketHandler {
 				else {
 					// TODO: Kick already connected players with the same name
 
+					// fire event
+					try {
+						FlowerpotServer.getInstance ().getEventManager ().fireEvent (new LoginSuccessEvent ());
+					} catch (Exception ex) {
+						logger.fatal ("Could not fire LoginSuccessEvent", ex);
+					}
+
 					// send success packet
 					LoginSuccessPacket successPacket = new LoginSuccessPacket (uuid, username);
 					channel.writeAndFlush (successPacket);
@@ -242,7 +250,7 @@ public class ClientPacketHandler {
 	 * @param packet
 	 */
 	@PacketHandler (priority = PacketHandlerPriority.LOWEST)
-	public void handle (Channel channel, LoginStartPacket packet) {
+	public void handle (Channel channel, LoginStartPacket packet) throws Exception {
 		// get attributes
 		MinecraftServer server = getServer (channel);
 
@@ -254,9 +262,13 @@ public class ClientPacketHandler {
 		logger.trace ("User %s requested to be authenticated (account %s has been requested).", channel.remoteAddress ().toString (), packet.getUsername ());
 
 		// check for offline mode
-		if (server.hasCapability (MinecraftServer.CAPABILITY_OFFLINE_MODE))
+		if (server.hasCapability (MinecraftServer.CAPABILITY_OFFLINE_MODE)) {
+			// fire event
+			FlowerpotServer.getInstance ().getEventManager ().fireEvent (new LoginSuccessEvent ());
+
+			// write success packet
 			channel.writeAndFlush (new LoginSuccessPacket (username, UUID.randomUUID ().toString ()));
-		else {
+		} else {
 			// encryption
 			EncryptionRequestPacket encryptionRequestPacket = new EncryptionRequestPacket ();
 
