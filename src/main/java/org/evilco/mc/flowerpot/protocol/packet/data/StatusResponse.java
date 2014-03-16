@@ -20,6 +20,11 @@ public class StatusResponse {
 	public String favicon = null;
 
 	/**
+	 * Stores the mod information.
+	 */
+	public Object modinfo = null;
+
+	/**
 	 * Stores the player statistic.
 	 */
 	public Players players = new Players ();

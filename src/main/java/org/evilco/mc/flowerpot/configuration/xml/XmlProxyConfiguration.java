@@ -38,6 +38,13 @@ public class XmlProxyConfiguration implements IProxyConfiguration {
 	public static final String NAMESPACE = "http://www.flowerpotmc.org/2014/configuration";
 
 	/**
+	 * Defines whether forge scans are enabled or not.
+	 */
+	@Comment ("Enables the Forge scan (allows automatic routing of Forge users).")
+	@Property ("forgeScanEnabled")
+	public Boolean forgeScanEnabled = true;
+
+	/**
 	 * Stores the listener list.
 	 */
 	@Comment ("Specifies listeners for the proxy.")
@@ -91,6 +98,14 @@ public class XmlProxyConfiguration implements IProxyConfiguration {
 
 		// generate metrics identifier
 		this.metricsIdentifier = UUID.randomUUID ();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public boolean getForgeScanEnabled () {
+		return this.forgeScanEnabled;
 	}
 
 	/**

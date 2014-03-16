@@ -12,6 +12,7 @@ import org.evilco.mc.flowerpot.event.login.HandshakeEvent;
 import org.evilco.mc.flowerpot.event.login.LoginSuccessEvent;
 import org.evilco.mc.flowerpot.event.login.PreLoginEvent;
 import org.evilco.mc.flowerpot.event.login.StatusResponseEvent;
+import org.evilco.mc.flowerpot.forge.ForgeModInformation;
 import org.evilco.mc.flowerpot.protocol.ConnectionState;
 import org.evilco.mc.flowerpot.protocol.codec.MinecraftCodec;
 import org.evilco.mc.flowerpot.protocol.codec.MinecraftEncryptionCodec;
@@ -336,6 +337,9 @@ public class ClientPacketHandler {
 
 		// pass data to description
 		response.description.setText (String.format (response.description.getText (), FlowerpotServer.VERSION, FlowerpotServer.BUILD));
+
+		// add forge information
+		if (FlowerpotServer.getInstance ().getConfiguration ().getForgeScanEnabled ()) response.modinfo = new ForgeModInformation ();
 
 		// fire event
 		StatusResponseEvent statusResponseEvent = new StatusResponseEvent (response);

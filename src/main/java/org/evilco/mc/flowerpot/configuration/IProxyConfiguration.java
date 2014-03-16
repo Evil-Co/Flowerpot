@@ -12,6 +12,12 @@ import java.util.UUID;
 public interface IProxyConfiguration {
 
 	/**
+	 * Indicates whether the forge scan is enabled.
+	 * @return
+	 */
+	public boolean getForgeScanEnabled ();
+
+	/**
 	 * Returns a list of configured listeners.
 	 * @return
 	 */
