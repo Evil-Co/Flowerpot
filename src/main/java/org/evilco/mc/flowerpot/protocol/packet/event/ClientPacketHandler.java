@@ -215,6 +215,9 @@ public class ClientPacketHandler {
 		PreLoginEvent preLoginEvent = new PreLoginEvent (server);
 		FlowerpotServer.getInstance ().getEventManager ().fireEvent (preLoginEvent);
 
+		// replace server
+		server = preLoginEvent.getServer ();
+
 		// handle errors
 		if (server == null || preLoginEvent.isCancelled ()) {
 			// log
@@ -335,7 +338,11 @@ public class ClientPacketHandler {
 		response.description.setText (String.format (response.description.getText (), FlowerpotServer.VERSION, FlowerpotServer.BUILD));
 
 		// fire event
-		FlowerpotServer.getInstance ().getEventManager ().fireEvent (new StatusResponseEvent (response));
+		StatusResponseEvent statusResponseEvent = new StatusResponseEvent (response);
+		FlowerpotServer.getInstance ().getEventManager ().fireEvent (statusResponseEvent);
+
+		// replace response
+		response = statusResponseEvent.getResponse ();
 
 		// send packet
 		channel.writeAndFlush (new StatusResponsePacket (response));
