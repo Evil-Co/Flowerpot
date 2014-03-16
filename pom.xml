@@ -138,6 +138,13 @@
 			<version>1.0-SNAPSHOT</version>
 		</dependency>
 
+		<!-- Events -->
+		<dependency>
+			<groupId>com.evilco</groupId>
+			<artifactId>event</artifactId>
+			<version>1.0-SNAPSHOT</version>
+		</dependency>
+
 		<!-- Log4j -->
 		<dependency>
 			<groupId>org.apache.logging.log4j</groupId>

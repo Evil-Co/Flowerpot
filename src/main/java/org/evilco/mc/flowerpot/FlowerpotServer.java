@@ -1,5 +1,6 @@
 package org.evilco.mc.flowerpot;
 
+import com.evilco.event.EventManager;
 import com.google.common.io.BaseEncoding;
 import io.netty.channel.EventLoopGroup;
 import io.netty.channel.nio.NioEventLoopGroup;
@@ -69,6 +70,11 @@ public class FlowerpotServer {
 	 * Stores the selected authentication service.
 	 */
 	protected IAuthenticationService authenticationService;
+
+	/**
+	 * Stores the event manager for the proxy.
+	 */
+	protected EventManager eventManager;
 
 	/**
 	 * Stores the currently active metrics manager.
@@ -150,6 +156,7 @@ public class FlowerpotServer {
 		this.authenticationService = new YggdrasilAuthenticationService ();
 		this.configuration = configuration;
 		this.packetManager = new PacketManager ();
+		this.eventManager = new EventManager ();
 
 		// create thread groups
 		this.threadGroupWorker = new NioEventLoopGroup ();
@@ -218,6 +225,14 @@ public class FlowerpotServer {
 	 */
 	public String getEncodedServerIcon () {
 		return "data:image/png;base64," + BaseEncoding.base64 ().encode (this.configuration.getServerIcon ());
+	}
+
+	/**
+	 * Returns the proxy event manager.
+	 * @return
+	 */
+	public EventManager getEventManager () {
+		return this.eventManager;
 	}
 
 	/**
