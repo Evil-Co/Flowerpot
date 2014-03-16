@@ -8,6 +8,8 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.evilco.mc.flowerpot.FlowerpotServer;
 import org.evilco.mc.flowerpot.authentication.AuthenticationCallback;
+import org.evilco.mc.flowerpot.event.login.PreLoginEvent;
+import org.evilco.mc.flowerpot.event.login.StatusResponseEvent;
 import org.evilco.mc.flowerpot.protocol.ConnectionState;
 import org.evilco.mc.flowerpot.protocol.codec.MinecraftCodec;
 import org.evilco.mc.flowerpot.protocol.codec.MinecraftEncryptionCodec;
@@ -180,8 +182,8 @@ public class ClientPacketHandler {
 	 * @param packet
 	 */
 	@PacketHandler (priority = PacketHandlerPriority.LOWEST)
-	public void handle (Channel channel, HandshakePacket packet) {
-		logger.debug ("Received handshake from %s: Requested server %s:%s (protocol version %s) with followup state %s.", channel.remoteAddress ().toString (), packet.getServerAddress (), packet.getServerPort (), packet.getProtocolVersion (), packet.getNextState ());
+	public void handle (Channel channel, HandshakePacket packet) throws Exception {
+		logger.debug ("Received login from %s: Requested server %s:%s (protocol version %s) with followup state %s.", channel.remoteAddress ().toString (), packet.getServerAddress (), packet.getServerPort (), packet.getProtocolVersion (), packet.getNextState ());
 
 		// get server
 		Map<CapabilityKey<?>, ICapability<?>> capabilityMap = new HashMap<> ();
@@ -191,8 +193,12 @@ public class ClientPacketHandler {
 
 		if (server == null) server = FlowerpotServer.getInstance ().getConfiguration ().getServerList ().matchServer (packet.getServerAddress (), packet.getServerPort (), Arrays.asList (new CapabilityKey<?>[]{MinecraftServer.CAPABILITY_FALLBACK}));
 
+		// fire pre login event
+		PreLoginEvent preLoginEvent = new PreLoginEvent (server);
+		FlowerpotServer.getInstance ().getEventManager ().fireEvent (preLoginEvent);
+
 		// handle errors
-		if (server == null) {
+		if (server == null || preLoginEvent.isCancelled ()) {
 			// log
 			logger.fatal ("Could not find any matching server for request %s:%s (protocol version %s).", packet.getServerAddress (), packet.getServerPort (), packet.getProtocolVersion ());
 
@@ -289,7 +295,7 @@ public class ClientPacketHandler {
 	 * @param packet
 	 */
 	@PacketHandler (priority = PacketHandlerPriority.LOWEST)
-	public void handle (Channel channel, StatusRequestPacket packet) {
+	public void handle (Channel channel, StatusRequestPacket packet) throws Exception {
 		// get server
 		MinecraftServer server = getServer (channel);
 
@@ -305,6 +311,9 @@ public class ClientPacketHandler {
 
 		// pass data to description
 		response.description.setText (String.format (response.description.getText (), FlowerpotServer.VERSION, FlowerpotServer.BUILD));
+
+		// fire event
+		FlowerpotServer.getInstance ().getEventManager ().fireEvent (new StatusResponseEvent (response));
 
 		// send packet
 		channel.writeAndFlush (new StatusResponsePacket (response));
