@@ -55,7 +55,7 @@ public class XmlServer extends MinecraftServer {
 	 */
 	@Comment ("Specifies the server port.")
 	@Property ("port")
-	public Integer port = 25565;
+	public Short port = 25565;
 
 	/**
 	 * Serialization constructor.
@@ -121,8 +121,7 @@ public class XmlServer extends MinecraftServer {
 	 */
 	@Override
 	public short getPort () {
-		// return this.port;
-		return -1;
+		return this.port;
 	}
 
 	/**
