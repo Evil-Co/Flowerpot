@@ -80,6 +80,9 @@ public class ClientChannelHandler extends ChannelHandlerAdapter {
 
 		// relay packet
 		if (!message.hasHandled ()) {
+			logger.trace ("Relaying unhandled packet of type %s.", msg.getClass ().getName ());
+
+			// relay
 			MinecraftClient client = ClientPacketHandler.getClient (ctx.channel ());
 			if (client != null) client.sendPacketServer (message);
 		}
