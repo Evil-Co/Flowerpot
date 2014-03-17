@@ -198,8 +198,6 @@ public class XmlProxyConfiguration implements IProxyConfiguration {
 	 * @throws Exception
 	 */
 	public void save (File file) throws ConfigurationException {
-		System.out.println (this.serverList);
-
 		ConfigurationProcessor.getInstance ().save (this, file);
 	}
 }
