@@ -1,4 +1,4 @@
-package org.evilco.mc.flowerpot.authentication;
+package org.evilco.mc.flowerpot.authentication.yggdrasil;
 
 /**
  * @auhtor Johannes Donath <johannesd@evil-co.com>

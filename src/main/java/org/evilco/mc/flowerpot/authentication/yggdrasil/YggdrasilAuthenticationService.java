@@ -1,7 +1,9 @@
-package org.evilco.mc.flowerpot.authentication;
+package org.evilco.mc.flowerpot.authentication.yggdrasil;
 
 import com.google.gson.Gson;
 import io.netty.channel.EventLoop;
+import org.evilco.mc.flowerpot.authentication.AuthenticationCallback;
+import org.evilco.mc.flowerpot.authentication.IAuthenticationService;
 import org.evilco.mc.flowerpot.protocol.EncryptionUtility;
 import org.evilco.mc.flowerpot.protocol.http.HttpClientCallback;
 import org.evilco.mc.flowerpot.protocol.http.SimpleHttpClient;

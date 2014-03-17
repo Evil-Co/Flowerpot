@@ -7,7 +7,7 @@ import io.netty.channel.nio.NioEventLoopGroup;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.evilco.mc.flowerpot.authentication.IAuthenticationService;
-import org.evilco.mc.flowerpot.authentication.YggdrasilAuthenticationService;
+import org.evilco.mc.flowerpot.authentication.yggdrasil.YggdrasilAuthenticationService;
 import org.evilco.mc.flowerpot.configuration.IProxyConfiguration;
 import org.evilco.mc.flowerpot.configuration.xml.XmlProxyConfiguration;
 import org.evilco.mc.flowerpot.metrics.IMetricsService;

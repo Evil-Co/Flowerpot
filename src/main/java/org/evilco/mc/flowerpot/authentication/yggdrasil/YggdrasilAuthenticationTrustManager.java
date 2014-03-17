@@ -1,6 +1,7 @@
-package org.evilco.mc.flowerpot.authentication;
+package org.evilco.mc.flowerpot.authentication.yggdrasil;
 
 import org.evilco.mc.flowerpot.FlowerpotServer;
+import org.evilco.mc.flowerpot.authentication.AbstractTrustManager;
 
 import java.io.IOException;
 import java.security.cert.CertificateException;
