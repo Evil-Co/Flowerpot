@@ -1,5 +1,12 @@
 package org.evilco.mc.flowerpot.chat.message;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.JsonObject;
+import org.evilco.mc.flowerpot.chat.message.serialization.MessageDeserializer;
+import org.evilco.mc.flowerpot.chat.message.serialization.TextMessageSerializer;
+import org.evilco.mc.flowerpot.chat.message.serialization.TranslatableMessageSerializer;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -28,6 +35,11 @@ public class BaseMessage {
 	 * Stores child text elements which inherit the text format.
 	 */
 	protected List<BaseMessage> extra = null;
+
+	/**
+	 * Stores the internal gson instance.
+	 */
+	protected static volatile Gson gson;
 
 	/**
 	 * Stores the hover event.
@@ -60,6 +72,26 @@ public class BaseMessage {
 	protected Boolean underlined = null;
 
 	/**
+	 * Static Initialization.
+	 */
+	static {
+		GsonBuilder builder = new GsonBuilder ();
+
+		// register adapters
+		builder.registerTypeAdapter (TextMessage.class, new TextMessageSerializer ());
+		builder.registerTypeAdapter (TranslatableMessage.class, new TranslatableMessageSerializer ());
+		builder.registerTypeAdapter (BaseMessage.class, new MessageDeserializer ());
+
+		// create gson instance
+		gson = builder.create ();
+	}
+
+	/**
+	 * Constructs a new BaseMessage.
+	 */
+	public BaseMessage () { }
+
+	/**
 	 * Adds a new child element.
 	 * @param value
 	 */
@@ -69,6 +101,15 @@ public class BaseMessage {
 
 		value.setParent (this);
 		this.extra.add (value);
+	}
+
+	/**
+	 * De-Serializes a message.
+	 * @param json
+	 * @return
+	 */
+	public static BaseMessage deserialize (String json) {
+		return gson.fromJson (json, BaseMessage.class);
 	}
 
 	/**
@@ -87,6 +128,14 @@ public class BaseMessage {
 	public ChatColor getColor () {
 		if (this.color == null && this.parent != null) return this.parent.getColor ();
 		return this.color;
+	}
+
+	/**
+	 * Returns all appended components.
+	 * @return
+	 */
+	public List<BaseMessage> getExtra () {
+		return this.extra;
 	}
 
 	/**
