@@ -49,9 +49,11 @@ public enum ConnectionState {
 		 * Static Initialization
 		 */
 		{
+			INBOUND.registerPacket (0x00, PingPacket.class);
 			// INBOUND.registerPacket (0x01, ChatPacket.class); // TODO
 			INBOUND.registerPacket (0x17, PluginMessagePacket.class);
 
+			OUTBOUND.registerPacket (0x00, PingPacket.class);
 			OUTBOUND.registerPacket (0x02, ChatPacket.class);
 			OUTBOUND.registerPacket (0x3F, PluginMessagePacket.class);
 			OUTBOUND.registerPacket (0x40, KickPacket.class);
