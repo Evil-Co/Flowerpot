@@ -1,6 +1,7 @@
 package org.evilco.mc.flowerpot.user;
 
 import io.netty.channel.Channel;
+import org.evilco.mc.flowerpot.chat.channel.ChatChannel;
 import org.evilco.mc.flowerpot.protocol.packet.AbstractPacket;
 
 /**
@@ -13,6 +14,11 @@ public class User {
 	 * Stores the connection channel.
 	 */
 	protected Channel channel;
+
+	/**
+	 * Stores the chat channel the user is currently in.
+	 */
+	protected ChatChannel chatChannel = null;
 
 	/**
 	 * Stores the userID.
@@ -44,6 +50,14 @@ public class User {
 	}
 
 	/**
+	 * Returns the chat channel the user is in.
+	 * @return
+	 */
+	public ChatChannel getChatChannel () {
+		return this.chatChannel;
+	}
+
+	/**
 	 * Returns the user ID.
 	 * @return
 	 */
@@ -65,5 +79,13 @@ public class User {
 	 */
 	public void sendPacket (AbstractPacket packet) {
 		this.getChannel ().writeAndFlush (packet);
+	}
+
+	/**
+	 * Sets a new chat channel.
+	 * @param chatChannel
+	 */
+	public void setChatChannel (ChatChannel chatChannel) {
+		this.chatChannel = chatChannel;
 	}
 }

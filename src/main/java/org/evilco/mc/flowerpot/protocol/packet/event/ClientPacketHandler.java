@@ -121,6 +121,23 @@ public class ClientPacketHandler {
 	}
 
 	/**
+	 * Handles chat messages.
+	 * @param channel
+	 * @param packet
+	 */
+	@PacketHandler (priority = PacketHandlerPriority.LOWEST)
+	public void handle (Channel channel, ChatPacket packet) {
+		// get user
+		User user = FlowerpotServer.getInstance ().getUserManager ().getUser (getUsername (channel));
+
+		// check channel
+		if (user.getChatChannel () != null) {
+			// send message to channel
+			user.getChatChannel ().sendMessage (packet);
+		}
+	}
+
+	/**
 	 * Handles encryption response packets.
 	 * @param channel
 	 * @param packet

@@ -8,6 +8,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.evilco.mc.flowerpot.authentication.IAuthenticationService;
 import org.evilco.mc.flowerpot.authentication.yggdrasil.YggdrasilAuthenticationService;
+import org.evilco.mc.flowerpot.chat.channel.ChatChannelManager;
 import org.evilco.mc.flowerpot.configuration.IProxyConfiguration;
 import org.evilco.mc.flowerpot.configuration.xml.XmlProxyConfiguration;
 import org.evilco.mc.flowerpot.metrics.IMetricsService;
@@ -72,6 +73,11 @@ public class FlowerpotServer {
 	 * Stores the selected authentication service.
 	 */
 	protected IAuthenticationService authenticationService;
+
+	/**
+	 * Stores the channel manager.
+	 */
+	protected ChatChannelManager channelManager;
 
 	/**
 	 * Stores the event manager for the proxy.
@@ -165,6 +171,7 @@ public class FlowerpotServer {
 		this.packetManager = new PacketManager ();
 		this.eventManager = new EventManager ();
 		this.userManager = new UserManager ();
+		this.channelManager = new ChatChannelManager ();
 
 		// create thread groups
 		this.threadGroupWorker = new NioEventLoopGroup ();
@@ -218,6 +225,14 @@ public class FlowerpotServer {
 	 */
 	public IAuthenticationService getAuthenticationService () {
 		return this.authenticationService;
+	}
+
+	/**
+	 * Returns the currently active chat channel manager.
+	 * @return
+	 */
+	public ChatChannelManager getChannelManager () {
+		return this.channelManager;
 	}
 
 	/**
