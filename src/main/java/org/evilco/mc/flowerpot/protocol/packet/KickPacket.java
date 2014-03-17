@@ -2,8 +2,8 @@ package org.evilco.mc.flowerpot.protocol.packet;
 
 import com.google.gson.Gson;
 import io.netty.buffer.ByteBuf;
-import org.evilco.mc.flowerpot.chat.BaseMessage;
-import org.evilco.mc.flowerpot.chat.TextMessage;
+import org.evilco.mc.flowerpot.chat.message.BaseMessage;
+import org.evilco.mc.flowerpot.chat.message.TextMessage;
 
 /**
  * @auhtor Johannes Donath <johannesd@evil-co.com>

@@ -1,7 +1,7 @@
 package org.evilco.mc.flowerpot.protocol.packet.data;
 
 import org.evilco.mc.flowerpot.FlowerpotServer;
-import org.evilco.mc.flowerpot.chat.TextMessage;
+import org.evilco.mc.flowerpot.chat.message.TextMessage;
 
 /**
  * @auhtor Johannes Donath <johannesd@evil-co.com>
