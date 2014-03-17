@@ -68,7 +68,7 @@ public class StatusResponse {
 		/**
 		 * Defines the protocol version.
 		 */
-		public int protocol = 4; // XXX: Update depending on latest release
+		public int protocol = 4;
 
 		/**
 		 * Constructs a new Version.

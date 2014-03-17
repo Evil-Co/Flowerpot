@@ -378,6 +378,7 @@ public class ClientPacketHandler {
 		// TODO: Add missing properties
 		response.favicon = FlowerpotServer.getInstance ().getEncodedServerIcon ();
 		response.players.online = FlowerpotServer.getInstance ().getUserManager ().getUserCount ();
+		response.version.protocol = ((ICapability<Integer>) server.getCapability (MinecraftServer.CAPABILITY_PROTOCOL)).get ();
 
 		// pass data to description
 		response.description.setText (String.format (response.description.getText (), FlowerpotServer.VERSION, FlowerpotServer.BUILD));
