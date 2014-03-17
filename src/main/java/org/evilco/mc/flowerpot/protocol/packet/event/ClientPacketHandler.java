@@ -133,7 +133,7 @@ public class ClientPacketHandler {
 		// check channel
 		if (user.getChatChannel () != null) {
 			// send message to channel
-			user.getChatChannel ().sendMessage (packet);
+			user.getChatChannel ().sendMessage (packet.getMessage ());
 		}
 	}
 
