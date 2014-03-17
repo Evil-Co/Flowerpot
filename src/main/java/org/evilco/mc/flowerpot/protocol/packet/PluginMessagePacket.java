@@ -19,6 +19,11 @@ public class PluginMessagePacket extends AbstractPacket {
 	public static final String MINECRAFT_CHANNEL_REGISTER = "REGISTER";
 
 	/**
+	 * Defines the Flowerpot server communication channel name.
+	 */
+	public static final String FLOWERPOT_CHANNEL = "Flowerpot";
+
+	/**
 	 * Stores the channel registrations required for Forge.
 	 */
 	public static final String[] FORGE_CHANNEL_REGISTER = new String[] { "FML|HS", "FML" };
