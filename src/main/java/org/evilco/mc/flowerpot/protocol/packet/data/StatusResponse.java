@@ -56,6 +56,11 @@ public class StatusResponse {
 	public static class Version {
 
 		/**
+		 * Indicates that Flowerpot is used.
+		 */
+		public boolean flowerpot = true;
+
+		/**
 		 * Defines the game version.
 		 */
 		public String name;
