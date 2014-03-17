@@ -3,6 +3,7 @@ package org.evilco.mc.flowerpot.chat.message;
 import com.google.common.base.Function;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Maps;
+import com.google.gson.annotations.SerializedName;
 
 import java.util.Map;
 import java.util.regex.Pattern;
@@ -12,27 +13,52 @@ import java.util.regex.Pattern;
  * @copyright Copyright (C) 2014 Evil-Co <http://www.evil-co.org>
  */
 public enum ChatColor {
+	@SerializedName ("black")
 	BLACK ('0'),
+	@SerializedName ("dark_blue")
 	DARK_BLUE ('1'),
+	@SerializedName ("dark_green")
 	DARK_GREEN ('2'),
+	@SerializedName ("dark_aqua")
 	DARK_AQUA ('3'),
+	@SerializedName ("dark_red")
 	DARK_RED ('4'),
+	@SerializedName ("dark_purple")
 	DARK_PURPLE ('5'),
+	@SerializedName ("gold")
 	GOLD ('6'),
+	@SerializedName ("gray")
 	GRAY ('7'),
+	@SerializedName ("dark_gray")
 	DARK_GRAY ('8'),
+	@SerializedName ("blue")
 	BLUE ('9'),
+	@SerializedName ("green")
 	GREEN ('a'),
+	@SerializedName ("aqua")
 	AQUA ('b'),
+	@SerializedName ("red")
 	RED ('c'),
+	@SerializedName ("light_purple")
 	LIGHT_PURPLE ('d'),
+	@SerializedName ("yellow")
 	YELLOW ('e'),
+	@SerializedName ("white")
 	WHITE ('f'),
+
+	// All colors as of this point are here for legacy purposes.
+
+	@SerializedName ("obfuscated")
 	OBFUSCATED ('k'),
+	@SerializedName ("bold")
 	BOLD ('l'),
+	@SerializedName ("strikethrough")
 	STRIKETHROUGH ('m'),
+	@SerializedName ("underline")
 	UNDERLINE ('n'),
+	@SerializedName ("italic")
 	ITALIC ('o'),
+	@SerializedName ("reset")
 	RESET ('r');
 
 	/**
