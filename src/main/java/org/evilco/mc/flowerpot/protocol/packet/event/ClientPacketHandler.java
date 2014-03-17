@@ -25,8 +25,10 @@ import org.evilco.mc.flowerpot.server.capability.CapabilityKey;
 import org.evilco.mc.flowerpot.server.capability.DefaultCapability;
 import org.evilco.mc.flowerpot.server.capability.ICapability;
 import org.evilco.mc.flowerpot.server.listener.ServerListener;
+import org.evilco.mc.flowerpot.user.User;
 
 import javax.crypto.SecretKey;
+import java.security.MessageDigest;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
@@ -160,7 +162,17 @@ public class ClientPacketHandler {
 				if (uuid == null)
 					channel.writeAndFlush (new KickPacket (FlowerpotServer.getInstance ().getTranslation ("disconnect.authenticationFailure")));
 				else {
-					// TODO: Kick already connected players with the same name
+					// kick existing players
+					if (FlowerpotServer.getInstance ().getUserManager ().hasUser (username)) {
+						// send kick packet
+						FlowerpotServer.getInstance ().getUserManager ().getUser (username).getChannel ().writeAndFlush (new KickPacket (FlowerpotServer.getInstance ().getTranslation ("disconnect.sessionRenew")));
+
+						// close connection
+						FlowerpotServer.getInstance ().getUserManager ().getUser (username).getChannel ().close ();
+					}
+
+					// register new player
+					FlowerpotServer.getInstance ().getUserManager ().addUser (new User (channel, username, uuid));
 
 					// fire event
 					try {
@@ -280,6 +292,21 @@ public class ClientPacketHandler {
 			// fire event
 			FlowerpotServer.getInstance ().getEventManager ().fireEvent (new LoginSuccessEvent ());
 
+			// kick existing players
+			if (FlowerpotServer.getInstance ().getUserManager ().hasUser (username)) {
+				// send kick packet
+				FlowerpotServer.getInstance ().getUserManager ().getUser (username).getChannel ().writeAndFlush (new KickPacket (FlowerpotServer.getInstance ().getTranslation ("disconnect.sessionRenew")));
+
+				// close connection
+				FlowerpotServer.getInstance ().getUserManager ().getUser (username).getChannel ().close ();
+			}
+
+			// generate UUID
+			MessageDigest digest = MessageDigest.getInstance ("SHA-1");
+
+			// register new player
+			FlowerpotServer.getInstance ().getUserManager ().addUser (new User (channel, username, "offline:" + UUID.nameUUIDFromBytes (digest.digest (username.getBytes ("UTF-8"))).toString ()));
+
 			// write success packet
 			channel.writeAndFlush (new LoginSuccessPacket (username, UUID.randomUUID ().toString ()));
 		} else {
@@ -347,9 +374,10 @@ public class ClientPacketHandler {
 		// create data object
 		StatusResponse response = new StatusResponse ();
 
-		// add encoded favicon
+		// add metadata
 		// TODO: Add missing properties
 		response.favicon = FlowerpotServer.getInstance ().getEncodedServerIcon ();
+		response.players.online = FlowerpotServer.getInstance ().getUserManager ().getUserCount ();
 
 		// pass data to description
 		response.description.setText (String.format (response.description.getText (), FlowerpotServer.VERSION, FlowerpotServer.BUILD));

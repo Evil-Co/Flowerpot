@@ -51,6 +51,12 @@ public class ClientChannelHandler extends ChannelHandlerAdapter {
 			client.getClientChannel ().close ();
 		}
 
+		// remove from user list
+		String username = ClientPacketHandler.getUsername (ctx.channel ());
+
+		// remove users from user manager
+		if (username != null && FlowerpotServer.getInstance ().getUserManager ().hasUser (username)) FlowerpotServer.getInstance ().getUserManager ().removeUser (username);
+
 		// call parent
 		super.channelInactive (ctx);
 	}

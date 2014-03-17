@@ -18,6 +18,7 @@ import org.evilco.mc.flowerpot.protocol.packet.event.ClientPacketHandler;
 import org.evilco.mc.flowerpot.protocol.packet.event.PacketManager;
 import org.evilco.mc.flowerpot.server.MinecraftServer;
 import org.evilco.mc.flowerpot.server.listener.ServerListener;
+import org.evilco.mc.flowerpot.user.UserManager;
 
 import java.io.File;
 import java.io.IOException;
@@ -139,6 +140,11 @@ public class FlowerpotServer {
 	protected EventLoopGroup threadGroupWorker;
 
 	/**
+	 * Stores the server user manager.
+	 */
+	protected UserManager userManager;
+
+	/**
 	 * Constructs a new FlowerpotServer.
 	 * @param configuration
 	 */
@@ -157,6 +163,7 @@ public class FlowerpotServer {
 		this.configuration = configuration;
 		this.packetManager = new PacketManager ();
 		this.eventManager = new EventManager ();
+		this.userManager = new UserManager ();
 
 		// create thread groups
 		this.threadGroupWorker = new NioEventLoopGroup ();
@@ -298,6 +305,14 @@ public class FlowerpotServer {
 		} catch (Exception ex) {
 			this.translation = ResourceBundle.getBundle ("messages", Locale.ENGLISH);
 		}
+	}
+
+	/**
+	 * Returns the server user manager.
+	 * @return
+	 */
+	public UserManager getUserManager () {
+		return this.userManager;
 	}
 
 	/**
