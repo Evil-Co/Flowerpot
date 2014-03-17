@@ -11,9 +11,6 @@ public abstract class AbstractCapability<T> implements ICapability<T> {
 	 */
 	@Override
 	public boolean equals (ICapability obj) {
-		System.out.println (obj);
-		System.out.println (obj.get ());
-
 		if (this.get () == null && obj.get () == null) return true;
 		if (this.get () != null && obj.get () != null) return true;
 		if (this.get () != null && obj.get () != null && this.get ().equals (obj.get ())) return true;
