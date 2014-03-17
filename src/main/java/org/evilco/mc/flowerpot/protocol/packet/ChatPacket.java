@@ -45,6 +45,22 @@ public class ChatPacket extends AbstractPacket {
 	}
 
 	/**
+	 * Returns the chat message.
+	 * @return
+	 */
+	public BaseMessage getMessage () {
+		return this.message;
+	}
+
+	/**
+	 * Sets a new message.
+	 * @param message
+	 */
+	public void setMessage (BaseMessage message) {
+		this.message = message;
+	}
+
+	/**
 	 * {@inheritDoc}
 	 */
 	@Override
