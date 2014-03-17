@@ -16,6 +16,7 @@ import org.evilco.mc.flowerpot.metrics.mcstats.MCStatsMetricsService;
 import org.evilco.mc.flowerpot.protocol.EncryptionUtility;
 import org.evilco.mc.flowerpot.protocol.packet.event.ClientPacketHandler;
 import org.evilco.mc.flowerpot.protocol.packet.event.PacketManager;
+import org.evilco.mc.flowerpot.protocol.packet.event.ServerPacketHandler;
 import org.evilco.mc.flowerpot.server.MinecraftServer;
 import org.evilco.mc.flowerpot.server.listener.ServerListener;
 import org.evilco.mc.flowerpot.user.UserManager;
@@ -170,6 +171,7 @@ public class FlowerpotServer {
 
 		// register default handlers
 		this.packetManager.registerHandler (new ClientPacketHandler ());
+		this.packetManager.registerHandler (new ServerPacketHandler ());
 
 		// enable metrics
 		MCStatsMetricsService metricsService = new MCStatsMetricsService ();

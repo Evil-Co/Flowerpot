@@ -2,11 +2,14 @@ package org.evilco.mc.flowerpot.protocol;
 
 import io.netty.channel.ChannelHandlerAdapter;
 import io.netty.channel.ChannelHandlerContext;
+import io.netty.channel.ChannelPromise;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.evilco.mc.flowerpot.FlowerpotServer;
 import org.evilco.mc.flowerpot.protocol.codec.MinecraftCodec;
 import org.evilco.mc.flowerpot.protocol.packet.*;
 import org.evilco.mc.flowerpot.protocol.packet.data.HandshakeState;
+import org.evilco.mc.flowerpot.protocol.packet.event.PacketHandlerSide;
 import org.evilco.mc.flowerpot.server.MinecraftClient;
 
 /**
@@ -99,29 +102,8 @@ public class ServerChannelHandler extends ChannelHandlerAdapter {
 		// cast
 		AbstractPacket message = ((AbstractPacket) msg);
 
-		// check for encryption requests
-		if (msg instanceof EncryptionRequestPacket) {
-			// log
-			logger.fatal ("Child server requested protocol encryption. Protocol encryption is not available when using Flowerpot. Please switch all of your servers to offline mode.");
-
-			// packet has been handled
-			message.setHandled (true);
-
-			// close
-			throw new BadPacketException ("Encryption is not supported when using Flowerpot");
-		}
-
-		// check for login success packet
-		if (msg instanceof LoginSuccessPacket) {
-			// log
-			logger.info ("Logged in successfully. Relay is ready.");
-
-			// update state
-			MinecraftCodec.setProtocol (ctx, ConnectionState.GAME);
-
-			// packet has been handled
-			message.setHandled (true);
-		}
+		// handle packet
+		FlowerpotServer.getInstance ().getPacketManager ().handlePacket (ctx.channel (), message, PacketHandlerSide.SERVER_TO_PROXY);
 
 		// relay unhandled packets
 		if (!message.hasHandled ()) this.client.sendPacket (message);
@@ -133,5 +115,14 @@ public class ServerChannelHandler extends ChannelHandlerAdapter {
 		this.client.getParent ().close ();
 
 		logger.warn ("Disconnected client from server due to internal exception.", cause);
+	}
+
+	@Override
+	public void write (ChannelHandlerContext ctx, Object msg, ChannelPromise promise) throws Exception {
+		// handle packet
+		if (msg instanceof AbstractPacket) FlowerpotServer.getInstance ().getPacketManager ().handlePacket (ctx.channel (), ((AbstractPacket) msg), PacketHandlerSide.PROXY_TO_SERVER);
+
+		// write data
+		super.write (ctx, msg, promise);
 	}
 }
