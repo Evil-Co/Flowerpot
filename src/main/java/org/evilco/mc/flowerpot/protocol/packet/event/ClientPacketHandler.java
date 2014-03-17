@@ -316,6 +316,22 @@ public class ClientPacketHandler {
 	}
 
 	/**
+	 * Handles plugin messages.
+	 * @param channel
+	 * @param packet
+	 */
+	@PacketHandler (priority = PacketHandlerPriority.LOWEST)
+	public void handle (Channel channel, PluginMessagePacket packet) {
+		if (packet.getChannel ().equals (PluginMessagePacket.FLOWERPOT_CHANNEL)) {
+			// create kick packet
+			channel.writeAndFlush (new KickPacket ("One of your mods tried to use the Flowerpot channel."));
+
+			// packet has been handled
+			packet.setHandled (true);
+		}
+	}
+
+	/**
 	 * Handles status request.
 	 * @param channel
 	 * @param packet
