@@ -6,7 +6,7 @@ import io.netty.buffer.ByteBuf;
  * @auhtor Johannes Donath <johannesd@evil-co.com>
  * @copyright Copyright (C) 2014 Evil-Co <http://www.evil-co.org>
  */
-public class PingPacket extends AbstractPacket {
+public class StatusPingPacket extends AbstractPacket {
 
 	/**
 	 * Stores the ping timestamp.
@@ -14,18 +14,18 @@ public class PingPacket extends AbstractPacket {
 	protected long timestamp;
 
 	/**
-	 * Constructs a new PingPacket.
+	 * Constructs a new StatusPingPacket.
 	 */
-	public PingPacket () {
+	public StatusPingPacket () {
 		super ();
 
 		this.timestamp = (System.currentTimeMillis () / 1000L);
 	}
 
 	/**
-	 * Constructs a new PingPacket.
+	 * Constructs a new StatusPingPacket.
 	 */
-	public PingPacket (ByteBuf in) {
+	public StatusPingPacket (ByteBuf in) {
 		super (in);
 
 		this.timestamp = in.readLong ();

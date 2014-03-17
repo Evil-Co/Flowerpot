@@ -331,7 +331,7 @@ public class ClientPacketHandler {
 	 * @param packet
 	 */
 	@PacketHandler (priority = PacketHandlerPriority.LOWEST)
-	public void handle (Channel channel, PingPacket packet) {
+	public void handle (Channel channel, StatusPingPacket packet) {
 		// log
 		logger.debug ("Received ping from %s. Replying with pong (%s).", channel.remoteAddress ().toString (), packet.getTimestamp ());
 

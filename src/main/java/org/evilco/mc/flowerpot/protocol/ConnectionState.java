@@ -21,11 +21,11 @@ public enum ConnectionState {
 		 */
 		{
 			INBOUND.registerPacket (0x00, StatusRequestPacket.class);
-			INBOUND.registerPacket (0x01, PingPacket.class);
+			INBOUND.registerPacket (0x01, StatusPingPacket.class);
 			INBOUND.registerPacket (0x17, PluginMessagePacket.class);
 
 			OUTBOUND.registerPacket (0x00, StatusResponsePacket.class);
-			OUTBOUND.registerPacket (0x01, PingPacket.class);
+			OUTBOUND.registerPacket (0x01, StatusPingPacket.class);
 			OUTBOUND.registerPacket (0x3F, PluginMessagePacket.class);
 		}
 	},
@@ -49,11 +49,11 @@ public enum ConnectionState {
 		 * Static Initialization
 		 */
 		{
-			INBOUND.registerPacket (0x00, PingPacket.class);
-			// INBOUND.registerPacket (0x01, ChatPacket.class); // TODO
+			// INBOUND.registerPacket (0x00, PingPacket.class);
+			INBOUND.registerPacket (0x01, ChatPacket.class);
 			INBOUND.registerPacket (0x17, PluginMessagePacket.class);
 
-			OUTBOUND.registerPacket (0x00, PingPacket.class);
+			// OUTBOUND.registerPacket (0x00, PingPacket.class);
 			OUTBOUND.registerPacket (0x02, ChatPacket.class);
 			OUTBOUND.registerPacket (0x3F, PluginMessagePacket.class);
 			OUTBOUND.registerPacket (0x40, KickPacket.class);
