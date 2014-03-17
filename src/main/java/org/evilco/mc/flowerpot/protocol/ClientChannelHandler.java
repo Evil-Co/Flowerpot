@@ -7,6 +7,7 @@ import io.netty.handler.timeout.ReadTimeoutException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.evilco.mc.flowerpot.FlowerpotServer;
+import org.evilco.mc.flowerpot.event.connection.DisconnectEvent;
 import org.evilco.mc.flowerpot.protocol.packet.AbstractPacket;
 import org.evilco.mc.flowerpot.protocol.packet.event.ClientPacketHandler;
 import org.evilco.mc.flowerpot.protocol.packet.event.PacketHandlerSide;
@@ -53,6 +54,9 @@ public class ClientChannelHandler extends ChannelHandlerAdapter {
 
 		// remove from user list
 		String username = ClientPacketHandler.getUsername (ctx.channel ());
+
+		// fire disconnect event
+		FlowerpotServer.getInstance ().getEventManager ().fireEvent (new DisconnectEvent (FlowerpotServer.getInstance ().getUserManager ().getUser (username)));
 
 		// remove users from user manager
 		if (username != null && FlowerpotServer.getInstance ().getUserManager ().hasUser (username)) FlowerpotServer.getInstance ().getUserManager ().removeUser (username);
