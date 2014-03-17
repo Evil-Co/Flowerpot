@@ -13,6 +13,13 @@ public class TextMessage extends BaseMessage {
 
 	/**
 	 * Constructs a new TextMessage.
+	 */
+	public TextMessage () {
+		super ();
+	}
+
+	/**
+	 * Constructs a new TextMessage.
 	 * @param text
 	 */
 	public TextMessage (String text) {
