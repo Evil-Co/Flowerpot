@@ -3,6 +3,7 @@ package org.evilco.mc.flowerpot.protocol.packet;
 import com.google.gson.Gson;
 import io.netty.buffer.ByteBuf;
 import org.evilco.mc.flowerpot.chat.message.BaseMessage;
+import org.evilco.mc.flowerpot.chat.message.TextMessage;
 
 /**
  * @auhtor Johannes Donath <johannesd@evil-co.com>
@@ -36,7 +37,11 @@ public class ChatPacket extends AbstractPacket {
 	public ChatPacket (ByteBuf in) {
 		super (in);
 
-		// TODO: Implement packet decoding
+		// read json string
+		String json = PacketUtility.readString (in);
+
+		// decode message
+		this.message = BaseMessage.deserialize (json);
 	}
 
 	/**
