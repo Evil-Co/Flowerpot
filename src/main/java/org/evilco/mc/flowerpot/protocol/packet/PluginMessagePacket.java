@@ -92,6 +92,22 @@ public class PluginMessagePacket extends AbstractPacket {
 	}
 
 	/**
+	 * Returns the channel the packet resides in.
+	 * @return
+	 */
+	public String getChannel () {
+		return this.channel;
+	}
+
+	/**
+	 * Returns the packet data.
+	 * @return
+	 */
+	public ByteBuf getData () {
+		return this.data;
+	}
+
+	/**
 	 * {@inheritDoc}
 	 */
 	@Override
