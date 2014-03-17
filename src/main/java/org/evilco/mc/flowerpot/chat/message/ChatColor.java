@@ -1,4 +1,4 @@
-package org.evilco.mc.flowerpot.chat;
+package org.evilco.mc.flowerpot.chat.message;
 
 import com.google.common.base.Function;
 import com.google.common.collect.ImmutableList;
