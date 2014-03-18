@@ -12,18 +12,18 @@ public interface INetworkHandler {
 	 * Returns the assigned priority.
 	 * @return
 	 */
-	public HandlerPriority getPriority ();
+	public NetworkPriority getPriority ();
 
 	/**
 	 * Returns the assigned handler side.
 	 * @return
 	 */
-	public HandlerSide getSide ();
+	public NetworkSide getSide ();
 
 	/**
 	 * Invokes the network handler.
 	 * @param packet
 	 * @param side
 	 */
-	public void invoke (IPacket packet, HandlerSide side);
+	public void invoke (IPacket packet, NetworkSide side);
 }

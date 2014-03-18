@@ -4,7 +4,7 @@ package com.evilco.flowerpot.api.network;
  * @auhtor Johannes Donath <johannesd@evil-co.com>
  * @copyright Copyright (C) 2014 Evil-Co <http://www.evil-co.org>
  */
-public enum HandlerPriority {
+public enum NetworkPriority {
 	LOWEST (-2),
 	LOW (-1),
 	NORMAL (0),
@@ -18,10 +18,10 @@ public enum HandlerPriority {
 	public final int value;
 
 	/**
-	 * Constructs a new HandlerPriority.
+	 * Constructs a new NetworkPriority.
 	 * @param value
 	 */
-	private HandlerPriority (int value) {
+	private NetworkPriority (int value) {
 		this.value = value;
 	}
 }

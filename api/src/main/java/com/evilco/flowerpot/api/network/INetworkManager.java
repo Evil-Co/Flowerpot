@@ -15,20 +15,20 @@ public interface INetworkManager {
 	 * @param packet
 	 * @param side
 	 */
-	public void handlePacket (IPacket packet, HandlerSide side);
+	public void handlePacket (IPacket packet, NetworkSide side);
 
 	/**
 	 * Registers a new network handler.
 	 * @param handler
 	 */
-	public void registerHandler (INetworkHandler handler, HandlerSide side, HandlerPriority priority);
+	public void registerHandler (INetworkHandler handler, NetworkSide side, NetworkPriority priority);
 
 	/**
 	 * Registers a new network handler.
 	 * @param object
 	 * @param method
 	 */
-	public void registerHandler (Object object, Method method, HandlerSide side, HandlerPriority priority);
+	public void registerHandler (Object object, Method method, NetworkSide side, NetworkPriority priority);
 
 	/**
 	 * Registers a new network handler object.
