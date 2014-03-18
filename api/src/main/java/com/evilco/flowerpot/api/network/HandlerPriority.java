@@ -1,10 +1,10 @@
-package com.evilco.flowerpot.proxy.protocol.packet.event;
+package com.evilco.flowerpot.api.network;
 
 /**
  * @auhtor Johannes Donath <johannesd@evil-co.com>
  * @copyright Copyright (C) 2014 Evil-Co <http://www.evil-co.org>
  */
-public enum PacketHandlerPriority {
+public enum HandlerPriority {
 	LOWEST (-2),
 	LOW (-1),
 	NORMAL (0),
@@ -18,10 +18,10 @@ public enum PacketHandlerPriority {
 	public final int value;
 
 	/**
-	 * Constructs a new PacketHandlerPriority.
+	 * Constructs a new HandlerPriority.
 	 * @param value
 	 */
-	private PacketHandlerPriority (int value) {
+	private HandlerPriority (int value) {
 		this.value = value;
 	}
 }

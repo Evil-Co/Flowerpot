@@ -1,4 +1,4 @@
-package com.evilco.flowerpot.proxy.metrics;
+package com.evilco.flowerpot.api.metrics;
 
 import java.util.UUID;
 
