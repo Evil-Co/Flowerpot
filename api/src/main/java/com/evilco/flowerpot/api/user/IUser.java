@@ -1,6 +1,7 @@
 package com.evilco.flowerpot.api.user;
 
 import com.evilco.flowerpot.api.chat.IChatChannel;
+import com.evilco.flowerpot.api.network.packet.IPacket;
 
 /**
  * @auhtor Johannes Donath <johannesd@evil-co.com>
@@ -36,7 +37,7 @@ public interface IUser {
 	 * Sends a packet to the client.
 	 * @param packet
 	 */
-	public void sendPacket (AbstractPacket packet);
+	public void sendPacket (IPacket packet);
 
 	/**
 	 * Sets a new display name.
