@@ -1,4 +1,4 @@
-package com.evilco.flowerpot.proxy.authentication;
+package com.evilco.flowerpot.api.authentication;
 
 import io.netty.channel.EventLoop;
 
