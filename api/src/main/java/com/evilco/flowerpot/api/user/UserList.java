@@ -1,4 +1,4 @@
-package api.user;
+package com.evilco.flowerpot.api.user;
 
 import java.util.ArrayList;
 import java.util.Collection;

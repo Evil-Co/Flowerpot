@@ -1,4 +1,4 @@
-package api.chat.message.serialization;
+package com.evilco.flowerpot.api.chat.message.serialization;
 
 import com.evilco.flowerpot.api.chat.message.BaseMessage;
 import com.evilco.flowerpot.api.chat.message.TextMessage;

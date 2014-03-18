@@ -1,4 +1,4 @@
-package api.user;
+package com.evilco.flowerpot.api.user;
 
 import com.evilco.flowerpot.api.chat.IChatChannel;
 
