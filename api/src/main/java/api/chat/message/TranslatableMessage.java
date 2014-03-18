@@ -1,4 +1,4 @@
-package com.evilco.flowerpot.api.chat.message;
+package api.chat.message;
 
 import java.util.ArrayList;
 import java.util.List;

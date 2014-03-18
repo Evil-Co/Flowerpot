@@ -1,4 +1,4 @@
-package com.evilco.flowerpot.api.chat.message;
+package api.chat.message;
 
 import com.google.gson.annotations.SerializedName;
 
