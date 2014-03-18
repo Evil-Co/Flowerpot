@@ -1,4 +1,4 @@
-package com.evilco.flowerpot.proxy.chat.message;
+package com.evilco.flowerpot.api.chat.message;
 
 import java.util.ArrayList;
 import java.util.List;

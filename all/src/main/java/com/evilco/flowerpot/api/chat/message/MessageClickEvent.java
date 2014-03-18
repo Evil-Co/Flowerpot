@@ -1,4 +1,4 @@
-package com.evilco.flowerpot.proxy.chat.message;
+package com.evilco.flowerpot.api.chat.message;
 
 /**
  * @auhtor Johannes Donath <johannesd@evil-co.com>

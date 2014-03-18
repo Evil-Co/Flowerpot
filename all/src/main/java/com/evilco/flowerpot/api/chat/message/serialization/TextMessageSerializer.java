@@ -1,7 +1,7 @@
-package com.evilco.flowerpot.proxy.chat.message.serialization;
+package com.evilco.flowerpot.api.chat.message.serialization;
 
+import com.evilco.flowerpot.api.chat.message.TextMessage;
 import com.google.gson.*;
-import com.evilco.flowerpot.proxy.chat.message.TextMessage;
 
 import java.lang.reflect.Type;
 

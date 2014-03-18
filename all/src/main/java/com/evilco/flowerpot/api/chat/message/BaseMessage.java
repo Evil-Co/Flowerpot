@@ -1,10 +1,10 @@
-package com.evilco.flowerpot.proxy.chat.message;
+package com.evilco.flowerpot.api.chat.message;
 
+import com.evilco.flowerpot.api.chat.message.serialization.MessageDeserializer;
+import com.evilco.flowerpot.api.chat.message.serialization.TextMessageSerializer;
+import com.evilco.flowerpot.api.chat.message.serialization.TranslatableMessageSerializer;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.evilco.flowerpot.proxy.chat.message.serialization.MessageDeserializer;
-import com.evilco.flowerpot.proxy.chat.message.serialization.TextMessageSerializer;
-import com.evilco.flowerpot.proxy.chat.message.serialization.TranslatableMessageSerializer;
 
 import java.util.ArrayList;
 import java.util.List;

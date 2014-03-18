@@ -1,11 +1,11 @@
-package com.evilco.flowerpot.proxy.chat.message.serialization;
+package com.evilco.flowerpot.api.chat.message.serialization;
 
+import com.evilco.flowerpot.api.chat.message.BaseMessage;
+import com.evilco.flowerpot.api.chat.message.ChatColor;
+import com.evilco.flowerpot.api.chat.message.MessageClickEvent;
+import com.evilco.flowerpot.api.chat.message.MessageHoverEvent;
 import com.google.gson.*;
 import com.google.gson.reflect.TypeToken;
-import com.evilco.flowerpot.proxy.chat.message.BaseMessage;
-import com.evilco.flowerpot.proxy.chat.message.ChatColor;
-import com.evilco.flowerpot.proxy.chat.message.MessageClickEvent;
-import com.evilco.flowerpot.proxy.chat.message.MessageHoverEvent;
 
 import java.lang.reflect.Type;
 import java.util.List;

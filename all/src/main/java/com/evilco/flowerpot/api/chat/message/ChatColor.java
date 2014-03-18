@@ -1,4 +1,4 @@
-package com.evilco.flowerpot.proxy.chat.message;
+package com.evilco.flowerpot.api.chat.message;
 
 import com.google.common.base.Function;
 import com.google.common.collect.ImmutableList;
