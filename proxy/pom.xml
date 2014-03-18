@@ -214,7 +214,7 @@
 						<addMavenDescriptor>true</addMavenDescriptor>
 
 						<manifest>
-							<mainClass>org.evilco.mc.flowerpot.FlowerpotServer</mainClass>
+							<mainClass>com.evilco.flowerpot.proxy.FlowerpotServer</mainClass>
 
 							<addClasspath>true</addClasspath>
 							<classpathPrefix>lib/</classpathPrefix>
