@@ -17,4 +17,88 @@
 	<name>Flowerpot API</name>
 	<description>Provides plugin access to the Flowerpot Proxy Suite.</description>
 	<inceptionYear>2014</inceptionYear>
+
+	<!-- Build Properties -->
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+
+		<!-- Signer Settings -->
+		<sign.keyStore>/opt/evilco/keystore</sign.keyStore>
+		<sign.password>changeit</sign.password>
+		<sign.alias>evilco-free</sign.alias>
+	</properties>
+
+	<!-- Build Dependencies -->
+	<dependencies>
+		<!-- GSON -->
+		<dependency>
+			<groupId>com.google.code.gson</groupId>
+			<artifactId>gson</artifactId>
+			<version>2.2.4</version>
+		</dependency>
+
+		<!-- Event Manager -->
+		<dependency>
+			<groupId>com.evilco</groupId>
+			<artifactId>event</artifactId>
+			<version>1.0-SNAPSHOT</version>
+		</dependency>
+	</dependencies>
+
+	<!-- Build Settings -->
+	<build>
+		<!-- Default Setup -->
+		<finalName>${project.groupId}.${project.artifactId}-${project.version}</finalName>
+		<defaultGoal>clean install</defaultGoal>
+
+		<sourceDirectory>${project.basedir}/src/main/java</sourceDirectory>
+		<testSourceDirectory>${project.basedir}/src/test/java</testSourceDirectory>
+
+		<!-- Resources -->
+		<resources>
+			<!-- License -->
+			<resource>
+				<directory>${project.basedir}</directory>
+				<targetPath>.</targetPath>
+				<filtering>false</filtering>
+
+				<includes>
+					<include>LICENSE</include>
+				</includes>
+			</resource>
+		</resources>
+
+		<!-- Build Plugins -->
+		<plugins>
+			<!-- Compiler -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>3.1</version>
+
+				<configuration>
+					<source>1.7</source>
+					<target>1.7</target>
+				</configuration>
+			</plugin>
+
+			<!-- JAR -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-jar-plugin</artifactId>
+				<version>2.4</version>
+
+				<configuration>
+					<archive>
+						<addMavenDescriptor>true</addMavenDescriptor>
+
+						<manifest>
+							<addDefaultSpecificationEntries>true</addDefaultSpecificationEntries>
+							<addDefaultImplementationEntries>true</addDefaultImplementationEntries>
+						</manifest>
+					</archive>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
 </project>
