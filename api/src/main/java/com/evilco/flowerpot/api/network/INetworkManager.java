@@ -21,14 +21,14 @@ public interface INetworkManager {
 	 * Registers a new network handler.
 	 * @param handler
 	 */
-	public void registerHandler (INetworkHandler handler, NetworkSide side, NetworkPriority priority);
+	public void registerHandler (INetworkHandler handler, NetworkSide side, NetworkDirection direction, NetworkPriority priority);
 
 	/**
 	 * Registers a new network handler.
 	 * @param object
 	 * @param method
 	 */
-	public void registerHandler (Object object, Method method, NetworkSide side, NetworkPriority priority);
+	public void registerHandler (Object object, Method method, NetworkSide side, NetworkDirection direction, NetworkPriority priority);
 
 	/**
 	 * Registers a new network handler object.
