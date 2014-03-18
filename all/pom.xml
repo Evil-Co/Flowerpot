@@ -20,11 +20,11 @@
 
 	<!-- Dependencies -->
 	<dependencies>
-		<!-- Proxy Implementation -->
+		<!-- Event Manager -->
 		<dependency>
-			<groupId>com.evilco.flowerpot</groupId>
-			<artifactId>proxy</artifactId>
-			<version>${project.parent.version}</version>
+			<groupId>com.evilco</groupId>
+			<artifactId>event</artifactId>
+			<version>1.0-SNAPSHOT</version>
 		</dependency>
 	</dependencies>
 </project>
