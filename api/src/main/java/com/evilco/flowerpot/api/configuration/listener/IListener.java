@@ -7,6 +7,12 @@ package com.evilco.flowerpot.api.configuration.listener;
 public interface IListener {
 
 	/**
+	 * Binds the listener.
+	 * @throws Exception
+	 */
+	public void bind () throws Exception;
+
+	/**
 	 * Returns the listener hostname.
 	 * @return
 	 */
