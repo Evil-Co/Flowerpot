@@ -3,6 +3,7 @@ package com.evilco.flowerpot.api;
 import com.evilco.event.EventManager;
 import com.evilco.flowerpot.api.authentication.IAuthenticationService;
 import com.evilco.flowerpot.api.chat.IChatManager;
+import com.evilco.flowerpot.api.configuration.IConfiguration;
 import com.evilco.flowerpot.api.network.INetworkManager;
 import com.evilco.flowerpot.api.translation.ITranslationManager;
 import com.evilco.flowerpot.api.user.IUserManager;
