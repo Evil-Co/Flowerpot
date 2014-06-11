@@ -131,5 +131,7 @@
 	</dependencies>
 
 	<!-- Sub-Modules -->
-	<modules></modules>
+	<modules>
+		<module>api</module>
+	</modules>
 </project>
