@@ -16,12 +16,18 @@
 
 package org.evilco.flowerpot.api.chat.message.interaction;
 
+import com.google.gson.annotations.SerializedName;
+
 /**
  * Provides a list of possible message click actions.
  */
 public enum MessageClickEvent {
+	@SerializedName ("open_file")
 	OPEN_FILE,
+	@SerializedName ("open_url")
 	OPEN_URL,
+	@SerializedName ("run_command")
 	RUN_COMMAND,
+	@SerializedName ("suggest_command")
 	SUGGEST_COMMAND
 }
