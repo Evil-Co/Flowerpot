@@ -17,6 +17,7 @@
 package org.evilco.flowerpot.api.chat.message;
 
 import lombok.Getter;
+import lombok.NonNull;
 import lombok.Setter;
 
 /**
@@ -42,7 +43,7 @@ public class TextMessage extends BaseChatMessage {
 	 * Constructs a new TextMessage instance.
 	 * @param text The message content.
 	 */
-	public TextMessage (String text) {
+	public TextMessage (@NonNull String text) {
 		super ();
 
 		this.setText (text);
