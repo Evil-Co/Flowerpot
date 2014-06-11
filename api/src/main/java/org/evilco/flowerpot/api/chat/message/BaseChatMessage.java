@@ -20,9 +20,11 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.SneakyThrows;
 import org.evilco.flowerpot.api.chat.message.interaction.MessageClickEvent;
 import org.evilco.flowerpot.api.chat.message.interaction.MessageHoverEvent;
 
+import java.lang.reflect.Constructor;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -112,6 +114,33 @@ public abstract class BaseChatMessage {
 	}
 
 	/**
+	 * Constructs a new BaseChatMessage instance.
+	 */
+	public BaseChatMessage () { }
+
+	/**
+	 * Copies a BaseChatMessage instance.
+	 * @param message The original message.
+	 */
+	public BaseChatMessage (BaseChatMessage message) {
+		this.setBold (message.getBold ());
+		this.setClickEvent (message.getClickEvent ());
+		this.setHoverEvent (message.getHoverEvent ());
+		this.setItalic (message.getItalic ());
+		this.setObfuscated (message.getObfuscated ());
+		this.setUnderlined (message.getUnderlined ());
+		this.setStrikethrough (message.getStrikethrough ());
+
+		// copy extra
+		for (BaseChatMessage child : message.getExtra ()) {
+			this.addExtra (child.copy ());
+		}
+
+		// normalize
+		this.normalize ();
+	}
+
+	/**
 	 * Adds a new message to the stack.
 	 * @param message The message.
 	 */
@@ -124,6 +153,23 @@ public abstract class BaseChatMessage {
 
 		// set parent
 		message.setParent (this);
+	}
+
+	/**
+	 * Copies the message.
+	 * @return A copied version of the message.
+	 */
+	@SneakyThrows
+	public BaseChatMessage copy () {
+		try {
+			// get constructor
+			Constructor<? extends BaseChatMessage> constructor = this.getClass ().getDeclaredConstructor (this.getClass ());
+
+			// create new instance
+			return constructor.newInstance (this);
+		} catch (NoSuchMethodException ex) {
+			throw new UnsupportedOperationException ("The message implementation " + this.getClass ().getName () + " does not have a copy constructor.");
+		}
 	}
 
 	/**

@@ -61,6 +61,33 @@ public class TranslationMessage extends BaseChatMessage {
 	}
 
 	/**
+	 * Constructs a new TranslationMessage instance.
+	 * @param message The message to copy.
+	 */
+	public TranslationMessage (TranslationMessage message) {
+		super (message);
+
+		this.setTranslate (message.getTranslate ());
+
+		// copy children
+		for (BaseChatMessage child : message.getWith ()) {
+			this.addWith (child.copy ());
+		}
+
+		// normalize
+		this.normalize ();
+	}
+
+	/**
+	 * Adds a new translation argument.
+	 * @param message The message to add.
+	 */
+	public void addWith (BaseChatMessage message) {
+		if (this.with == null) this.with = new ArrayList<BaseChatMessage> ();
+		this.with.add (message);
+	}
+
+	/**
 	 * {@inheritDoc}
 	 */
 	@Override

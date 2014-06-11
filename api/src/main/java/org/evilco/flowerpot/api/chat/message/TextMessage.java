@@ -48,4 +48,14 @@ public class TextMessage extends BaseChatMessage {
 
 		this.setText (text);
 	}
+
+	/**
+	 * Constructs a new TextMessage instance.
+	 * @param message The message to copy.
+	 */
+	public TextMessage (TextMessage message) {
+		super (message);
+
+		this.setText (message.getText ());
+	}
 }
