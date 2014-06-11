@@ -22,7 +22,7 @@ import lombok.Setter;
 /**
  * Represents a text based chat message.
  */
-public class TextMessage {
+public class TextMessage extends BaseChatMessage {
 
 	/**
 	 * Stores the message content.
@@ -34,13 +34,17 @@ public class TextMessage {
 	/**
 	 * Constructs a new empty TextMessage instance.
 	 */
-	public TextMessage () { }
+	public TextMessage () {
+		super ();
+	}
 
 	/**
 	 * Constructs a new TextMessage instance.
 	 * @param text The message content.
 	 */
 	public TextMessage (String text) {
+		super ();
+		
 		this.setText (text);
 	}
 }
