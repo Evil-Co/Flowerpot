@@ -50,7 +50,7 @@ public class TextMessageSerializer extends BaseChatMessageSerializer<TextMessage
 	@Override
 	public JsonElement serialize (TextMessage src, Type typeOfSrc, JsonSerializationContext context) {
 		// get base serialization
-		JsonObject object = ((JsonObject) super.serialize (src, typeOfSrc, context));
+		JsonObject object = super.serialize (src, typeOfSrc, context).getAsJsonObject ();
 
 		// append messages
 		object.add ("text", context.serialize (src.getText ()));
