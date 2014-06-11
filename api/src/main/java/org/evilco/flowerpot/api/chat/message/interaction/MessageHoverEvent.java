@@ -48,8 +48,8 @@ public class MessageHoverEvent {
 	 * @param value The content.
 	 */
 	public MessageHoverEvent (MessageHoverAction action, List<BaseChatMessage> value) {
-		this.action = action;
-		this.value = value;
+		this.setAction (action);
+		this.setValue (value);
 	}
 
 	/**
