@@ -63,6 +63,7 @@ public abstract class BaseChatMessage {
 	/**
 	 * Stores the gson instance used to (de-)serialize messages.
 	 */
+	@Getter
 	protected static final Gson gson;
 
 	/**
