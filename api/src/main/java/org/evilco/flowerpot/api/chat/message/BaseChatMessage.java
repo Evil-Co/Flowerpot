@@ -23,6 +23,8 @@ import lombok.Setter;
 import lombok.SneakyThrows;
 import org.evilco.flowerpot.api.chat.message.interaction.MessageClickEvent;
 import org.evilco.flowerpot.api.chat.message.interaction.MessageHoverEvent;
+import org.evilco.flowerpot.api.chat.message.json.TextMessageSerializer;
+import org.evilco.flowerpot.api.chat.message.json.TranslationMessageSerializer;
 
 import java.lang.reflect.Constructor;
 import java.util.ArrayList;
@@ -107,7 +109,9 @@ public abstract class BaseChatMessage {
 		// create builder
 		GsonBuilder builder = new GsonBuilder ();
 
-		// TODO: Add type adapter
+		// add type adapters
+		builder.registerTypeAdapter (TextMessage.class, new TextMessageSerializer ());
+		builder.registerTypeAdapter (TranslationMessage.class, new TranslationMessageSerializer ());
 
 		// create Gson instance
 		gson = builder.create ();
