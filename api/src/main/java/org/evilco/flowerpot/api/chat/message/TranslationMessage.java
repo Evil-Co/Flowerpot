@@ -59,4 +59,20 @@ public class TranslationMessage extends BaseChatMessage {
 	public TranslationMessage (String translate) {
 		this (translate, new ArrayList<BaseChatMessage> ());
 	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void normalize () {
+		super.normalize ();
+
+		// skip execution
+		if (this.with == null) return;
+
+		// fix parents
+		for (BaseChatMessage message : this.with) {
+			message.setParent (this);
+		}
+	}
 }
