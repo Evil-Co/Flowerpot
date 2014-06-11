@@ -16,24 +16,42 @@
 
 package org.evilco.flowerpot.api.chat.message;
 
+import com.google.gson.annotations.SerializedName;
+
 /**
  * Provides a list of possible message colors.
  */
 public enum ChatColor {
+	@SerializedName ("aqua")
 	AQUA,
+	@SerializedName ("black")
 	BLACK,
+	@SerializedName ("blue")
 	BLUE,
+	@SerializedName ("dark_aqua")
 	DARK_AQUA,
+	@SerializedName ("dark_blue")
 	DARK_BLUE,
+	@SerializedName ("dark_gray")
 	DARK_GRAY,
+	@SerializedName ("dark_green")
 	DARK_GREEN,
+	@SerializedName ("dark_purple")
 	DARK_PURPLE,
+	@SerializedName ("dark_red")
 	DARK_RED,
+	@SerializedName ("gold")
 	GOLD,
+	@SerializedName ("gray")
 	GRAY,
+	@SerializedName ("green")
 	GREEN,
+	@SerializedName ("light_purple")
 	LIGHT_PURPLE,
+	@SerializedName ("red")
 	RED,
+	@SerializedName ("yellow")
 	YELLOW,
+	@SerializedName ("white")
 	WHITE
 }
