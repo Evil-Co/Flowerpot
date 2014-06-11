@@ -17,4 +17,14 @@
 	<name>Flowerpot API</name>
 	<description>Provides easy access to the Flowerpot server suite.</description>
 	<inceptionYear>2014</inceptionYear>
+
+	<!-- Dependencies -->
+	<dependencies>
+		<!-- GSON -->
+		<dependency>
+			<groupId>com.google.code.gson</groupId>
+			<artifactId>gson</artifactId>
+			<version>2.2.4</version>
+		</dependency>
+	</dependencies>
 </project>
