@@ -52,6 +52,8 @@ public abstract class BaseChatMessage {
 	/**
 	 * Stores a list of messages which will be appended to the message.
 	 */
+	@Getter
+	@Setter
 	protected List<BaseChatMessage> extra = null;
 
 	/**
