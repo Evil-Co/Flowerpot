@@ -16,8 +16,16 @@
 
 package org.evilco.flowerpot.api.chat.message.interaction;
 
+import com.google.gson.annotations.SerializedName;
+
 /**
  * Provides a list of possible actions to perform on hover.
  */
 public enum MessageHoverAction {
+	@SerializedName ("show_achievement")
+	SHOW_ACHIEVEMENT,
+	@SerializedName ("show_item")
+	SHOW_ITEM,
+	@SerializedName ("show_text")
+	SHOW_TEXT
 }
