@@ -18,7 +18,6 @@ package org.evilco.flowerpot.api.chat.message;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import io.netty.bootstrap.Bootstrap;
 import lombok.Getter;
 import lombok.Setter;
 import org.evilco.flowerpot.api.chat.message.interaction.MessageClickEvent;
@@ -36,7 +35,7 @@ public abstract class BaseChatMessage {
 	 * Indicates whether the message will be displayed in bold.
 	 */
 	@Setter
-	protected Bootstrap bold = null;
+	protected Boolean bold = null;
 
 	/**
 	 * Defines the action performed when the message is clicked.
@@ -129,7 +128,7 @@ public abstract class BaseChatMessage {
 	 * Checks whether the message will be displayed in bold.
 	 * @return True if the style is bold.
 	 */
-	public Bootstrap getBold () {
+	public Boolean getBold () {
 		if (this.parent != null && this.bold == null) return this.parent.getBold ();
 		return bold;
 	}
