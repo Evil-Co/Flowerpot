@@ -64,7 +64,7 @@
 
 	<!-- Distribution -->
 	<distributionManagement>
-		<downloadUrl>http://www.evil-co.org/product/flowerpot</downloadUrl>
+		<downloadUrl>http://www.flowerpotmc.org</downloadUrl>
 
 		<repository>
 			<id>evil-co</id>
