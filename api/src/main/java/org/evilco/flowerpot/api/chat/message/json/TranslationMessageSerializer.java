@@ -47,6 +47,9 @@ public class TranslationMessageSerializer extends BaseChatMessageSerializer<Tran
 		if (object.has ("translate")) message.setTranslate (object.get ("translate").getAsString ());
 		if (object.has ("with")) message.setWith (((List<BaseChatMessage>) context.deserialize (object.get ("with"), withType)));
 
+		// normalize
+		message.normalize ();
+
 		// return finished object
 		return message;
 	}
