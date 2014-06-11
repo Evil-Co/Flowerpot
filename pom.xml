@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<!-- Artifact Information -->
+	<groupId>org.evilco.flowerpot</groupId>
+	<artifactId>parent</artifactId>
+	<version>1.0-SNAPSHOT</version>
+	<packaging>pom</packaging>
+
+	<!-- Artifact Metadata -->
+	<name>Flowerpot</name>
+	<description>A netty based Minecraft proxy implementation.</description>
+	<url>http://www.flowerpotmc.org</url>
+	<inceptionYear>2014</inceptionYear>
+
+	<!-- Organization -->
+	<organization>
+		<name>Evil-Co</name>
+		<url>http://www.evil-co.org</url>
+	</organization>
+
+	<!-- Contributors -->
+	<contributors>
+		<!-- Johannes "Akkarin" Donath -->
+		<contributor>
+			<name>Johannes Donath</name>
+			<email>johannesd@evil-co.com</email>
+			<url>http://www.johannes-donath.com</url>
+
+			<organization>Evil-Co</organization>
+			<organizationUrl>http://www.evil-co.org</organizationUrl>
+		</contributor>
+	</contributors>
+
+	<!-- Licenses -->
+	<licenses>
+		<license>
+			<name>Apache License 2.0</name>
+			<url>LICENSE</url>
+			<distribution>repo</distribution>
+		</license>
+	</licenses>
+
+	<!-- Issue Reporting -->
+	<issueManagement>
+		<url>https://evilco.atlassian.net/browse/MCFP</url>
+		<system>JIRA</system>
+	</issueManagement>
+
+	<!-- CI Management -->
+	<ciManagement>
+		<url>https://evilco.atlassian.net/builds/browse/MCFP</url>
+		<system>Bamboo</system>
+	</ciManagement>
+
+	<!-- SCM -->
+	<scm>
+		<url>https://github.com/Evil-Co/Flowerpot</url>
+		<connection>scm:git:git://github.com/Evil-Co/Flowerpot.git</connection>
+		<developerConnection>scm:git:git://git@github.com/Evil-Co/Flowerpot.git</developerConnection>
+		<tag>2.0</tag>
+	</scm>
+
+	<!-- Distribution -->
+	<distributionManagement>
+		<downloadUrl>http://www.evil-co.org/product/flowerpot</downloadUrl>
+
+		<repository>
+			<id>evil-co</id>
+			<url>http://nexus.evil-co.org/content/repositories/free/</url>
+		</repository>
+
+		<snapshotRepository>
+			<id>evil-co</id>
+			<url>http://nexus.evil-co.org/content/repositories/free-snapshots/</url>
+		</snapshotRepository>
+	</distributionManagement>
+
+	<!-- Dependency Repositories -->
+	<repositories>
+		<repository>
+			<id>evil-co</id>
+			<url>http://nexus.evil-co.org/content/repositories/free-snapshots/</url>
+
+			<snapshots>
+				<enabled>true</enabled>
+			</snapshots>
+		</repository>
+	</repositories>
+
+	<!-- Global Dependencies -->
+	<dependencies>
+		<!-- Guava -->
+		<dependency>
+			<groupId>com.google.guava</groupId>
+			<artifactId>guava</artifactId>
+			<version>17.0</version>
+		</dependency>
+
+		<!-- JUnit -->
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>4.11</version>
+			<scope>test</scope>
+		</dependency>
+
+		<!-- Lombok -->
+		<dependency>
+			<groupId>org.projectlombok</groupId>
+			<artifactId>lombok</artifactId>
+			<version>1.14.0</version>
+			<scope>provided</scope>
+		</dependency>
+
+		<!-- Mockito -->
+		<dependency>
+			<groupId>org.mockito</groupId>
+			<artifactId>mockito-core</artifactId>
+			<version>1.9.5</version>
+			<scope>test</scope>
+		</dependency>
+
+		<!-- Netty -->
+		<dependency>
+			<groupId>io.netty</groupId>
+			<artifactId>netty-all</artifactId>
+			<version>5.0.0.Alpha1</version>
+		</dependency>
+	</dependencies>
+
+	<!-- Sub-Modules -->
+	<modules></modules>
+</project>
