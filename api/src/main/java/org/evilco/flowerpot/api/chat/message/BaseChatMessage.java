@@ -260,4 +260,23 @@ public abstract class BaseChatMessage {
 			message.setParent (this);
 		}
 	}
+
+	/**
+	 * Serializes a message.
+	 * @return The json version of the message.
+	 */
+	public String serialize () {
+		return gson.toJson (this);
+	}
+
+	/**
+	 * Un-Serializes a message.
+	 * @param json The json message.
+	 * @param type The message type.
+	 * @param <T> The message type.
+	 * @return The original message.
+	 */
+	protected static <T extends BaseChatMessage> T unserialize (String json, Class<T> type) {
+		return gson.fromJson (json, type);
+	}
 }

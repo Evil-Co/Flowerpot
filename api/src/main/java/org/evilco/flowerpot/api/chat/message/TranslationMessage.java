@@ -102,4 +102,13 @@ public class TranslationMessage extends BaseChatMessage {
 			message.setParent (this);
 		}
 	}
+
+	/**
+	 * Un-Serializes a message.
+	 * @param json The serialized message.
+	 * @return The original message.
+	 */
+	public static TranslationMessage unserialize (String json) {
+		return unserialize (json, TranslationMessage.class);
+	}
 }

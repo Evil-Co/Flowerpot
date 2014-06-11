@@ -58,4 +58,13 @@ public class TextMessage extends BaseChatMessage {
 
 		this.setText (message.getText ());
 	}
+
+	/**
+	 * Un-Serializes a message.
+	 * @param json The serializes message.
+	 * @return The original message.
+	 */
+	public static TextMessage unserialize (String json) {
+		return unserialize (json, TextMessage.class);
+	}
 }
