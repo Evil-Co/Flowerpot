@@ -44,7 +44,7 @@ public class TextMessage extends BaseChatMessage {
 	 */
 	public TextMessage (String text) {
 		super ();
-		
+
 		this.setText (text);
 	}
 }
