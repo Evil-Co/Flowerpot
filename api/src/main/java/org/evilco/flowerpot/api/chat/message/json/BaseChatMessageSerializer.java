@@ -79,15 +79,15 @@ public abstract class BaseChatMessageSerializer<T extends BaseChatMessage> imple
 		JsonObject object = new JsonObject ();
 
 		// set properties
-		object.add ("bold", context.serialize (src.getBold ()));
-		object.add ("clickEvent", context.serialize (src.getClickEvent ()));
-		object.add ("color", context.serialize (src.getColor ()));
-		object.add ("extra", context.serialize (src.getExtra ()));
-		object.add ("hoverEvent", context.serialize (src.getHoverEvent ()));
-		object.add ("italic", context.serialize (src.getItalic ()));
-		object.add ("obfuscated", context.serialize (src.getObfuscated ()));
-		object.add ("strikethrough", context.serialize (src.getStrikethrough ()));
-		object.add ("underlined", context.serialize (src.getUnderlined ()));
+		if (src.getBold ()) object.add ("bold", context.serialize (src.getBold ()));
+		if (src.getClickEvent () != null) object.add ("clickEvent", context.serialize (src.getClickEvent ()));
+		if (src.getColor () != null) object.add ("color", context.serialize (src.getColor ()));
+		if (src.getExtra () != null) object.add ("extra", context.serialize (src.getExtra ()));
+		if (src.getHoverEvent () != null) object.add ("hoverEvent", context.serialize (src.getHoverEvent ()));
+		if (src.getItalic ()) object.add ("italic", context.serialize (src.getItalic ()));
+		if (src.getObfuscated ()) object.add ("obfuscated", context.serialize (src.getObfuscated ()));
+		if (src.getStrikethrough ()) object.add ("strikethrough", context.serialize (src.getStrikethrough ()));
+		if (src.getUnderlined ()) object.add ("underlined", context.serialize (src.getUnderlined ()));
 
 		// return finished object
 		return object;
