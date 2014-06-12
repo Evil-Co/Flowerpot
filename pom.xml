@@ -129,6 +129,12 @@
 			<scope>provided</scope>
 		</dependency>
 
+		<dependency>
+			<groupId>org.evilco.mc.protocol</groupId>
+			<artifactId>common</artifactId>
+			<version>1.7-SNAPSHOT</version>
+		</dependency>
+
 		<!-- Mockito -->
 		<dependency>
 			<groupId>org.mockito</groupId>
